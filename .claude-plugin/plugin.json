@@ -6,5 +6,7 @@
     "name": "David Allouche",
     "email": "david@ddaa.net"
   },
+  "homepage": "https://github.com/ddaanet/craft",
+  "repository": "https://github.com/ddaanet/craft",
   "license": "MIT"
 }
