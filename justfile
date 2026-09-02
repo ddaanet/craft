@@ -1,3 +1,5 @@
+import 'plugin-dev/release.just'
+
 precommit:
     true
 
