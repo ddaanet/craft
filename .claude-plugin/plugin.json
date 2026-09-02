@@ -1,0 +1,10 @@
+{
+  "name": "craft",
+  "version": "0.0.0",
+  "description": "Guidance skills for design docs, plans and specs, test discipline, agent-facing directives, and tooling-change hygiene.",
+  "author": {
+    "name": "David Allouche",
+    "email": "david@ddaa.net"
+  },
+  "license": "MIT"
+}

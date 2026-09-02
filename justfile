@@ -1,0 +1,4 @@
+precommit:
+    true
+
+prerelease: precommit
