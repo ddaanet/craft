@@ -6,8 +6,13 @@ Prose beats a big table for anything with a paragraph's worth of reasoning in a
 cell: a rejected-alternatives or decisions table hides the rationale in one long
 cell and forces every entry into the same width. Subsections with a bolded
 lead-in read the same at a glance and let the argument breathe. Keep tables for
-genuinely tabular data — short, uniform, scannable cells, which is what FR/NFR
-rows and transformation contracts are.
+genuinely tabular data — short, uniform, scannable cells, which is what a
+transformation contract is. **FR and NFR rows usually are not**: a requirement
+stated as a sentence is neither short nor uniform, so those sections take the
+same bolded lead-in prose as decisions, each carrying its id, the statement, the
+status and the `Where · pinned by` pin inline. Numbering survives the move, so
+`FR-7` stays citable. Default to prose and reach for a table only where the
+cells really are small.
 
 Each decision carries its rationale and, where one applies, a **Supersedes** or
 **Reopen-if** clause — the condition that puts a settled decision back on the

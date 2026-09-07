@@ -63,6 +63,37 @@ rejected-alternative names under the decision group they protect (one *Rejected*
 line per group, no separate index) and rewording each conclusion to fit one
 wrapped line.
 
+Collapse restatements before cutting anything. The tell for a hub past its floor
+is a section that restates a node instead of summarizing it; on one project two
+sections both restating the same install-time node became one paragraph. That is
+noise reduction and stands on its own — the cut below is the structural move.
+
+The last seam is the `## Design Decisions` heading itself, and it is a section
+boundary that already exists. Everything above it says what the system is and
+how it is built, read while building or debugging one component; everything
+below — the decision groups and their *Rejected* lines — is the argument index,
+read whole when weighing or adding a decision. So the conclusions move whole
+into `docs/decisions.md`: one line per decision and every rejected alternative
+by name, grouped by the node that argues them, verbatim. The two sections become
+pointer stubs, the shape §Changelog already has toward `changelog.md`, and the
+hub keeps its six sections.
+
+This cut does not pay the usual way. The saving elsewhere is the reader skipping
+most pointers, and nobody skips a decisions index — they read it whole, which is
+the property the coverage rule above demands. What it buys is that they read it
+whole *only* when weighing a decision, instead of carrying it on every trip into
+a component. Take it as the lever at the floor rather than a shape every design
+doc starts in. Raising the hub's own cap instead is not the move: the split
+preserves the read-whole property at a third of the size. Measured on one
+project, hub 400 → 279 lines with the index at 133.
+
+Once a doc has taken this cut, its checker follows the conclusions rather than
+the hub — every conclusion line and every delegation is read from the index, a
+missing index is an error the way a missing hub is, and hub citations are still
+checked against what the index and the nodes define. No check wants a conclusion
+in both files, so this retargets one constant rather than creating a two-file
+hub.
+
 A hub at its cap is never a reason to leave a new conclusion out — by that logic
 nothing could be added again. It is the signal to move the largest hub-only
 detail (a requirement carrying its own measurements, say) into a node, verbatim,

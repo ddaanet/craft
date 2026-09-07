@@ -22,7 +22,7 @@ them.
    - `Partial`.
    - `Planned`.
 
-4. **A `Where · pinned by` column** on the FR and NFR tables, mapping each
+4. **A `Where · pinned by` clause** on every FR and NFR entry, mapping each
    requirement to its code symbol and the test that proves it. This turns the
    document into a navigation index and makes "Done" re-checkable rather than a
    bare claim. *Verify the symbols and tests exist before writing them* — never
