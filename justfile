@@ -15,6 +15,6 @@ format-docs:
     have=$(rumdl --version) || { echo "format-docs: rumdl not on PATH — run 'uv sync' and let direnv load .envrc" >&2; exit 1; }
     want=$(sed -n 's/.*"rumdl==\([0-9.]*\)".*/\1/p' pyproject.toml)
     [ "$have" = "rumdl $want" ] || { echo "format-docs: $have on PATH, pyproject.toml pins $want — run 'uv sync'" >&2; exit 1; }
-    rumdl fmt --no-cache skills plans
+    rumdl fmt --no-cache skills plans docs
 
 prerelease: precommit

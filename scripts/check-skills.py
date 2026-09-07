@@ -10,6 +10,8 @@ gate reports them.
 The rest is shape. A description is loaded into every session whether or not the
 skill fires, so it is capped; a hub is read on every invocation and a node only
 when the hub sends the reader there, so the hub's line cap is the tighter one.
+The same node cap covers `scripts/*.py` and `docs/*.md`, which are read at one
+go by the same reader and are wrapped by the same formatter pass.
 
 Eleven checks, all blocking:
 
@@ -47,7 +49,9 @@ MAX_DESCRIPTION_BYTES = 600
 # A hub is read on every invocation; a node only when the hub sends the reader
 # there. Both are hard-wrapped at 80 columns by `just format-docs`, which is
 # what makes a line count mean anything at all — an unwrapped file games any
-# cap. See `scripts/check-skills.py`'s caller in the justfile.
+# cap. See `scripts/check-skills.py`'s caller in the justfile. The living design
+# doc is capped as a node: it is prose a reader takes in at one go, so exempting
+# it because it is maintainer-facing would be exempting it from its own rule.
 MAX_HUB_LINES = 200
 MAX_NODE_LINES = 400
 
@@ -187,7 +191,8 @@ def main() -> int:
     for path in sorted(SKILLS.rglob("*.md")):
         check_body(path, failures)
 
-    for path in sorted(Path("scripts").glob("*.py")):
+    capped = sorted(Path("scripts").glob("*.py")) + sorted(Path("docs").glob("*.md"))
+    for path in capped:
         lines = len(path.read_text().splitlines())
         if lines > MAX_NODE_LINES:
             failures.append(f"{path}: oversized-file: {lines} lines > {MAX_NODE_LINES}")
