@@ -1,0 +1,14 @@
+# Dev tooling only; nothing here is a Python package. `uv sync` materializes
+# `.venv/bin`, which `.envrc` puts on PATH. PyYAML is there because
+# `scripts/check-skills.py` parses skill frontmatter, and because the venv's
+# python3 shadows the system one for every script on PATH.
+[project]
+name = "craft-dev"
+version = "0"
+requires-python = ">=3.9"
+
+[dependency-groups]
+dev = ["rumdl==0.2.60", "pyyaml>=6"]
+
+[tool.uv]
+package = false
