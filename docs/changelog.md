@@ -15,12 +15,11 @@ plugin's own tooling: `just format-docs` wrapped `skills` and `plans` but not
 design doc that is neither wrapped nor capped cannot obey the rule its own skill
 states, so both were widened (D-9).
 
-The pass also produced the `Done (gated)` status, which the legend inherited
-from the skill does not have. Every functional requirement here is enforced by a
-gate running over the real tree rather than by a test, because the checker has
-no test suite (L-1) — and `Done` claims a test. Recording the weaker status was
-preferable to either overstating the evidence or leaving the requirements
-unmarked.
+Every requirement is pinned by `just precommit` rather than by a unit test, and
+that is what a pin is for: the gate re-checks the claim on every commit, which
+is the property that makes a `Done` more than an assertion. What stays unpinned
+is the checker itself, which has no test suite, so nothing shows a check would
+fail if it regressed (L-1).
 
 ## 2026-09-07 — two inbound briefs applied to `design-doc-writing`
 

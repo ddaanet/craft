@@ -21,9 +21,6 @@ it got here is [the changelog](changelog.md).
 
 - `Done` — implemented and pinned by a test.
 - `Done (prose)` — instructions, not code and not tested.
-- `Done (gated)` — implemented and enforced by `just precommit` over the real
-  tree on every commit. Weaker than `Done`: the gate is production, not a test,
-  and nothing proves it would fail if the check regressed. See L-1.
 - `Partial`.
 - `Planned`.
 
@@ -32,53 +29,51 @@ it got here is [the changelog](changelog.md).
 **FR-1 — five guidance skills ship as plugin skills.** `design-doc-writing`,
 `plan-contracts`, `test-discipline`, `directive-writing` and `removing-cleanly`
 live at `skills/<name>/SKILL.md` and are auto-discovered; the manifest lists no
-components. *Done (gated)* · Where · pinned by: `skills/`, the `missing-skill`
-and `name-mismatch` checks in `check_frontmatter`.
+components. *Done* · Where · pinned by: `skills/`, the `missing-skill` and
+`name-mismatch` checks in `check_frontmatter`.
 
 **FR-2 — a skill is a hub with opt-in nodes.** `SKILL.md` carries what every
 invocation needs; `references/*.md` carries what only some invocations need, and
-the hub links each one. A node no hub points at is unreachable and fails.
-*Done (gated)* · Where · pinned by: the `orphan-node` and `broken-link` checks
-in `main` and `check_body`.
+the hub links each one. A node no hub points at is unreachable and fails. *Done*
+· Where · pinned by: the `orphan-node` and `broken-link` checks in `main` and
+`check_body`.
 
 **FR-3 — descriptions are purpose-first and bounded.** What the skill does, then
 "Use when", then what it is not for. A description is loaded into every session
 whether or not the skill fires, so it is capped at 600 bytes and must be a
-quoted YAML scalar. *Done (gated)* · Where · pinned by: `MAX_DESCRIPTION_BYTES`
-and the `long-description` and `unquoted-description` checks in
-`check_frontmatter`.
+quoted YAML scalar. *Done* · Where · pinned by: `MAX_DESCRIPTION_BYTES` and the
+`long-description` and `unquoted-description` checks in `check_frontmatter`.
 
 **FR-4 — no shipped body carries a private reference.** Every skill was written
 from a private memory store, so the failure mode is leakage: a `[[wikilink]]`
 that resolved only there, a `memory/…` path that exists on one machine, a
 retired source-fact filename, or an attribution naming somebody the reader does
 not know. None of these stop a skill loading, so only a gate reports them.
-*Done (gated)* · Where · pinned by: the `wikilink`, `private-reference` and
+*Done* · Where · pinned by: the `wikilink`, `private-reference` and
 `attribution` checks in `check_body`, against the `SOURCE_FACTS` set.
 
 **FR-5 — line caps are enforced against wrapped prose.** 200 lines for a hub,
 400 for a node or a maintainer script, measured only after `just format-docs`
-hard-wraps at 80 columns — an unwrapped file games any line count.
-*Done (gated)* · Where · pinned by: `MAX_HUB_LINES`, `MAX_NODE_LINES`, the
-`oversized-file` check, and `format-docs` running as `precommit`'s first
-dependency.
+hard-wraps at 80 columns — an unwrapped file games any line count. *Done* ·
+Where · pinned by: `MAX_HUB_LINES`, `MAX_NODE_LINES`, the `oversized-file`
+check, and `format-docs` running as `precommit`'s first dependency.
 
 **FR-6 — code samples are not scanned as prose.** A bats expression such as
 `[[ "$out" != *"x"* ]]` is a sample, not a wikilink, and a path inside a fence
 illustrates rather than points. Fences and inline spans are blanked to spaces
 before the prose checks run, preserving line numbers so failures still name the
-right line. *Done (gated)* · Where · pinned by: `blank_code`.
+right line. *Done* · Where · pinned by: `blank_code`.
 
 **FR-7 — the gate runs before every commit.** `just precommit` formats, runs the
 checker, parses the manifest and shellchecks the launcher. It is a required step
 rather than a suggestion, and it takes well under a second, so it carries no
-cache or sentinel. *Done (gated)* · Where · pinned by: the `precommit` and
-`format-docs` recipes in `justfile`.
+cache or sentinel. *Done* · Where · pinned by: the `precommit` and `format-docs`
+recipes in `justfile`.
 
 **FR-8 — the in-tree plugin is active in a dev session.** `.bin/claude` prepends
 `--plugin-dir <repo root>` and chains to the next `claude` on `PATH` with its
 own directory stripped, passing the stripped `PATH` through the `exec`. `.envrc`
-adds it last so it wins over `.gitlore/bin`. *Done (gated)* · Where · pinned by:
+adds it last so it wins over `.gitlore/bin`. *Done* · Where · pinned by:
 `.bin/claude`, the final `PATH_add` in `.envrc`, and `shellcheck` in
 `precommit`.
 
@@ -94,8 +89,8 @@ pinned by: `import 'plugin-dev/release.just'` and the `prerelease` recipe in
 600-byte cap is roughly 3 KB paid by every session that enables the plugin,
 fired or not. The cap sits above the largest comparable installed skill measured
 (`shell-scripting:shell-gotchas`, 551 B) and well under the point where five of
-them stop being free. *Done (gated)* · Where · pinned by:
-`MAX_DESCRIPTION_BYTES` and its comment.
+them stop being free. *Done* · Where · pinned by: `MAX_DESCRIPTION_BYTES` and
+its comment.
 
 **NFR-2 — a body is self-contained for a reader without the store.** The skills
 were cut from memory facts whose neighbours are not shipped, so a surviving
@@ -106,8 +101,8 @@ that an inlined clause reads correctly stays with review.
 
 **NFR-3 — the gate is fast enough to be unconditional.** Sub-second on the whole
 tree, which is what lets it run on every commit with no cache to invalidate and
-no sentinel to go stale. *Done (gated)* · Where · pinned by: `precommit` having
-no cache step.
+no sentinel to go stale. *Done* · Where · pinned by: `precommit` having no cache
+step.
 
 **NFR-4 — the vendored subtree is never hand-edited.** `plugin-dev/` is
 generated content pulled from a pinned `dist-` tag of the toolkit repo; a fix
@@ -194,9 +189,11 @@ argument for them ships in `craft:plan-contracts`.
 root reads as a tracked project document, which is how `brief-craft-seed.md` was
 read. `plans/` holds what this repo plans for itself; `inbox/` holds what
 arrives. A brief's recommendation is input, not a decision: its constraints get
-verified against the shipped code before anything is edited.
-*Rejected: leaving inbox untracked as scratch* — the briefs are the provenance
-for the edits they cause.
+verified against the shipped code before anything is edited. Once acted on, a
+brief moves into `plans/` under its own dateline, so `inbox/` holds only what is
+still untriaged. *Rejected: leaving inbox untracked as scratch* — the briefs are
+the provenance for the edits they cause, and deleting a spent one throws that
+away.
 
 **D-9 — the design doc is covered by the same formatter and cap as a skill.**
 Written while dogfooding `design-doc-writing`, which requires both.
@@ -226,11 +223,12 @@ The ones that stand alone:
 
 ## Limitations
 
-- **L-1 — `scripts/check-skills.py` has no test suite.** Every FR above is
-  therefore `Done (gated)` rather than `Done`: the checks run over the real tree
-  on every commit, which is production evidence, but nothing demonstrates that a
-  check would fail if it regressed — a check silently returning no failures
-  looks exactly like a tree with no failures. This is the top item in Next.
+- **L-1 — `scripts/check-skills.py` has no test suite.** The gate pins every
+  requirement above by running over the real tree on every commit, which is what
+  makes a `Done` re-checkable. What stays unpinned is the checker itself:
+  nothing demonstrates that a check would fail if it regressed, and a check
+  silently returning no failures looks exactly like a tree with none. This is
+  the top item in Next.
 - **L-2 — whether a description actually triggers is not mechanically
   checkable.** The gate enforces the description's shape and size; whether the
   wording causes the skill to fire at the right moment is judgement, and stays

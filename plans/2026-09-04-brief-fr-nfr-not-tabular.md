@@ -4,10 +4,9 @@
 
 The `design-doc-writing` fact in the shared `ddaanet` tier names FR and NFR rows
 as an example of genuinely tabular data. That is wrong, my human partner
-corrected it, and the correction has to reach the skill being cut from that
-fact — not just the fact. Two sentences carry the error, in two different
-sections, and a pass that fixes only the obvious one leaves the doc
-contradicting itself.
+corrected it, and the correction has to reach the skill being cut from that fact
+— not just the fact. Two sentences carry the error, in two different sections,
+and a pass that fixes only the obvious one leaves the doc contradicting itself.
 
 ### Decisions
 
@@ -16,17 +15,17 @@ contradicting itself.
   really are small.
 - **A transformation contract stays the tabular example. FR and NFR rows do
   not.** A requirement stated as a sentence is neither short nor uniform, which
-  is the test the section already gives — it just drew the wrong conclusion
-  from it.
+  is the test the section already gives — it just drew the wrong conclusion from
+  it.
 - **Requirement sections take the same bolded lead-in prose as decisions.** Each
   entry carries its id, the statement, the status and the `Where · pinned by`
   pin inline. Numbering survives the move, so `FR-7` stays citable from a plan,
   a commit message or another section.
-- **The state layer's fourth item changes with it.** It called `Where · pinned
-  by` a *column on the FR and NFR tables*. With no tables it is a clause on each
-  entry. This is the sentence a fix aimed only at the *Prose over tables*
-  section will miss, and leaving it turns the skill into an instruction to build
-  a table that the same skill forbids two sections later.
+- **The state layer's fourth item changes with it.** It called
+  `Where · pinned by` a *column on the FR and NFR tables*. With no tables it is
+  a clause on each entry. This is the sentence a fix aimed only at the
+  *Prose over tables* section will miss, and leaving it turns the skill into an
+  instruction to build a table that the same skill forbids two sections later.
 
 ### Constraints
 
@@ -43,16 +42,20 @@ contradicting itself.
 The corrected *Prose over tables* wording now reads:
 
 > Keep tables for genuinely tabular data — short, uniform, scannable cells,
-> which is what a transformation contract is. **FR and NFR rows usually are
-> not**: a requirement stated as a sentence is neither short nor uniform, so
-> those sections take the same bolded lead-in prose as decisions, each carrying
-> its id, the statement, the status and the `Where · pinned by` pin inline.
-> Numbering survives the move, so `FR-7` stays citable. Default to prose and
-> reach for a table only where the cells really are small.
+> which is what a transformation contract is.
+> **FR and NFR rows usually are not**: a requirement stated as a sentence is
+> neither short nor uniform, so those sections take the same bolded lead-in
+> prose as decisions, each carrying its id, the statement, the status and the
+> `Where · pinned by` pin inline. Numbering survives the move, so `FR-7` stays
+> citable. Default to prose and reach for a table only where the cells really
+> are small.
 
-And the state-layer item now opens `**A `Where · pinned by` clause** on every FR
-and NFR entry, mapping each requirement to its code symbol and the test that
-proves it` — clause, every entry, no table.
+And the state-layer item now opens:
+
+> **A `Where · pinned by` clause** on every FR and NFR entry, mapping each
+> requirement to its code symbol and the test that proves it
+
+— clause, every entry, no table.
 
 ### Rejected approaches
 
@@ -78,7 +81,7 @@ and its pin, at `~/code/plugin-craft/docs/design.md`.
 
 Worth knowing while extracting: this same tier fact is what `plugin-craft` cut
 its four skills from, and that pass found two classes of dangling identifier a
-wikilink check cannot see — internal requirement, decision and plan ids
-(`FR5a`, `(D14)`, `Plan 04 Step 6`) and file paths in another repository. Both
-appear in the tier's design-doc material. `my human partner` phrasing is *not*
-in that set and ships fine in a skill body, on the `superpowers` precedent.
+wikilink check cannot see — internal requirement, decision and plan ids (`FR5a`,
+`(D14)`, `Plan 04 Step 6`) and file paths in another repository. Both appear in
+the tier's design-doc material. `my human partner` phrasing is *not* in that set
+and ships fine in a skill body, on the `superpowers` precedent.

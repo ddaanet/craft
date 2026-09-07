@@ -45,8 +45,8 @@ Twenty facts, ~74.8KB of body, holding 4,748 bytes of always-loaded index.
 
 ### Decisions
 
-- **Five skills, one plugin.** Every enabled skill's `description` is injected at
-  session start and counted under `/context`'s *Skills*, so context cost is
+- **Five skills, one plugin.** Every enabled skill's `description` is injected
+  at session start and counted under `/context`'s *Skills*, so context cost is
   per-skill and packaging is neutral on it. The plugin boundary is therefore an
   enablement decision, and these five share one — nobody wants doc discipline on
   and test discipline off.
@@ -54,8 +54,8 @@ Twenty facts, ~74.8KB of body, holding 4,748 bytes of always-loaded index.
   memories" would trigger nothing; each *skill* carries the trigger, the plugin
   only needs a coherent theme.
 - **Two skills override third-party skills** — `superpowers:writing-plans` and
-  `superpowers:test-driven-development` are from `obra/superpowers` and cannot be
-  edited. The overriding skill's description must name the same moment so it
+  `superpowers:test-driven-development` are from `obra/superpowers` and cannot
+  be edited. The overriding skill's description must name the same moment so it
   activates alongside.
 - **`SKILL.md` plus `references/`** progressive disclosure. `shell-gotchas`
   already uses that shape, and `design-doc-writing` itself prescribes hub +
@@ -69,15 +69,15 @@ Twenty facts, ~74.8KB of body, holding 4,748 bytes of always-loaded index.
 - **Distributed skill text never cites a memory file.** Consumers do not have
   this store, so a `[[wikilink]]` or a `memory/ddaanet/…` path dangles for every
   one of them. Inline the criteria at write time. Links pointing *outside* the
-  set above, which must be resolved rather than rewritten: `[[examine-evidence-drift]]`
-  (in `design-doc-writing`, `spec-enumerations-need-rederiving`),
-  `[[gitlore-tier-index-budget]]` (in `design-doc-no-situational-state`),
-  `[[hook-output-channels]]` (in `design-doc-writing`),
-  `[[bats-shellcheck-gotchas]]` (in `green-is-not-evidence`),
-  `[[detect-liveness-not-presence]]` (in `no-transition-special-cases`). Links
-  *within* the set become ordinary cross-references between skills or sections.
-  `remove-cleanly-no-vestigial` carries a `[[link]]` that is a generic example,
-  not a reference — drop it.
+  set above, which must be resolved rather than rewritten:
+  `[[examine-evidence-drift]]` (in `design-doc-writing`,
+  `spec-enumerations-need-rederiving`), `[[gitlore-tier-index-budget]]` (in
+  `design-doc-no-situational-state`), `[[hook-output-channels]]` (in
+  `design-doc-writing`), `[[bats-shellcheck-gotchas]]` (in
+  `green-is-not-evidence`), `[[detect-liveness-not-presence]]` (in
+  `no-transition-special-cases`). Links *within* the set become ordinary
+  cross-references between skills or sections. `remove-cleanly-no-vestigial`
+  carries a `[[link]]` that is a generic example, not a reference — drop it.
 - **Description form: purpose first, then "Use when", then exclusions.** Never a
   bare trigger list. Length is a per-session cost in every repo where the plugin
   is enabled, so keep it tight.
@@ -89,8 +89,8 @@ Twenty facts, ~74.8KB of body, holding 4,748 bytes of always-loaded index.
 - **Do not delete or edit the source memory facts.** Retiring them from the
   ddaanet tier is a separate gitlore-side pass; this repo has no authority over
   that store, and the tier is shared with nine other repos.
-- Never `--no-verify`. Do not create or switch branches — work on what is checked
-  out.
+- Never `--no-verify`. Do not create or switch branches — work on what is
+  checked out.
 
 ### Rejected approaches
 
