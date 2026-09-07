@@ -1,7 +1,7 @@
 # craft — design
 
-Status: seeded, unreleased. Five skills ship; no release has been cut. Verified
-against: `64844cd` (2026-09-07).
+Status: released. Five skills ship at v0.1.0, listed in the `ddaanet`
+marketplace. Verified against: `bd38454` (2026-09-07).
 
 This document is the living design: what craft is, how it is built, and why. How
 it got here is [the changelog](changelog.md).
@@ -11,8 +11,7 @@ it got here is [the changelog](changelog.md).
 - **Focus** — dogfooding the five skills on real work. They were written from
   retired memory facts and reviewed as prose; nothing had invoked them until
   this document was written from `design-doc-writing` itself.
-- **Next** — a test suite for `scripts/check-skills.py`, which has none (L-1),
-  and the marketplace release (`just release` plus the `claude-plugins` entry).
+- **Next** — a test suite for `scripts/check-skills.py`, which has none (L-1).
 - **Do not re-litigate** — the hub/node split, the 200/400 line caps, the
   formatter-before-checker ordering, and markdown-skills-only as the component
   set. All are settled below with their reasons.
@@ -79,9 +78,9 @@ adds it last so it wins over `.gitlore/bin`. *Done* · Where · pinned by:
 
 **FR-9 — releases go through the vendored toolkit.** `plugin-dev/release.just`
 provides `release`, `resume-release` and `check-version`; craft supplies
-`precommit` and `prerelease`. *Planned* — no release has been cut. Where ·
-pinned by: `import 'plugin-dev/release.just'` and the `prerelease` recipe in
-`justfile`.
+`precommit` and `prerelease`. *Done* — v0.1.0 was cut through it. Where · pinned
+by: `import 'plugin-dev/release.just'` and the `prerelease` recipe in
+`justfile`, which just refuses to parse without it.
 
 ## Non-functional requirements
 
