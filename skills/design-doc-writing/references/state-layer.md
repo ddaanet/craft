@@ -17,16 +17,21 @@ them.
 
 3. **A status legend** — fixed vocabulary, so "Done" means one thing.
 
-   - `Done` — implemented and pinned by a test.
-   - `Done (prose)` — instructions, not code and not tested.
+   - `Done` — implemented, and pinned by something that re-checks the claim on
+     its own: a test, or a gate that runs over the real tree on every commit.
+     What makes a pin a pin is the re-check, not which of the two it is.
+   - `Done (prose)` — instructions, not code and nothing re-checking them.
    - `Partial`.
    - `Planned`.
 
 4. **A `Where · pinned by` clause** on every FR and NFR entry, mapping each
-   requirement to its code symbol and the test that proves it. This turns the
-   document into a navigation index and makes "Done" re-checkable rather than a
-   bare claim. *Verify the symbols and tests exist before writing them* — never
-   assert an unverified pin.
+   requirement to its code symbol and to whatever proves it — a test, or the
+   gate check that would fail if it regressed. This turns the document into a
+   navigation index and makes "Done" re-checkable rather than a bare claim.
+   *Verify the symbols and the pins exist before writing them* — never assert an
+   unverified pin. A project whose requirements are all pinned by one gate still
+   owes that gate its own pin: a check nothing tests is a `Done` resting on an
+   untested claim, and belongs in Limitations until it has one.
 
 5. **Limitations** (inherent — *can't*) split from **Non-goals** (deliberate —
    *won't, for now*). Conflating them hides whether an exclusion is a hard wall

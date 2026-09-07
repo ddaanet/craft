@@ -4,6 +4,7 @@ precommit: format-docs
     #!/usr/bin/env bash
     set -euo pipefail
     scripts/check-skills.py
+    pytest tests/ -q
     jq . .claude-plugin/plugin.json >/dev/null && echo "jq: plugin.json parses"
     shellcheck .bin/claude && echo "shellcheck: .bin/claude clean"
 

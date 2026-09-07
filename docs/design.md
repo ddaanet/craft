@@ -9,17 +9,21 @@ it got here is [the changelog](changelog.md).
 ## Now
 
 - **Focus** — dogfooding the five skills on real work. They were written from
-  retired memory facts and reviewed as prose; nothing had invoked them until
-  this document was written from `design-doc-writing` itself.
-- **Next** — a test suite for `scripts/check-skills.py`, which has none (L-1).
+  retired memory facts and reviewed as prose. Two have now been invoked against
+  live work: `design-doc-writing` wrote this document, and `test-discipline`
+  drove the checker's suite.
+- **Next** — dogfood the three still unexercised: `plan-contracts`,
+  `directive-writing` and `removing-cleanly`. Their trigger wording and their
+  reference-node splits have never met a real task.
 - **Do not re-litigate** — the hub/node split, the 200/400 line caps, the
   formatter-before-checker ordering, and markdown-skills-only as the component
   set. All are settled below with their reasons.
 
 ## Status legend
 
-- `Done` — implemented and pinned by a test.
-- `Done (prose)` — instructions, not code and not tested.
+- `Done` — implemented, and pinned by something that re-checks it: a test, or
+  `just precommit` running over the real tree.
+- `Done (prose)` — instructions, not code and nothing re-checking them.
 - `Partial`.
 - `Planned`.
 
@@ -64,8 +68,8 @@ before the prose checks run, preserving line numbers so failures still name the
 right line. *Done* · Where · pinned by: `blank_code`.
 
 **FR-7 — the gate runs before every commit.** `just precommit` formats, runs the
-checker, parses the manifest and shellchecks the launcher. It is a required step
-rather than a suggestion, and it takes well under a second, so it carries no
+checker, runs the checker's own suite, parses the manifest and shellchecks the
+launcher. It is a required step rather than a suggestion, and it carries no
 cache or sentinel. *Done* · Where · pinned by: the `precommit` and `format-docs`
 recipes in `justfile`.
 
@@ -98,10 +102,13 @@ meaning, the rule it pointed at is restated inline instead. *Done (prose)* ·
 Where · pinned by: FR-4's checks catch the mechanical classes; the judgement
 that an inlined clause reads correctly stays with review.
 
-**NFR-3 — the gate is fast enough to be unconditional.** Sub-second on the whole
-tree, which is what lets it run on every commit with no cache to invalidate and
-no sentinel to go stale. *Done* · Where · pinned by: `precommit` having no cache
-step.
+**NFR-3 — the gate is cheap enough to be unconditional.** Roughly six seconds on
+the whole tree, nearly all of it the checker's suite: thirty tests, each
+spawning the checker as a subprocess so the invocation matches the one
+`precommit` makes. That is what lets the gate run on every commit with no cache
+to invalidate and no sentinel to go stale — the sub-second figure this recorded
+before the suite existed bought nothing that the absence of a cache does not buy
+at six. *Done* · Where · pinned by: `precommit` having no cache step.
 
 **NFR-4 — the vendored subtree is never hand-edited.** `plugin-dev/` is
 generated content pulled from a pinned `dist-` tag of the toolkit repo; a fix
@@ -122,6 +129,9 @@ component paths — skills are discovered from `skills/`.
 - **`scripts/check-skills.py`** — maintainer tooling, not a shipped component.
   Eleven blocking checks, grouped as frontmatter shape (`check_frontmatter`),
   body hygiene and caps (`check_body`), and reachability (in `main`).
+- **`tests/test_check_skills.py`** — the gate's own gate. One test per check,
+  each spoiling an otherwise-clean tree in exactly one way and asserting the
+  *complete* output, so the assertion fails if the check it names stops firing.
 - **`justfile`** — `format-docs` then `precommit` then `prerelease`, with the
   release recipes imported from the vendored toolkit.
 - **`.rumdl.toml`** — MD013 only, reflow at 80 columns in `normalize` mode.
@@ -217,17 +227,18 @@ The ones that stand alone:
   hub's floor, and this hub is nowhere near it. Recorded here so the option is
   not re-derived: see
   `skills/design-doc-writing/references/splitting-an-oversized-doc.md`.
-- **Per-check caching or a sentinel file in `precommit`.** The whole gate is
-  sub-second; a cache would add invalidation bugs to buy nothing (NFR-3).
+- **Per-check caching or a sentinel file in `precommit`.** A cache would add
+  invalidation bugs to buy back a few seconds on a gate nobody waits on (NFR-3).
 
 ## Limitations
 
-- **L-1 — `scripts/check-skills.py` has no test suite.** The gate pins every
-  requirement above by running over the real tree on every commit, which is what
-  makes a `Done` re-checkable. What stays unpinned is the checker itself:
-  nothing demonstrates that a check would fail if it regressed, and a check
-  silently returning no failures looks exactly like a tree with none. This is
-  the top item in Next.
+- **L-1 — `blank_code`'s line-preservation is unobservable.** It substitutes
+  spaces rather than deleting, so that a failure message names the right line —
+  but no check reports a line number, and the one line-derived figure
+  (`oversized-file`) counts the raw text rather than the blanked prose. Nothing
+  can distinguish the current implementation from one that deletes. The
+  behaviour is right to keep, since a future check may report a line; what is
+  missing is the seam that would let a test see it.
 - **L-2 — whether a description actually triggers is not mechanically
   checkable.** The gate enforces the description's shape and size; whether the
   wording causes the skill to fire at the right moment is judgement, and stays

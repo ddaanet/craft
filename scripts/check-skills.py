@@ -10,8 +10,9 @@ gate reports them.
 The rest is shape. A description is loaded into every session whether or not the
 skill fires, so it is capped; a hub is read on every invocation and a node only
 when the hub sends the reader there, so the hub's line cap is the tighter one.
-The same node cap covers `scripts/*.py` and `docs/*.md`, which are read at one
-go by the same reader and are wrapped by the same formatter pass.
+The same node cap covers `scripts/*.py`, `tests/*.py` and `docs/*.md`, which
+are read at one go by the same reader and are wrapped by the same formatter
+pass.
 
 Eleven checks, all blocking:
 
@@ -191,7 +192,11 @@ def main() -> int:
     for path in sorted(SKILLS.rglob("*.md")):
         check_body(path, failures)
 
-    capped = sorted(Path("scripts").glob("*.py")) + sorted(Path("docs").glob("*.md"))
+    capped = (
+        sorted(Path("scripts").glob("*.py"))
+        + sorted(Path("tests").glob("*.py"))
+        + sorted(Path("docs").glob("*.md"))
+    )
     for path in capped:
         lines = len(path.read_text().splitlines())
         if lines > MAX_NODE_LINES:

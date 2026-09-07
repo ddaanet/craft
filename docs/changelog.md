@@ -6,6 +6,33 @@ history is already the full changelog and needs no duplicate here. An entry
 earns its place by answering a question a future reader would otherwise ask of
 [the design](design.md) and find no answer to.
 
+## 2026-09-07 — the checker gets a suite, and the gate stops being sub-second
+
+L-1 was the last thing the design doc named as unpinned: eleven checks gating
+every requirement, and nothing showing that any of them would fail if it
+regressed. The suite closes it with one test per check, each spoiling an
+otherwise-clean tree in exactly one way and asserting the *complete* output
+rather than the exit code — a test that only asserted "something failed" would
+pass just as well when a different check fired on an accidental second defect.
+
+Thirty tests, all green the first time they ran, which is no evidence at all
+that they discriminate. A mutation pass supplied the missing red: each check was
+neutered in turn in a copy of the checker, and every one of the thirteen
+mutations turned the test named for it red. No mutation survived.
+
+The suite runs in `precommit`, which takes the gate from well under a second to
+around six. NFR-3 was rewritten rather than quietly left standing: the property
+that lets the gate be unconditional is that it has no cache and no sentinel, and
+a sub-second figure was never what bought that. The cost is thirty subprocess
+spawns, which is the price of running the checker the way `precommit` runs it
+instead of importing its functions.
+
+L-1 is now a different limitation. `blank_code` substitutes spaces for code
+rather than deleting it, so that a failure message would name the right line —
+but no check reports a line number, and the one line-derived figure counts the
+raw text. Nothing can tell the implementation apart from one that deletes. The
+behaviour stays; what is missing is the seam that would let a test see it.
+
 ## 2026-09-07 — the living design doc, and the gate widened to cover it
 
 Craft shipped `design-doc-writing` and had no `docs/design.md`. Writing one from
