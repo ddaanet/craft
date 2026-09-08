@@ -1,7 +1,7 @@
 # craft — design
 
 Status: released. Five skills ship at v0.1.0, listed in the `ddaanet`
-marketplace. Verified against: `69c421a` (2026-09-07).
+marketplace. Verified against: `a83bb98` (2026-09-08).
 
 This document is the living design: what craft is, how it is built, and why. How
 it got here is [the changelog](changelog.md).
