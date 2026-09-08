@@ -21,7 +21,9 @@ each test fails on its assertion, then implement to green.
 
 An assertion that was green the first time it ran is not evidence either. It has
 never demonstrated that it discriminates, and no reviewer reading the finished
-test can recover that history from the artifact.
+test can recover that history from the artifact. Where the code already exists
+and the ordering cannot supply a red, one mutation per behaviour supplies it
+instead.
 
 ## The nodes
 
@@ -31,8 +33,9 @@ test can recover that history from the artifact.
   structure a test asserting something does *not* happen so that it cannot go
   vacuous later.
 - [Genuine red](references/genuine-red.md) — stub-then-assert, the inert-stub
-  batch run and what it does not prove, one contract per line, and mutating the
-  subject in place rather than relocating the test.
+  batch run and what it does not prove, one mutation per behaviour for a suite
+  written after the code, one contract per line, and mutating the subject in
+  place rather than relocating the test.
 - [Coverage shape](references/coverage-shape.md) — outside-in when the
   architecture is settled; assert that the suite is *reached* and that the code
   is *invoked as production invokes it*.

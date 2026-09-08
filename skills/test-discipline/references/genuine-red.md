@@ -35,6 +35,38 @@ the correct implementation and the plausible-but-forbidden one it exists to rule
 out. That case needs the *wrong* implementation run against the batch — a second
 run, not a per-test exercise.
 
+## A suite written after the code gets its red from mutation
+
+Tests written against an implementation that already works are green on their
+first run, so the ordering never supplies a red. Manufacturing the absence per
+test is the general remedy; the systematic form is
+**one mutation per behaviour the suite claims to pin**.
+
+Take each check, branch or rule the code implements, neuter exactly that one in
+a copy of the subject, run the whole suite, and record which tests go red. Three
+things come out of the run that reading the tests cannot give you:
+
+- **A mutation nothing catches** names an unpinned behaviour. The suite looked
+  complete and was not.
+- **A red that is not the test named for the mutated behaviour** means the test
+  that failed is coupled to something it does not claim, while the one that
+  should have failed is passing for another reason.
+- **A test that goes red under no mutation at all** asserts something true of
+  the fixture rather than of the code.
+
+The bar is that every mutation is caught, and caught by its own test. Measured:
+thirty tests over a gate's eleven checks, thirteen mutations, each turning red
+the test named for it and none surviving — which is exactly the evidence the
+first green run could not give.
+
+This only works if the assertions are exact. A test asserting merely that the
+run failed passes whenever *any* check fires, so it survives the mutation of its
+own check whenever the fixture happens to trip a second one. Assert the complete
+output and a mutation has nowhere to hide.
+
+Mutate in place and restore after, per the next section — a suite copied
+somewhere else to be mutated fails for reasons unrelated to the mutation.
+
 ## Mutate the subject in place, never relocate the test
 
 A shell test that resolves its own root —

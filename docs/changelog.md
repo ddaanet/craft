@@ -6,6 +6,23 @@ history is already the full changelog and needs no duplicate here. An entry
 earns its place by answering a question a future reader would otherwise ask of
 [the design](design.md) and find no answer to.
 
+## 2026-09-08 — dogfooding `test-discipline` fed a gap back into it
+
+Writing the checker's suite was the skill's first run against live work, and it
+found the skill covering only half its own subject. `genuine-red` prescribed
+stub-then-assert, which presumes the code does not exist yet, and noted in
+passing that a suite validated against a finished implementation "has to
+manufacture the absence the ordering would have given" — without saying how.
+Everything the suite actually needed was in that unwritten half: one mutation
+per behaviour, the whole suite run against each, and the three distinct things a
+surviving or misdirected red tells you.
+
+Added there rather than to the hub, and phrased to lean on the existing
+mutate-in-place rule instead of restating it. The exactness requirement travels
+with it: a test asserting only that the run failed survives the mutation of its
+own check whenever the fixture trips a second one, which is why the suite
+asserts complete output.
+
 ## 2026-09-07 — the checker gets a suite, and the gate stops being sub-second
 
 L-1 was the last thing the design doc named as unpinned: eleven checks gating
