@@ -38,6 +38,13 @@ memory" — because that prevents an invented recovery. Make it true of every fl
 the mode covers: the first draft said "this turn's commit", false wherever the
 commit arrives in a later user turn.
 
+**A transform is described by its input, never its output.** Where a tool
+rewrites what the agent writes, the agent sees the rewritten form everywhere
+else and can imitate that instead. Measured: told "conventional-commit prefixes
+are rewritten with emoji on commit", an agent facing an all-emoji `git log`
+wrote the emoji itself, and the hook rejected it. State the form to write —
+"prefix with `feat:`, `fix:` …; the hook adds the emoji".
+
 ## Withhold, don't forbid
 
 When the only route to an unwanted action is an identifier — a filename, a flag,

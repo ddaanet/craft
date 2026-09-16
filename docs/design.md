@@ -8,22 +8,14 @@ it got here is [the changelog](changelog.md).
 
 ## Now
 
-- **Focus** — dogfooding the five skills on real work. They were written from
-  retired memory facts and reviewed as prose. Four have now met live work:
-  `design-doc-writing` wrote this document, `test-discipline` drove the
-  checker's suite, and `plan-contracts` shaped and `removing-cleanly` executed
-  the plan that removed `attribution` and gave failures a line.
-- **What that plan showed** — the contracts carried two sonnet dispatches, red
-  and green, with no rework, and naming each red test's seam let one mutation
-  confirm it. `removing-cleanly`'s machinery grep caught every mention by name
-  but not a count derived from the removed thing: NFR-3's test count went stale
-  and was caught by reading. The outline told execution to renumber Limitations,
-  against `design-doc-writing`'s retire-don't-renumber; it was written without
-  loading the skill that governs the doc it edits, and the renumber landed
-  before that skill was invoked. Both misses are now rules in the skills that
-  let them through.
-- **Next** — dogfood `directive-writing`, the one still unexercised, against
-  real agent-facing output.
+- **Focus** — whether the skills fire when they should. All five have now met
+  live work, and each run fed its gaps back into the skill; the changelog has
+  what each showed. What no run can settle by editing a body is triggering
+  (L-2): `directive-writing` names dispatch text in its description and did not
+  fire on two dispatch prompts written in the session that dogfooded it.
+- **Next** — record each moment a skill should have fired and did not, with the
+  text that should have matched, until there are enough to say whether a
+  description's wording or the skill boundary is at fault.
 - **Do not re-litigate** — the hub/node split, the 200/400 line caps, the
   formatter-before-checker ordering, and markdown-skills-only as the component
   set. All are settled below with their reasons.

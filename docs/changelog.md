@@ -6,6 +6,22 @@ history is already the full changelog and needs no duplicate here. An entry
 earns its place by answering a question a future reader would otherwise ask of
 [the design](design.md) and find no answer to.
 
+## 2026-09-17 — dogfooding `directive-writing` on text that had already fired
+
+The skill was run against agent-facing text whose effect on an agent had been
+observed in the same session, rather than reviewed cold: a deny from a `git add`
+guard, a memory tool's SessionStart context, and a commit-msg hook's
+SessionStart context. Each finding went to its own repository as a brief. One
+fed back: the commit-msg context described its rewrite ("prefixes are rewritten
+with emoji"), and the agent, facing an all-emoji log, wrote the emoji itself.
+The five cuts did not cover a directive describing a transform by its output, so
+the skill now says to state the input form. The checker's own comments took the
+code-comment cut in the same pass.
+
+The skill did not fire on the two dispatch prompts written that session,
+although its description names dispatch text. That is recorded against L-2, not
+fixed: one miss does not say whether the wording or the boundary is wrong.
+
 ## 2026-09-17 — dogfooding `plan-contracts` and `removing-cleanly` fed two gaps back
 
 The plan that removed `attribution` and gave failures a line was the first live
