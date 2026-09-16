@@ -24,6 +24,15 @@ guards against its return.
 helpers, constants, fixtures, tests, docs, recipes, and inbound references — and
 cut each. Convert any absence-guard into the positive contract of what remains.
 
+**A grep for the name misses every figure derived from it.** "Eleven checks",
+"thirty tests", a file total: none contains the removed thing's name, so each
+survives the sweep and goes stale on the commit that lands. Grep for the number
+words and numerals the removal changes, and re-derive each from its source —
+collect the suite, count the list — rather than decrementing, since a removal
+rewrites some dependents and deletes others. Measured: removing one check from a
+checker came back clean on a grep for its name while a design doc still claimed
+the suite's old test count.
+
 Retiring a durable note is the same pass: `rm` leaves every surviving link to it
 pointing at content nobody will write, so sweep the corpus for inbound links
 too. **Where the link carried meaning, restate the rule inline rather than

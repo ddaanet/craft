@@ -6,6 +6,18 @@ history is already the full changelog and needs no duplicate here. An entry
 earns its place by answering a question a future reader would otherwise ask of
 [the design](design.md) and find no answer to.
 
+## 2026-09-17 — dogfooding `plan-contracts` and `removing-cleanly` fed two gaps back
+
+The plan that removed `attribution` and gave failures a line was the first live
+run of both skills, and each let one thing through. `removing-cleanly`'s sweep
+greps for the removed thing's name, and the test count the removal changed does
+not contain it; the skill now says to grep for the figures a removal changes and
+re-derive them. The outline told execution to renumber Limitations, which
+`design-doc-writing` forbids, because it was written without loading that skill;
+`plan-contracts` now says to load the skill governing any artifact a plan edits
+and check each step against it. Both land where the miss happened rather than in
+the skill that was contradicted, which already said the right thing.
+
 ## 2026-09-17 — failures name a line, closing the old L-1
 
 L-1 was that `blank_code`'s line-preservation could not be observed: it

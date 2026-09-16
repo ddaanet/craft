@@ -20,11 +20,10 @@ it got here is [the changelog](changelog.md).
   and was caught by reading. The outline told execution to renumber Limitations,
   against `design-doc-writing`'s retire-don't-renumber; it was written without
   loading the skill that governs the doc it edits, and the renumber landed
-  before that skill was invoked.
+  before that skill was invoked. Both misses are now rules in the skills that
+  let them through.
 - **Next** — dogfood `directive-writing`, the one still unexercised, against
-  real agent-facing output. Decide whether the two misses feed back: derived
-  counts into `removing-cleanly`, and loading the governing skill into
-  `plan-contracts`.
+  real agent-facing output.
 - **Do not re-litigate** — the hub/node split, the 200/400 line caps, the
   formatter-before-checker ordering, and markdown-skills-only as the component
   set. All are settled below with their reasons.

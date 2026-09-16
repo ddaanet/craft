@@ -40,3 +40,22 @@ quantity a downstream constant is supposed to bound.
 A green suite is evidence about the code's behaviour under the assumptions the
 fixtures encode, never about the world; the `test-discipline` skill covers what
 a green run does and does not prove.
+
+## Load the skill that governs what the plan edits
+
+A plan that edits an artifact with its own maintenance rules — a living design
+doc, a changelog, a skill — restates those rules as steps, and restates them
+from recall unless the governing skill is loaded while the plan is written. The
+executor follows the plan, because the plan is more specific, and the skill's
+rule arrives only if something invokes it later, after the edit has landed.
+
+Measured instance: an outline told its executor to delete a limitation from a
+design doc and renumber the rest. The `design-doc-writing` skill says to retire
+an id and leave the gap, because changelog entries cite limitations by number.
+The outline was written without loading that skill; the renumber passed the
+gate, was committed, and was reversed a commit later, when the skill loaded for
+the next edit to the same doc.
+
+**Before writing a step that edits such an artifact, load its skill and check
+the step against it.** A step that contradicts the governing skill is a finding
+against the plan, not a deviation for the executor to make.

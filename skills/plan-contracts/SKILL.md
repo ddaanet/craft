@@ -47,8 +47,9 @@ the override stick; the next upgrade overwrites it without a word.
   call sites is answering conformance, not completeness; re-derive the list by
   grep before checking anything against it.
 - [Before you plan](references/before-you-plan.md) — run the existing pipeline
-  against real data first. Fixtures are written by the same hand as the code, so
-  they encode the same assumptions and cannot disprove them.
+  against real data first, since fixtures written by the same hand as the code
+  cannot disprove its assumptions; and load the skill governing any artifact the
+  plan edits, or its steps restate that skill's rules from recall.
 
 Large docs defeat eyeball review, which is the other half of why a plan is sized
 to its work; the `design-doc-writing` skill covers how to present one for review
