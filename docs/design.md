@@ -102,7 +102,7 @@ Where · pinned by: FR-4's checks catch the mechanical classes; the judgement
 that an inlined clause reads correctly stays with review.
 
 **NFR-3 — the gate is cheap enough to be unconditional.** Roughly six seconds on
-the whole tree, nearly all of it the checker's suite: twenty-nine tests, each
+the whole tree, nearly all of it the checker's suite: thirty-one tests, each
 spawning the checker as a subprocess so the invocation matches the one
 `precommit` makes. That is what lets the gate run on every commit with no cache
 to invalidate and no sentinel to go stale — the sub-second figure this recorded
@@ -236,18 +236,11 @@ The ones that stand alone:
 
 ## Limitations
 
-- **L-1 — `blank_code`'s line-preservation is unobservable.** It substitutes
-  spaces rather than deleting, so that a failure message names the right line —
-  but no check reports a line number, and the one line-derived figure
-  (`oversized-file`) counts the raw text rather than the blanked prose. Nothing
-  can distinguish the current implementation from one that deletes. The
-  behaviour is right to keep, since a future check may report a line; what is
-  missing is the seam that would let a test see it.
-- **L-2 — whether a description actually triggers is not mechanically
+- **L-1 — whether a description actually triggers is not mechanically
   checkable.** The gate enforces the description's shape and size; whether the
   wording causes the skill to fire at the right moment is judgement, and stays
   with review and with dogfooding.
-- **L-3 — NFR-4 is unenforced.** Nothing detects a hand-edit to `plugin-dev/`;
+- **L-2 — NFR-4 is unenforced.** Nothing detects a hand-edit to `plugin-dev/`;
   it is a convention held by the author.
 
 ## Non-goals

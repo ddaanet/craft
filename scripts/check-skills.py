@@ -55,8 +55,9 @@ MAX_HUB_LINES = 200
 MAX_NODE_LINES = 400
 
 # The memory facts these skills were written from, plus the two the same pass
-# retired to other venues. Every one is gone from the store, so a surviving
-# mention in a body is a dangling private reference rather than a citation.
+# retired to other venues. Some still live in the store (`hook-output-channels`
+# is indexed there), so a body naming one is private to a reader without the
+# store, whether or not the fact itself survives.
 SOURCE_FACTS = frozenset(
     {
         "design-doc-writing",
@@ -104,6 +105,15 @@ def blank_code(text: str) -> str:
     return CODE_SPAN.sub(lambda m: " " * len(m.group(0)), blanked)
 
 
+def line_of(text: str, index: int) -> int:
+    """1-based line of `index` into `text`.
+
+    `blank_code` substitutes spaces for code rather than deleting, so an
+    index into the blanked prose is also an index into the raw text.
+    """
+    return 1 + text.count("\n", 0, index)
+
+
 def check_frontmatter(skill_md: Path, failures: list[str]) -> None:
     """Parse a hub's frontmatter and check its name, description and quoting."""
     text = skill_md.read_text()
@@ -147,20 +157,28 @@ def check_body(path: Path, failures: list[str]) -> None:
     text = path.read_text()
     prose = blank_code(text)
 
-    for hit in WIKILINK.findall(prose):
-        failures.append(f"{path}: wikilink: {hit}")
+    for match in WIKILINK.finditer(prose):
+        line = line_of(prose, match.start())
+        failures.append(f"{path}:{line}: wikilink: {match.group(0)}")
+    # None of these literal patterns contains a space, so a reflow by the
+    # formatter cannot split one across lines.
     for pattern in ("memory/", "MEMORY.md"):
-        if pattern in prose:
-            failures.append(f"{path}: private-reference: {pattern}")
+        for match in re.finditer(re.escape(pattern), prose):
+            line = line_of(prose, match.start())
+            failures.append(f"{path}:{line}: private-reference: {pattern}")
     for slug in sorted(SOURCE_FACTS):
-        if f"{slug}.md" in prose:
-            failures.append(f"{path}: private-reference: {slug}.md")
+        pattern = f"{slug}.md"
+        for match in re.finditer(re.escape(pattern), prose):
+            line = line_of(prose, match.start())
+            failures.append(f"{path}:{line}: private-reference: {pattern}")
 
-    for target in LINK.findall(prose):
+    for match in LINK.finditer(prose):
+        target = match.group(1)
         if "://" in target or target.startswith("#"):
             continue
         if not (path.parent / target.split("#", 1)[0]).exists():
-            failures.append(f"{path}: broken-link: {target}")
+            line = line_of(prose, match.start())
+            failures.append(f"{path}:{line}: broken-link: {target}")
 
     cap = MAX_HUB_LINES if path.name == "SKILL.md" else MAX_NODE_LINES
     lines = len(text.splitlines())

@@ -2,7 +2,7 @@
 
 The checker pins every requirement in `docs/design.md` by running over the real
 tree on each commit. Nothing pinned the checker itself, so a check that stopped
-firing would look exactly like a tree with nothing to report (L-1).
+firing would look exactly like a tree with nothing to report.
 
 Each test here spoils an otherwise-clean tree in exactly one way and asserts the
 **complete** output — not that a failure occurred, but that this failure and no
@@ -156,27 +156,42 @@ def test_long_description_is_measured_in_bytes_not_characters(tmp_path):
 
 def test_wikilink(tmp_path):
     tree = build(tmp_path, {"skills/alpha/SKILL.md": hub(body="See [[some-fact]].")})
-    assert check(tree) == (1, ["skills/alpha/SKILL.md: wikilink: [[some-fact]]"])
+    assert check(tree) == (1, ["skills/alpha/SKILL.md:8: wikilink: [[some-fact]]"])
 
 
 def test_private_reference_to_the_store(tmp_path):
     tree = build(tmp_path, {"skills/alpha/SKILL.md": hub(body="Written in memory/ddaanet.")})
-    assert check(tree) == (1, ["skills/alpha/SKILL.md: private-reference: memory/"])
+    assert check(tree) == (1, ["skills/alpha/SKILL.md:8: private-reference: memory/"])
 
 
 def test_private_reference_to_the_index(tmp_path):
     tree = build(tmp_path, {"skills/alpha/SKILL.md": hub(body="Indexed in MEMORY.md.")})
-    assert check(tree) == (1, ["skills/alpha/SKILL.md: private-reference: MEMORY.md"])
+    assert check(tree) == (1, ["skills/alpha/SKILL.md:8: private-reference: MEMORY.md"])
 
 
 def test_private_reference_to_a_retired_source_fact(tmp_path):
     tree = build(tmp_path, {"skills/alpha/SKILL.md": hub(body="From outside-in-tdd.md.")})
-    assert check(tree) == (1, ["skills/alpha/SKILL.md: private-reference: outside-in-tdd.md"])
+    assert check(tree) == (1, ["skills/alpha/SKILL.md:8: private-reference: outside-in-tdd.md"])
+
+
+def test_private_reference_reports_every_occurrence(tmp_path):
+    """Once per pattern would hide every hit after the first behind a clean count."""
+    tree = build(
+        tmp_path,
+        {"skills/alpha/SKILL.md": hub(body="See memory/one.\nAlso memory/two.")},
+    )
+    assert check(tree) == (
+        1,
+        [
+            "skills/alpha/SKILL.md:8: private-reference: memory/",
+            "skills/alpha/SKILL.md:9: private-reference: memory/",
+        ],
+    )
 
 
 def test_broken_link(tmp_path):
     tree = build(tmp_path, {"skills/alpha/SKILL.md": hub(body="See [gone](references/gone.md).")})
-    assert check(tree) == (1, ["skills/alpha/SKILL.md: broken-link: references/gone.md"])
+    assert check(tree) == (1, ["skills/alpha/SKILL.md:8: broken-link: references/gone.md"])
 
 
 def test_external_and_anchor_links_are_not_targets_on_disk(tmp_path):
@@ -243,7 +258,15 @@ def test_an_inline_span_is_not_scanned_as_prose(tmp_path):
 def test_blanking_code_does_not_hide_prose_on_the_same_line(tmp_path):
     """Only the span is blanked, so a defect beside it is still reported."""
     tree = build(tmp_path, {"skills/alpha/SKILL.md": hub(body="Run `cd memory/` and see [[x]].")})
-    assert check(tree) == (1, ["skills/alpha/SKILL.md: wikilink: [[x]]"])
+    assert check(tree) == (1, ["skills/alpha/SKILL.md:8: wikilink: [[x]]"])
+
+
+def test_blanking_a_fence_keeps_lines_below_it_at_their_raw_line(tmp_path):
+    """A `blank_code` that deleted the fence instead of substituting spaces
+    would report the wikilink three lines earlier than its true line."""
+    body = "```\ncode\n```\n[[x]]"
+    tree = build(tmp_path, {"skills/alpha/SKILL.md": hub(body=body)})
+    assert check(tree) == (1, ["skills/alpha/SKILL.md:11: wikilink: [[x]]"])
 
 
 # --- the run as a whole
@@ -259,7 +282,7 @@ def test_every_failure_is_reported_not_just_the_first(tmp_path):
         1,
         [
             "skills/alpha/SKILL.md: name-mismatch: 'beta' vs directory 'alpha'",
-            "skills/alpha/SKILL.md: wikilink: [[x]]",
+            "skills/alpha/SKILL.md:8: wikilink: [[x]]",
         ],
     )
 
