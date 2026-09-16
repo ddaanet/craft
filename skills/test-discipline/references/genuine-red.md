@@ -43,8 +43,8 @@ test is the general remedy; the systematic form is
 **one mutation per behaviour the suite claims to pin**.
 
 Take each check, branch or rule the code implements, neuter exactly that one in
-a copy of the subject, run the whole suite, and record which tests go red. Three
-things come out of the run that reading the tests cannot give you:
+the subject where it lives, run the whole suite, and record which tests go red.
+Three things come out of the run that reading the tests cannot give you:
 
 - **A mutation nothing catches** names an unpinned behaviour. The suite looked
   complete and was not.
@@ -81,9 +81,34 @@ This runs the opposite way from a vacuous green — it manufactures *red*, so a
 defect that does not exist clears the "watch it fail" bar and gets a fix written
 for it.
 
-Save a copy of the script, mutate it where it lives, restore after. A red-check
-recipe handed over in a plan or a skill is where this arrives; check it against
-the suite's own root resolution before following it.
+Mutate the script where it lives, then restore it per the next section. A
+red-check recipe handed over in a plan or a skill is where relocation arrives;
+check it against the suite's own root resolution before following it.
+
+## Restore by inverting the edit, never from a copy
+
+Mutating, running the suite and restoring are separate tool calls, so any
+restore that depends on state surviving between calls is the hazard. Measured: a
+backup written to `$TMPDIR` succeeded, the suite redded as intended, and the
+restore one call later read an empty `$TMPDIR` — `cp` failed, and the mutation
+stayed live in a tree holding uncommitted work. The `&&` that chained the backup
+proved it was written, never that it could be found again.
+
+Apply the mutation as an exact string replacement, and restore by applying it
+again with the two strings swapped. No backup file, no scratch directory, and
+the string pair is itself the record of what was changed.
+
+- **The mutated string must be unique in the file.** Inverting `return []` in a
+  file that already holds another `return []` restores the wrong line. Choose a
+  mutation text that occurs nowhere else, or confirm its count before applying.
+- **Prove the restore.** Grep for the mutation text and expect no hit, then run
+  the full suite and expect green. The replacement exiting 0 is not the
+  evidence.
+
+Rejected, each for a reason worth keeping: `${TMPDIR:-/tmp}` keeps the
+cross-call assumption and only covers an unset variable;
+`git checkout -- <file>` and `git stash` discard the uncommitted fixes of the
+very session that is mutation-checking a test it just wrote.
 
 ## Interface contracts, one per line
 

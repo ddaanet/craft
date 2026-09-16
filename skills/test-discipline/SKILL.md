@@ -34,8 +34,9 @@ instead.
   vacuous later.
 - [Genuine red](references/genuine-red.md) — stub-then-assert, the inert-stub
   batch run and what it does not prove, one mutation per behaviour for a suite
-  written after the code, one contract per line, and mutating the subject in
-  place rather than relocating the test.
+  written after the code, one contract per line, mutating the subject in place
+  rather than relocating the test, and restoring it by inverting the edit rather
+  than from a backup copy.
 - [Coverage shape](references/coverage-shape.md) — outside-in when the
   architecture is settled; assert that the suite is *reached* and that the code
   is *invoked as production invokes it*.
