@@ -1,7 +1,7 @@
 # craft — design
 
 Status: released. Five skills ship at v0.1.0, listed in the `ddaanet`
-marketplace. Verified against: `a83bb98` (2026-09-08).
+marketplace. Verified against: `56bfebf` (2026-09-17).
 
 This document is the living design: what craft is, how it is built, and why. How
 it got here is [the changelog](changelog.md).
@@ -9,12 +9,22 @@ it got here is [the changelog](changelog.md).
 ## Now
 
 - **Focus** — dogfooding the five skills on real work. They were written from
-  retired memory facts and reviewed as prose. Two have now been invoked against
-  live work: `design-doc-writing` wrote this document, and `test-discipline`
-  drove the checker's suite.
-- **Next** — dogfood the three still unexercised: `plan-contracts`,
-  `directive-writing` and `removing-cleanly`. Their trigger wording and their
-  reference-node splits have never met a real task.
+  retired memory facts and reviewed as prose. Four have now met live work:
+  `design-doc-writing` wrote this document, `test-discipline` drove the
+  checker's suite, and `plan-contracts` shaped and `removing-cleanly` executed
+  the plan that removed `attribution` and gave failures a line.
+- **What that plan showed** — the contracts carried two sonnet dispatches, red
+  and green, with no rework, and naming each red test's seam let one mutation
+  confirm it. `removing-cleanly`'s machinery grep caught every mention by name
+  but not a count derived from the removed thing: NFR-3's test count went stale
+  and was caught by reading. The outline told execution to renumber Limitations,
+  against `design-doc-writing`'s retire-don't-renumber; it was written without
+  loading the skill that governs the doc it edits, and the renumber landed
+  before that skill was invoked.
+- **Next** — dogfood `directive-writing`, the one still unexercised, against
+  real agent-facing output. Decide whether the two misses feed back: derived
+  counts into `removing-cleanly`, and loading the governing skill into
+  `plan-contracts`.
 - **Do not re-litigate** — the hub/node split, the 200/400 line caps, the
   formatter-before-checker ordering, and markdown-skills-only as the component
   set. All are settled below with their reasons.
@@ -236,11 +246,11 @@ The ones that stand alone:
 
 ## Limitations
 
-- **L-1 — whether a description actually triggers is not mechanically
+- **L-2 — whether a description actually triggers is not mechanically
   checkable.** The gate enforces the description's shape and size; whether the
   wording causes the skill to fire at the right moment is judgement, and stays
   with review and with dogfooding.
-- **L-2 — NFR-4 is unenforced.** Nothing detects a hand-edit to `plugin-dev/`;
+- **L-3 — NFR-4 is unenforced.** Nothing detects a hand-edit to `plugin-dev/`;
   it is a convention held by the author.
 
 ## Non-goals

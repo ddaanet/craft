@@ -8,15 +8,15 @@ earns its place by answering a question a future reader would otherwise ask of
 
 ## 2026-09-17 — failures name a line, closing the old L-1
 
-The limitation then numbered L-1 was that `blank_code`'s line-preservation could
-not be observed: it substitutes spaces for code so that a failure would name the
-right line, and no failure named one. `wikilink`, `private-reference` and
-`broken-link` now report `path:line:`, and a test puts a fence above a wikilink
-so a `blank_code` that deleted instead would report the wrong line — verified by
-making that mutation and watching exactly that test fail. `private-reference`
-became per occurrence on the same ground: once per pattern hid every hit after
-the first. The frontmatter checks and whole-file checks keep `path:`, having no
-line worth naming. The remaining limitations were renumbered.
+L-1 was that `blank_code`'s line-preservation could not be observed: it
+substitutes spaces for code so that a failure would name the right line, and no
+failure named one. `wikilink`, `private-reference` and `broken-link` now report
+`path:line:`, and a test puts a fence above a wikilink so a `blank_code` that
+deleted instead would report the wrong line — verified by making that mutation
+and watching exactly that test fail. `private-reference` became per occurrence
+on the same ground: once per pattern hid every hit after the first. The
+frontmatter checks and whole-file checks keep `path:`, having no line worth
+naming. L-1 is retired and its id left unused.
 
 ## 2026-09-17 — the `attribution` check is removed, as wrong policy
 
