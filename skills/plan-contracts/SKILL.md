@@ -41,8 +41,8 @@ the override stick; the next upgrade overwrites it without a word.
   verbatim, why full bodies cost more than they save, and the size difference to
   budget for.
 - [Contracts and size](references/contracts-and-size.md) — the ~400-line
-  contract as the split signal, and how to measure a line cap honestly instead
-  of gaming it.
+  contract as the split signal, how to measure a line cap honestly instead of
+  gaming it, and cutting duplicated rationale before splitting an over-cap plan.
 - [Spec hygiene](references/spec-hygiene.md) — a spec that enumerates its own
   call sites is answering conformance, not completeness; re-derive the list by
   grep before checking anything against it.

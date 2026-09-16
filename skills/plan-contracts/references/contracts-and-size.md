@@ -41,6 +41,40 @@ dropped content is not.
 GitHub bodies are the opposite case — they render every newline as a break, so
 no hard wrap there.
 
+## Before splitting, cut what the plan duplicates
+
+An over-cap plan has two sanctioned escapes, a split and an exemption, and both
+are wrong when the overage is duplication: a split files the redundancy in two
+documents, an exemption keeps it whole. The duplication that hides best is the
+plan pre-writing the code comments it commissions.
+
+**Where a plan and the comment it commissions would both carry a rationale, the
+comment keeps it and the plan names the constraint.** The instinct runs the
+other way, because the plan feels like the design artifact. But a plan is read
+once and discarded after execution, while the comment ships and is read by
+whoever next edits that line.
+
+Measured instance: a design outline at 498 lines against a 400 cap, roughly a
+quarter of it shell-mechanics rationale — a no-match `grep` under
+`set -euo pipefail`, `git ls-remote` exiting 128 — each argued in the plan and
+each also the subject of a comment the plan told the implementer to write.
+Compressed to 376 lines, it lost no content, changed no decision, and no longer
+needed a split.
+
+Run this before reaching for a split or an exemption, in descending yield:
+
+1. Hoist a failure mode recurring across sections into one short list the
+   sections reference.
+2. Reduce a flat list of test scenarios to a bullet each, with a shared preamble
+   for the assertions every one of them makes.
+3. Cut rejected alternatives to a sentence once the decision is settled.
+4. Drop any "what changes" summary that restates a per-file section.
+
+This is not the prose loss the next section forbids. Shaving loses what a later
+reader needs; cutting duplication loses nothing, because every removed sentence
+survives in the place that ships. If a cut would leave a rationale nowhere, it
+is shaving — keep it.
+
 ## The three forms of cramming
 
 **Long lines** are the first, above.
