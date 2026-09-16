@@ -175,7 +175,7 @@ def test_private_reference_to_a_retired_source_fact(tmp_path):
 
 
 def test_private_reference_reports_every_occurrence(tmp_path):
-    """Once per pattern would hide every hit after the first behind a clean count."""
+    """Each occurrence is its own failure, in line order."""
     tree = build(
         tmp_path,
         {"skills/alpha/SKILL.md": hub(body="See memory/one.\nAlso memory/two.")},

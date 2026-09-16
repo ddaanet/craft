@@ -46,18 +46,14 @@ SKILLS = Path("skills")
 MAX_DESCRIPTION_BYTES = 600
 
 # A hub is read on every invocation; a node only when the hub sends the reader
-# there. Both are hard-wrapped at 80 columns by `just format-docs`, which is
-# what makes a line count mean anything at all — an unwrapped file games any
-# cap. See `scripts/check-skills.py`'s caller in the justfile. The living design
-# doc is capped as a node: it is prose a reader takes in at one go, so exempting
-# it because it is maintainer-facing would be exempting it from its own rule.
+# there. Both caps count lines after `just format-docs` has hard-wrapped at 80
+# columns; run without it, an unwrapped file games any cap. The design doc is
+# capped as a node, since a reader takes it in at one go.
 MAX_HUB_LINES = 200
 MAX_NODE_LINES = 400
 
-# The memory facts these skills were written from, plus the two the same pass
-# retired to other venues. Some still live in the store (`hook-output-channels`
-# is indexed there), so a body naming one is private to a reader without the
-# store, whether or not the fact itself survives.
+# The memory facts these skills were written from. A body naming one cites a
+# file only a reader with the store can open.
 SOURCE_FACTS = frozenset(
     {
         "design-doc-writing",
@@ -160,8 +156,8 @@ def check_body(path: Path, failures: list[str]) -> None:
     for match in WIKILINK.finditer(prose):
         line = line_of(prose, match.start())
         failures.append(f"{path}:{line}: wikilink: {match.group(0)}")
-    # None of these literal patterns contains a space, so a reflow by the
-    # formatter cannot split one across lines.
+    # Keep these patterns free of spaces: the formatter reflows prose, and a
+    # pattern with a space can be split across lines and go unmatched.
     for pattern in ("memory/", "MEMORY.md"):
         for match in re.finditer(re.escape(pattern), prose):
             line = line_of(prose, match.start())
