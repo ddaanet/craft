@@ -97,11 +97,11 @@ hard-wraps `skills/`, `plans/` and `docs/` at 80 columns, runs
 `scripts/check-skills.py` over the tree, parses the manifest and shellchecks
 the dev launcher. It is sub-second, so it carries no cache and no sentinel.
 
-`scripts/check-skills.py` enforces eleven blocking checks: frontmatter shape,
+`scripts/check-skills.py` enforces ten blocking checks: frontmatter shape,
 description size and quoting, node reachability, link validity, the line
 caps, and — because every skill here was cut from a private memory store —
-that no shipped body carries a `[[wikilink]]`, a private path or an
-attribution that resolves only on the author's machine.
+that no shipped body carries a `[[wikilink]]` or a private path that resolves
+only on the author's machine.
 
 `.bin/claude` launches Claude Code with `--plugin-dir` pointed at the repo
 root, so a dev session runs the in-tree plugin rather than an installed copy.

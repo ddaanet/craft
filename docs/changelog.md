@@ -6,6 +6,15 @@ history is already the full changelog and needs no duplicate here. An entry
 earns its place by answering a question a future reader would otherwise ask of
 [the design](design.md) and find no answer to.
 
+## 2026-09-17 — the `attribution` check is removed, as wrong policy
+
+The checker failed any body saying "my human partner", on the theory that the
+phrase names somebody a reader does not know. That is backwards: the phrase is
+house policy, because "user" already names whoever uses the software being
+built, and the collaborator needs a name of its own. The check was found while
+grounding L-1 — a reflow could split the phrase across a newline and disarm the
+substring match — and removing it replaces hardening it. Recorded as D-10.
+
 ## 2026-09-08 — dogfooding `test-discipline` fed a gap back into it
 
 Writing the checker's suite was the skill's first run against live work, and it

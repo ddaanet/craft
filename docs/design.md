@@ -49,11 +49,10 @@ quoted YAML scalar. *Done* · Where · pinned by: `MAX_DESCRIPTION_BYTES` and th
 
 **FR-4 — no shipped body carries a private reference.** Every skill was written
 from a private memory store, so the failure mode is leakage: a `[[wikilink]]`
-that resolved only there, a `memory/…` path that exists on one machine, a
-retired source-fact filename, or an attribution naming somebody the reader does
-not know. None of these stop a skill loading, so only a gate reports them.
-*Done* · Where · pinned by: the `wikilink`, `private-reference` and
-`attribution` checks in `check_body`, against the `SOURCE_FACTS` set.
+that resolved only there, a `memory/…` path that exists on one machine, or a
+retired source-fact filename. None of these stop a skill loading, so only a gate
+reports them. *Done* · Where · pinned by: the `wikilink` and `private-reference`
+checks in `check_body`, against the `SOURCE_FACTS` set.
 
 **FR-5 — line caps are enforced against wrapped prose.** 200 lines for a hub,
 400 for a node or a maintainer script, measured only after `just format-docs`
@@ -103,7 +102,7 @@ Where · pinned by: FR-4's checks catch the mechanical classes; the judgement
 that an inlined clause reads correctly stays with review.
 
 **NFR-3 — the gate is cheap enough to be unconditional.** Roughly six seconds on
-the whole tree, nearly all of it the checker's suite: thirty tests, each
+the whole tree, nearly all of it the checker's suite: twenty-nine tests, each
 spawning the checker as a subprocess so the invocation matches the one
 `precommit` makes. That is what lets the gate run on every commit with no cache
 to invalidate and no sentinel to go stale — the sub-second figure this recorded
@@ -127,8 +126,8 @@ component paths — skills are discovered from `skills/`.
 - **`skills/<name>/references/*.md`** — nodes, read only when the hub sends the
   reader to one. Two skills are hub-only, having no material that splits.
 - **`scripts/check-skills.py`** — maintainer tooling, not a shipped component.
-  Eleven blocking checks, grouped as frontmatter shape (`check_frontmatter`),
-  body hygiene and caps (`check_body`), and reachability (in `main`).
+  Ten blocking checks, grouped as frontmatter shape (`check_frontmatter`), body
+  hygiene and caps (`check_body`), and reachability (in `main`).
 - **`tests/test_check_skills.py`** — the gate's own gate. One test per check,
   each spoiling an otherwise-clean tree in exactly one way and asserting the
   *complete* output, so the assertion fails if the check it names stops firing.
@@ -209,6 +208,11 @@ Written while dogfooding `design-doc-writing`, which requires both.
 *Rejected: exempting `docs/` as maintainer-only prose* — the cap exists because
 a reader takes a document in at one go, which is as true here as under
 `skills/`.
+
+**D-10 — "my human partner" is house policy, not leakage.** "User" names whoever
+uses the software being built, so the collaborator needs a name of its own, and
+the phrase ships in skill bodies on purpose. *Rejected: an attribution check* —
+it failed every body using the phrase, enforcing the opposite of the policy.
 
 ## Rejected alternatives
 

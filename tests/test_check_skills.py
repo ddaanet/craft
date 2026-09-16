@@ -174,11 +174,6 @@ def test_private_reference_to_a_retired_source_fact(tmp_path):
     assert check(tree) == (1, ["skills/alpha/SKILL.md: private-reference: outside-in-tdd.md"])
 
 
-def test_attribution(tmp_path):
-    tree = build(tmp_path, {"skills/alpha/SKILL.md": hub(body="Ask my human partner.")})
-    assert check(tree) == (1, ["skills/alpha/SKILL.md: attribution: 'my human partner'"])
-
-
 def test_broken_link(tmp_path):
     tree = build(tmp_path, {"skills/alpha/SKILL.md": hub(body="See [gone](references/gone.md).")})
     assert check(tree) == (1, ["skills/alpha/SKILL.md: broken-link: references/gone.md"])
@@ -235,7 +230,7 @@ def test_oversized_doc(tmp_path):
 
 
 def test_a_fenced_block_is_not_scanned_as_prose(tmp_path):
-    body = "```bash\n[[ \"$out\" != *x* ]]\ncat memory/MEMORY.md  # my human partner\n```\n"
+    body = "```bash\n[[ \"$out\" != *x* ]]\ncat memory/MEMORY.md\n```\n"
     tree = build(tmp_path, {"skills/alpha/SKILL.md": hub(body=body)})
     assert check(tree) == (0, ["check-skills: 1 files, all checks passed"])
 
@@ -247,8 +242,8 @@ def test_an_inline_span_is_not_scanned_as_prose(tmp_path):
 
 def test_blanking_code_does_not_hide_prose_on_the_same_line(tmp_path):
     """Only the span is blanked, so a defect beside it is still reported."""
-    tree = build(tmp_path, {"skills/alpha/SKILL.md": hub(body="Run `cd memory/` and ask my human partner.")})
-    assert check(tree) == (1, ["skills/alpha/SKILL.md: attribution: 'my human partner'"])
+    tree = build(tmp_path, {"skills/alpha/SKILL.md": hub(body="Run `cd memory/` and see [[x]].")})
+    assert check(tree) == (1, ["skills/alpha/SKILL.md: wikilink: [[x]]"])
 
 
 # --- the run as a whole
@@ -258,14 +253,13 @@ def test_every_failure_is_reported_not_just_the_first(tmp_path):
     """Checks accumulate: a second defect does not hide behind the first."""
     tree = build(
         tmp_path,
-        {"skills/alpha/SKILL.md": hub(name="beta", body="See [[x]] and ask my human partner.")},
+        {"skills/alpha/SKILL.md": hub(name="beta", body="See [[x]].")},
     )
     assert check(tree) == (
         1,
         [
             "skills/alpha/SKILL.md: name-mismatch: 'beta' vs directory 'alpha'",
             "skills/alpha/SKILL.md: wikilink: [[x]]",
-            "skills/alpha/SKILL.md: attribution: 'my human partner'",
         ],
     )
 

@@ -2,10 +2,9 @@
 """Hygiene gate over `skills/`: the shipped bodies carry no private references.
 
 Every skill here was written from a private memory store, so the failure mode is
-leakage rather than breakage: a `[[wikilink]]` that resolved in that store, a
-`memory/…` path that exists on one machine, a "my human partner" that names
-nobody a reader knows. None of those stop the skill loading, so nothing but a
-gate reports them.
+leakage rather than breakage: a `[[wikilink]]` that resolved in that store, or a
+`memory/…` path that exists on one machine. Neither stops the skill loading, so
+nothing but a gate reports them.
 
 The rest is shape. A description is loaded into every session whether or not the
 skill fires, so it is capped; a hub is read on every invocation and a node only
@@ -14,7 +13,7 @@ The same node cap covers `scripts/*.py`, `tests/*.py` and `docs/*.md`, which
 are read at one go by the same reader and are wrapped by the same formatter
 pass.
 
-Eleven checks, all blocking:
+Ten checks, all blocking:
 
 - `missing-skill`        a `skills/<name>/` with no `SKILL.md`
 - `missing-field`        frontmatter without `name` or `description`
@@ -23,7 +22,6 @@ Eleven checks, all blocking:
 - `long-description`     a description past the byte cap
 - `wikilink`             `[[…]]`, which resolves only inside the memory store
 - `private-reference`    a `memory/…` path, `MEMORY.md`, or a source-fact slug
-- `attribution`          "my human partner", who is nobody to a reader
 - `broken-link`          a relative pointer whose target is not on disk
 - `orphan-node`          a `references/*.md` no hub points at
 - `oversized-file`       a file past the cap for its kind
@@ -151,8 +149,6 @@ def check_body(path: Path, failures: list[str]) -> None:
 
     for hit in WIKILINK.findall(prose):
         failures.append(f"{path}: wikilink: {hit}")
-    if "my human partner" in prose:
-        failures.append(f"{path}: attribution: 'my human partner'")
     for pattern in ("memory/", "MEMORY.md"):
         if pattern in prose:
             failures.append(f"{path}: private-reference: {pattern}")
