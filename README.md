@@ -94,8 +94,9 @@ None. The plugin ships markdown and reads nothing outside the session.
 
 `just precommit` is the gate and is required before every commit. It
 hard-wraps `skills/`, `plans/` and `docs/` at 80 columns, runs
-`scripts/check-skills.py` over the tree, parses the manifest and shellchecks
-the dev launcher. It is sub-second, so it carries no cache and no sentinel.
+`scripts/check-skills.py` over the tree, runs the checker's own test suite,
+parses the manifest and shellchecks the dev launcher. It takes a few seconds,
+cheap enough to carry no cache and no sentinel.
 
 `scripts/check-skills.py` enforces ten blocking checks: frontmatter shape,
 description size and quoting, node reachability, link validity, the line
