@@ -1,3 +1,3 @@
 ## Current task
 
-Execute `plans/check-skills-locations/outline.md` directly, with no runbook (my human partner's call). There are three changes: (1) remove the `attribution` check in one pass, as its own commit — "my human partner" is house policy because "user" names the software's user; (2) put line numbers on `wikilink`, `private-reference` and `broken-link`, test-first, with red and green dispatched separately and the test-driver on sonnet; (3) close L-1 in `docs/design.md` in the same commit as change 2. This also dogfoods `craft:removing-cleanly` on a real removal, and `plan-contracts` shaped the outline.
+Check craft's release readiness with `ddaa:preflight`. Since the last release, the `attribution` check was removed, `wikilink`, `private-reference` and `broken-link` failures gained line numbers, and dogfooding fed new rules back into `removing-cleanly`, `plan-contracts` and `directive-writing`.
