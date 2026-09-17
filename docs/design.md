@@ -13,9 +13,6 @@ it got here is [the changelog](changelog.md).
   what each showed. What no run can settle by editing a body is triggering
   (L-2): `directive-writing` names dispatch text in its description and did not
   fire on two dispatch prompts written in the session that dogfooded it.
-- **Next** — record each moment a skill should have fired and did not, with the
-  text that should have matched, until there are enough to say whether a
-  description's wording or the skill boundary is at fault.
 - **Do not re-litigate** — the hub/node split, the 200/400 line caps, the
   formatter-before-checker ordering, and markdown-skills-only as the component
   set. All are settled below with their reasons.
