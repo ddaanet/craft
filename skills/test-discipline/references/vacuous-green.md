@@ -58,6 +58,15 @@ removed.
   left all ten tests green: the write was **completely unobserved**. Where a
   test observes a downstream effect, assert the actual write directly.
 
+- **End state standing in for the moment.** A test for "X happens too late" or
+  "in the wrong step" that asserts only the end state is green for any
+  implementation reaching that state later — a retry, a second push, a repair
+  pass — including the ones that leave the window open. The end state is the
+  cheapest thing to assert and the fixture already exposes it, which is why it
+  gets picked. Make the moment observable and assert on it: a stub or hook
+  recording what each step offered, an append-only log, a fixture in which the
+  late route is impossible.
+
 - **The right exception from the wrong guard.** Two note-validation tests raised
   the right `TriageSessionError`, from the dispatch-ownership guard firing first
   rather than the note check they were named for. When a test pins an exception,

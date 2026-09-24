@@ -6,6 +6,33 @@ history is already the full changelog and needs no duplicate here. An entry
 earns its place by answering a question a future reader would otherwise ask of
 [the design](design.md) and find no answer to.
 
+## 2026-09-24 — three `test-discipline` briefs, and the matrix-staleness rule rejected
+
+Two briefs proposed that a mutation matrix describes the bytes it ran against:
+run the mutations last, re-run after any later edit, re-run an inherited matrix
+before believing it, and re-confirm the same test reds after a
+behaviour-changing edit. Rejected. The proof a mutation run gives is
+behaviour-bound — the test discriminates a behaviour, and a later green run
+shows the behaviour is still there — so a later edit invalidates it no more than
+it invalidates any other test in the suite. What is byte-bound is the recipe:
+the string pair or comment naming the mutation, which a later edit can move out
+from under. A stale recipe re-applied neuters nothing, and the survived mutation
+reads as a vacuous test, which is what the instance behind the rule actually
+was. `genuine-red` now says to prove a mutation landed, symmetrical with proving
+the restore, and names the stale recipe as the reading to check before the two
+`non-vacuous-negatives` gives a survived mutation.
+
+Taken besides: a red is evidence for the one assertion it landed on, the
+assertions below it being born green in a test that passed its red step; a
+mutation's red must be a failed assertion, not a setup exception; and the
+vacuous-green catalogue gains end state standing in for the moment. Dropped as
+already implied: asserting a fixture property rather than trusting a helper's
+name, since the pairing rule catches the drift; mutating a pass-through fixture
+value, since the node already says to mutate the subject; and a refusal's
+message as a behaviour of its own, which is the born-green-assertion point from
+the other side. The gitlore brief stays in the inbox for its `directive-writing`
+section.
+
 ## 2026-09-17 — dogfooding `directive-writing` on text that had already fired
 
 The skill was run against agent-facing text whose effect on an agent had been

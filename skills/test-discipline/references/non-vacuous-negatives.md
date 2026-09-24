@@ -103,6 +103,11 @@ self-parent check. Delete the guard and pin the guarantee that is actually
 load-bearing. Its comment goes with it: a comment claiming the reason the line
 did not serve survives the line unless the same pass cuts both.
 
+Both readings assume the mutation landed. A recipe recorded against an earlier
+version of the subject can miss the behaviour it once neutered, and a survived
+mutation then says nothing about the code or the test; `genuine-red` has the
+check.
+
 ## Delete an untestable negative whole
 
 Where a negative genuinely cannot fail — it refutes wording no producer emits at

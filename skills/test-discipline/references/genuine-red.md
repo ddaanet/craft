@@ -18,6 +18,12 @@ An assertion that was green the first time it ran is not evidence either: it has
 never demonstrated that it discriminates, and no reviewer reading the finished
 test can recover that history from the artifact.
 
+A red is evidence for the one assertion it landed on. Under errexit the test
+dies there, so every assertion below it ran for the first time in the green that
+followed: born green, inside a test that passed its red step. Measured: a
+refusal's exit status redded and the wording assertion under it never did, and
+the wording was wrong, twice in one pass.
+
 ## The inert stub makes a batch cheap to validate
 
 Run N tests against the inert stub once and every test's red is individually
@@ -64,6 +70,10 @@ run failed passes whenever *any* check fires, so it survives the mutation of its
 own check whenever the fixture happens to trip a second one. Assert the complete
 output and a mutation has nowhere to hide.
 
+The red a mutation owes is the red the ordering owes: a failed assertion. A
+mutation that removes a file reds the test at a setup exception, which proves
+the file is missing and nothing about the assertion below it.
+
 Mutate in place and restore after, per the next section — a suite copied
 somewhere else to be mutated fails for reasons unrelated to the mutation.
 
@@ -101,6 +111,16 @@ the string pair is itself the record of what was changed.
 - **The mutated string must be unique in the file.** Inverting `return []` in a
   file that already holds another `return []` restores the wrong line. Choose a
   mutation text that occurs nowhere else, or confirm its count before applying.
+- **Prove the mutation landed.** A replacement whose old string matches nothing
+  exits 0 and changes nothing, so the suite stays green and the run reads as a
+  mutation nothing catches — a false finding of an unpinned behaviour. Grep for
+  the mutated text before running the suite. Measured: a `sed` dropping
+  `pipefail` from a `set` line, where a renamed line turns the scenario into a
+  second run of the unmodified script. The same false reading arrives when a
+  recorded mutation is re-applied after the subject changed: the recipe names
+  bytes and the proof names a behaviour, so the recipe having missed is the
+  first reading to check, ahead of the two that `non-vacuous-negatives` gives a
+  survived mutation.
 - **Prove the restore.** Grep for the mutation text and expect no hit, then run
   the full suite and expect green. The replacement exiting 0 is not the
   evidence.
