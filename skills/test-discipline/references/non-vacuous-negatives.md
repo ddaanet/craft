@@ -76,6 +76,13 @@ preference leaves the test green. Put the decoy first.
 Same shape as the pairing rule below, one level in: the fixture has to make the
 two implementations disagree, not merely exercise both.
 
+A fix that narrows a guard by **normalizing** — strip, lowercase, canonicalize,
+resolve — is where this bites next. The normalization erases the distinction the
+original defect turned on, so the new predicate is right on every filed case and
+wrong one step past them. Add the row one step beyond the filed cases, on the
+far side of the boundary: "three spaces is a heading" does not stop a later
+strip-first rewrite, and "four spaces is content" does.
+
 ## A pairing is a property of the fixture, not of the comment above it
 
 A negative whose fixture differs from its positive in more than the guard's

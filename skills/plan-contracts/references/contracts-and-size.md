@@ -24,6 +24,15 @@ already wrong once. Rewritten as a contract it said
 *derive the count from what came back and assert the ceiling*, which is the
 load-bearing claim.
 
+The same holds for a dispatch. One specified `line.strip()` before an emptiness
+test on markdown lines, and the subagent implemented it exactly. Stripping
+re-opened the defect one indent along: four leading spaces open a code block, so
+an indented `# run the migration first` is content, and the strip-first rule
+read it as a heading. Reviewing the returned diff found nothing, correctly. The
+contract form — under four spaces a heading, four or more content — states the
+inputs the rule must handle, which gives the implementer a case set to test
+against and the dispatcher one to check the returned rule by.
+
 ## Measure the cap honestly
 
 When an artifact has a line-count cap, the cap is a proxy for *reviewable*.

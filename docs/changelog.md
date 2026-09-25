@@ -6,6 +6,26 @@ history is already the full changelog and needs no duplicate here. An entry
 earns its place by answering a question a future reader would otherwise ask of
 [the design](design.md) and find no answer to.
 
+## 2026-09-25 — `spec-hygiene` widens from call-site lists to any claim a spec makes
+
+Two briefs shared one mechanism: every artifact downstream of a spec is a
+faithful transformation of it, so a review of the returned work confirms only
+conformance, and a wrong spec passes every layer. `spec-hygiene` now covers
+three claims queried rather than carried: a call-site list by grep, a claimed
+duplicate by `diff` (with substantive differences declared and the replacement
+scoped to the block's line range), and a contract sentence by the case table of
+whoever enumerates the cases, since it reaches the docstring verbatim and code
+review reads code against it. The brief's writer-side rule, to check a contract
+as a standalone proposition, was dropped as a restatement of being correct.
+
+Its dispatch incident was aimed at `directive-writing` and lands in
+`contracts-and-size` instead: a directive specifying `line.strip()` stated a
+function body where a contract over inputs belonged, so it is a second measured
+case of the contract form catching what code hides. The general form it offered
+without a home — a fix narrowing a guard by normalizing re-opens the defect one
+step along — joins `non-vacuous-negatives` beside the decoy rule, whose shape it
+is: the row past the boundary is the one where the two implementations disagree.
+
 ## 2026-09-25 — `removing-cleanly` absorbs the reference-audit fact
 
 A brief proposed generalizing the derived-figures paragraph from figures to

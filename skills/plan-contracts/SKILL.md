@@ -43,9 +43,10 @@ the override stick; the next upgrade overwrites it without a word.
 - [Contracts and size](references/contracts-and-size.md) — the ~400-line
   contract as the split signal, how to measure a line cap honestly instead of
   gaming it, and cutting duplicated rationale before splitting an over-cap plan.
-- [Spec hygiene](references/spec-hygiene.md) — a spec that enumerates its own
-  call sites is answering conformance, not completeness; re-derive the list by
-  grep before checking anything against it.
+- [Spec hygiene](references/spec-hygiene.md) — a spec's claims about the corpus
+  or its cases are queries to run, since every review downstream checks only
+  conformance to them: grep a call-site list, diff a claimed duplicate, check a
+  contract sentence against its case table.
 - [Before you plan](references/before-you-plan.md) — run the existing pipeline
   against real data first, since fixtures written by the same hand as the code
   cannot disprove its assumptions; and load the skill governing any artifact the
