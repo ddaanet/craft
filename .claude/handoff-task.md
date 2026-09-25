@@ -1,3 +1,3 @@
 ## Current task
 
-Check craft's release readiness with `ddaa:preflight`. Since the last release, the `attribution` check was removed, `wikilink`, `private-reference` and `broken-link` failures gained line numbers, and dogfooding fed new rules back into `removing-cleanly`, `plan-contracts` and `directive-writing`.
+Triaging craft's inbox one group at a time, grouped by the skill node each brief targets, so only one topic is open at once. The test-discipline and removing-cleanly groups have landed; plan-contracts is next. Per group: read every brief critically against the shipped node, present per-item rulings with defaults, then edit, run `just precommit`, add a changelog entry, move each spent brief to `plans/<its own dateline>-<name>.md`, and commit. A brief spanning groups moves only when its last section is spent.
