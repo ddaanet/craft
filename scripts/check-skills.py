@@ -78,6 +78,7 @@ SOURCE_FACTS = frozenset(
         "no-transition-special-cases",
         "plan-contracts-not-full-code",
         "precommit-line-caps",
+        "reference-audit-after-a-move",
     },
 )
 

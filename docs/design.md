@@ -165,11 +165,11 @@ runtime parses. *Rejected: a bespoke frontmatter parser* — more code to be wro
 than the rule is worth.
 
 **D-4 — retired source facts are named in the checker.** The twenty facts these
-skills were written from, plus two retired to other venues, are enumerated in
-`SOURCE_FACTS`. Every one is gone from the store, so a surviving mention in a
-body is a dangling private reference rather than a citation.
-*Rejected: matching any `*.md` filename* — it would flag legitimate references
-to shipped files.
+skills were written from, two retired to other venues, and one absorbed into a
+skill after release are enumerated in `SOURCE_FACTS`. Every one is gone from the
+store, so a surviving mention in a body is a dangling private reference rather
+than a citation. *Rejected: matching any `*.md` filename* — it would flag
+legitimate references to shipped files.
 
 **D-5 — markdown skills only.** No hooks, scripts, agents or commands as plugin
 components. The guidance is prose that an agent reads at a moment; nothing in it

@@ -1,6 +1,6 @@
 ---
 name: removing-cleanly
-description: "Cut a capability in one pass — helpers, constants, fixtures, absence-guards, docs and inbound references — and fix forward instead of branching for a transition in tooling you also control. Use when removing a feature, retiring a file, deleting a module, or handling a version transition in your own tooling. Not for migrations at a boundary with users you do not control, which need real migration handling."
+description: "Cut a capability in one pass — helpers, constants, fixtures, absence-guards, docs and inbound references — and fix forward instead of branching for a transition in tooling you also control. Use when removing a feature, retiring a file, deleting or splitting a module, renaming a symbol other files cite, or handling a version transition in your own tooling. Not for migrations at a boundary with users you do not control, which need real migration handling."
 ---
 
 # Removing cleanly
@@ -23,6 +23,15 @@ guards against its return.
 **How to apply:** after removing a feature, grep for its whole machinery —
 helpers, constants, fixtures, tests, docs, recipes, and inbound references — and
 cut each. Convert any absence-guard into the positive contract of what remains.
+
+**Sweep the whole tree, never the diff under review**, and classify every hit
+accurate or stale against where the thing lives now, if anywhere. A sweep scoped
+to the change inherits its blind spot: the prose that survives a split is the
+prose nobody re-read, so older drift sits in the same files and is wrong whether
+or not this change made it so. State the classification per hit — "the rest are
+fine" is where the misses hide. Measured: two independent reviews of a module
+split each reported six stale references, and a whole-tree grep found nine,
+three of them left by an earlier split.
 
 **A grep for the name misses every figure derived from it.** "Eleven checks",
 "thirty tests", a file total: none contains the removed thing's name, so each

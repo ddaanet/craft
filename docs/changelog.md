@@ -6,6 +6,24 @@ history is already the full changelog and needs no duplicate here. An entry
 earns its place by answering a question a future reader would otherwise ask of
 [the design](design.md) and find no answer to.
 
+## 2026-09-25 — `removing-cleanly` absorbs the reference-audit fact
+
+A brief proposed generalizing the derived-figures paragraph from figures to
+forms: pointer verbs, caller enumerations. Dropped. Its stale caller count was a
+numeral the change moved, which the paragraph already covers, and its drifted
+pointer verb was a `directive-writing` defect the sweep happened to find, not a
+dependent of the removal. Its open question landed instead: the shared-tier fact
+saying a stale-reference sweep runs over the whole tree with every hit
+classified, never over the diff under review, fires at the moment this skill
+does and now lives in it. The fact is retired and joins `SOURCE_FACTS`, and the
+description gains splitting a module and renaming a symbol, the moments the fact
+fired on that no removal trigger named.
+
+A second brief, on checking a dedup's premise by `diff`, was aimed here and
+belongs to `plan-contracts`: its trigger is a plan claiming two passages are the
+same, and its rule is `spec-hygiene`'s claim-about-the-corpus rule with `diff`
+as the query. It waits in the inbox for that group.
+
 ## 2026-09-24 — three `test-discipline` briefs, and the matrix-staleness rule rejected
 
 Two briefs proposed that a mutation matrix describes the bytes it ran against:
