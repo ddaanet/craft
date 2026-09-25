@@ -1,6 +1,6 @@
 ---
 name: plan-contracts
-description: "Size a plan or spec to the executable work it carries and state each task as a contract rather than full code, so the document stays reviewable and its enumerations stay true. Use when writing, sizing, splitting or reviewing an implementation plan, spec or design task, when another plan-writing skill asks for complete code in every step, or when a line-count cap on a plan, PR or source file is in play. Not for the design doc itself, which is a living doc rather than a frozen plan."
+description: "Size a plan or spec to the executable work it carries and state each task as a contract rather than full code, so the document stays reviewable and its enumerations stay true. Use when writing, sizing, splitting or reviewing an implementation plan, spec or design task, when another plan-writing skill asks for complete code in every step, when collapsing passages claimed to be duplicates, or when a line-count cap on a plan, PR or source file is in play. Not for the design doc itself, which is a living doc rather than a frozen plan."
 ---
 
 # Plan contracts

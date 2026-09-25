@@ -61,7 +61,9 @@ cause lived in the fixture, which is the part review skims.
 
 The brief that dispatched the work misdescribes the code in the same way a
 hand-listed enumeration does — conformance passes clean against it. The
-`plan-contracts` skill covers re-deriving those enumerations by grep.
+`plan-contracts` skill covers reading a spec's claims as queries: re-deriving an
+enumeration by grep, and stating a dispatch as a contract over inputs rather
+than as the function body.
 
 ## For each test guarding non-trivial logic
 

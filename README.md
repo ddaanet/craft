@@ -23,10 +23,10 @@ docs.
 | skill | use it when |
 |---|---|
 | `design-doc-writing` | creating, updating, reviewing, splitting or auditing a design doc, spec or architecture reference — or a decision, requirement or rejected alternative needs recording |
-| `plan-contracts` | writing, sizing, splitting or reviewing an implementation plan or spec — or a line-count cap on a plan, a PR or a source file is in play |
+| `plan-contracts` | writing, sizing, splitting or reviewing an implementation plan or spec, collapsing passages claimed to be duplicates — or a line-count cap on a plan, a PR or a source file is in play |
 | `test-discipline` | writing, reviewing or dispatching tests, planning a red step, or inherited or subagent-authored tests came back green |
 | `directive-writing` | authoring agent-facing text: a hook's `additionalContext`, a probe directive, an instructing error message, a deny reason, a code comment |
-| `removing-cleanly` | removing a feature, retiring a file, deleting a module, or handling a version transition in tooling you also control |
+| `removing-cleanly` | removing a feature, retiring a file, deleting or splitting a module, renaming a symbol other files cite, or handling a version transition in tooling you also control |
 
 Each one also says what it is *not* for, and means it:
 

@@ -16,7 +16,9 @@ duplicate by `diff` (with substantive differences declared and the replacement
 scoped to the block's line range), and a contract sentence by the case table of
 whoever enumerates the cases, since it reaches the docstring verbatim and code
 review reads code against it. The brief's writer-side rule, to check a contract
-as a standalone proposition, was dropped as a restatement of being correct.
+as a standalone proposition, was dropped as a restatement of being correct. The
+description gains collapsing passages claimed to be duplicates, the moment the
+`diff` rule is for and one no plan-writing trigger names.
 
 Its dispatch incident was aimed at `directive-writing` and lands in
 `contracts-and-size` instead: a directive specifying `line.strip()` stated a

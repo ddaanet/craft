@@ -29,14 +29,16 @@ the other says, which is exactly when nobody reads the other.
 **Diff the passages before treating them as copies, and state what came back**,
 even when it is "byte identical". Classify each difference as wording or
 substance: a substantive one becomes a declared decision with a rationale, never
-a side effect of which copy survived. Then scope the replacement to the
-duplicated **block** by its line range, and name what in the enclosing section
-stays. Measured instance: an outline proposing to collapse two copies of a
-routing block asserted they "state the same decision" and scoped the change as
-"the section, replaced by a pointer". The copies routed the same input
-differently, and the enclosing section also decided whether an outline sufficed
-— a question the pointer would have deleted. A reviewer who diffed found both;
-the author, who had read each copy for plausibility, found neither.
+a side effect of which copy survived. The rationale comes from both copies'
+history, not from which one reads as current: drift between co-maintained copies
+runs in either direction. Then scope the replacement to the duplicated **block**
+by its line range, and name what in the enclosing section stays. Measured
+instance: an outline proposing to collapse two copies of a routing block
+asserted they "state the same decision" and scoped the change as "the section,
+replaced by a pointer". The copies routed the same input differently, and the
+enclosing section also decided whether an outline sufficed — a question the
+pointer would have deleted. A reviewer who diffed found both; the author, who
+had read each copy for plausibility, found neither.
 
 ## A contract line is source text
 
