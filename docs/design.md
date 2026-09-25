@@ -1,21 +1,11 @@
 # craft — design
 
-Status: released. Five skills ship at v0.1.0, listed in the `ddaanet`
-marketplace. Verified against: `56bfebf` (2026-09-17).
+**Do not re-litigate** — the hub/node split, the 200/400 line caps, the
+formatter-before-checker ordering, and markdown-skills-only as the component
+set. All are settled below with their reasons.
 
 This document is the living design: what craft is, how it is built, and why. How
 it got here is [the changelog](changelog.md).
-
-## Now
-
-- **Focus** — whether the skills fire when they should. All five have now met
-  live work, and each run fed its gaps back into the skill; the changelog has
-  what each showed. What no run can settle by editing a body is triggering
-  (L-2): `directive-writing` names dispatch text in its description and did not
-  fire on two dispatch prompts written in the session that dogfooded it.
-- **Do not re-litigate** — the hub/node split, the 200/400 line caps, the
-  formatter-before-checker ordering, and markdown-skills-only as the component
-  set. All are settled below with their reasons.
 
 ## Status legend
 

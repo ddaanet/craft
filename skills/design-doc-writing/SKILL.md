@@ -67,9 +67,9 @@ the fix was queued as a review finding as though the figure were the defect.
   real loader cutoff rather than a soft limit, so retiring entries is a periodic
   pass" survives every future measurement; "the index is 31.7 KB and truncated"
   does not.
-- **State that has to live somewhere lives where state lives** — the doc's
-  status stamp, a task frame, a report. Those are read as of-a-moment by
-  construction; the design record is not.
+- **State that has to live somewhere lives where state lives** — a task frame, a
+  date-stamped plan, a report. Those are read as of-a-moment by construction;
+  the design record is not.
 - **An entry existing only to report that a mutable quantity is out of bounds
   gets retired, not corrected.** Its content was always a task, and the task
   belongs to whatever pass owns it.
@@ -77,8 +77,9 @@ the fix was queued as a review finding as though the figure were the defect.
 ## The nodes
 
 - [The state layer](references/state-layer.md) — the six sections say what the
-  system is and why, never what is true right now or how much to trust it. Five
-  additions carry that, and a cold reader has nothing without them.
+  system is and why, never how much to trust each claim or what is settled. Four
+  additions carry that, and one test decides which state claims may stay: the
+  edit that falsifies a claim has to touch it.
 - [Splitting an oversized doc](references/splitting-an-oversized-doc.md) —
   trimming has a hard ceiling, so past it the fix is a cut, and which cut
   depends on a measurement taken first.

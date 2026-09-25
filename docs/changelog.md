@@ -6,6 +6,23 @@ history is already the full changelog and needs no duplicate here. An entry
 earns its place by answering a question a future reader would otherwise ask of
 [the design](design.md) and find no answer to.
 
+## 2026-09-25 — the state layer drops the status stamp and the resume pointer
+
+`design-doc-writing` no longer asks a design doc for a `Status:` line, a
+`Verified against: <commit>` stamp or a Focus / Next section. A brief from
+another repo showed all three stale two releases on, and this doc had the same
+fault: it said v0.1.0 with v0.2.0 tagged. The skill already argued that
+refreshing a mutable figure schedules the same correction again, while naming
+the stamp as where such state belongs; the stamp was that argument's own
+counterexample. The node now states the test that decides which state stays —
+the edit that falsifies a claim has to touch it — so per-requirement `Done`
+markers and their pins stay, and release state, next action and anchor commit go
+to tags, the task frame or a plan, and `git log`. `Do not re-litigate` survives
+as a line under the title, since it names decisions rather than state.
+*Rejected: keeping the stamp for projects without tags or a task frame* — a
+dated plan is always available, and the rot does not depend on whether another
+home exists; *a refresh rule* — the correction the skill already rejects.
+
 ## 2026-09-25 — `directive-writing` splits out its comments node, and the cut reaches plan vocabulary
 
 The comments cut now covers runbook item and slice ids and `file:NNN` line
