@@ -73,35 +73,12 @@ Plan-scoped artifacts — a recall artifact under `plans/<job>/`, a dispatch
 prompt naming paths — are the channel for by-path references. They live with the
 plan, not with the plugin.
 
-## Code comments take the same cut
+## Comments and changelogs
 
-Against a different bar:
-**what a maintainer needs in order to change the code safely.** Where a repo
-keeps its design history in a changelog, comments drift into retelling it — the
-defect that motivated the shape, what an earlier draft said, a clause defending
-the choice against an alternative.
-
-The rule, the constraint and the contract stay; the story, the incident and the
-self-commentary belong to the changelog, which is where a reader who wants them
-is already headed. Rationale a maintainer needs in order not to break the code
-is not narration: "the arrays expand this way because bash 3.2" stays.
-
-"Remove narration" is the instruction that makes the cut.
-
-## One change, four artifacts, one telling
-
-A change that touches code, tests, a changelog entry and a design doc invites
-writing the incident into all four, and each copy reads as reasonable in
-isolation.
-
-- The **changelog** gets the narrative — it is the write-time record.
-- The **design doc** gets the standing rule, in present tense.
-- The **code and test comments** get the constraint alone.
-
-Watch for a signature phrase recurring across them: "load-bearing", "the shape
-of", "by construction" carry real meaning the first time and become verbal tics
-by the fourth, at which point they read as emphasis substituting for content.
-Grep the diff for recurring favourites before committing.
+[Comments and changelogs](references/comments-and-changelogs.md) — the same cut
+applied to code comments against a maintainer's bar, plan ids and line numbers
+included; one change told once across code, tests, changelog and design doc; and
+a pre-commit sweep of the staged diff for plan vocabulary.
 
 ## How to apply
 

@@ -122,7 +122,7 @@ component paths — skills are discovered from `skills/`.
 - **`skills/<name>/SKILL.md`** — the hub, read on every invocation of that
   skill.
 - **`skills/<name>/references/*.md`** — nodes, read only when the hub sends the
-  reader to one. Two skills are hub-only, having no material that splits.
+  reader to one. One skill is hub-only, having no material that splits.
 - **`scripts/check-skills.py`** — maintainer tooling, not a shipped component.
   Ten blocking checks, grouped as frontmatter shape (`check_frontmatter`), body
   hygiene and caps (`check_body`), and reachability (in `main`).

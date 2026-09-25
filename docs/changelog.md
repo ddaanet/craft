@@ -6,6 +6,23 @@ history is already the full changelog and needs no duplicate here. An entry
 earns its place by answering a question a future reader would otherwise ask of
 [the design](design.md) and find no answer to.
 
+## 2026-09-25 — `directive-writing` splits out its comments node, and the cut reaches plan vocabulary
+
+The comments cut now covers runbook item and slice ids and `file:NNN` line
+numbers: the id names an artifact that lives with the plan while the code
+outlives it, and the line number goes stale at the next edit. The brief's
+explanation of why subagents write them — the dispatch as the agent's vocabulary
+for *why* — was dropped as an unchecked mechanism claim; only the observation
+ships. Its sweep was rewritten before landing: the brief's pattern matched bare
+`slice` (array slicing), caught only `.bats` line numbers and named a `memory/`
+path the hygiene gate refuses; the shipped one scans the staged diff's added
+lines and was checked against a fixture of five bad and four clean lines.
+
+The addition would have pushed the hub past its 200-line cap, so the two comment
+sections — the maintainer's bar and one telling across four artifacts — moved to
+`references/comments-and-changelogs.md` with the sweep, a moment of their own at
+pre-commit review. Only `removing-cleanly` is now hub-only.
+
 ## 2026-09-25 — `spec-hygiene` widens from call-site lists to any claim a spec makes
 
 Two briefs shared one mechanism: every artifact downstream of a spec is a

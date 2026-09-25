@@ -70,8 +70,8 @@ A skill is a **hub** with **opt-in nodes**.
 - `skills/<name>/SKILL.md` — the hub, read on every invocation. Capped at
   200 lines, because every invocation pays for it.
 - `skills/<name>/references/*.md` — nodes, read only when the hub sends you
-  to one. Capped at 400 lines. Two of the five skills are hub-only, having
-  no material that splits.
+  to one. Capped at 400 lines. One of the five skills is hub-only, having no
+  material that splits.
 
 Both caps are measured only after the prose is hard-wrapped at 80 columns,
 because an unwrapped file games any line count. `just precommit` runs the
