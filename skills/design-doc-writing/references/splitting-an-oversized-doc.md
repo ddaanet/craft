@@ -129,6 +129,17 @@ over the cap (400 lines) and any pointer that stops resolving. `rumdl` with
 MD013 reflow at 80 columns is the wrapper that does this without changing what
 the markdown renders to.
 
+Establish that claim for any markdown re-serializer — a wrapper, a formatter, a
+converter — by rendering every file to HTML with cmark-gfm before and after, and
+diffing the results whitespace-collapsed. A text diff, even token-level or
+whitespace-insensitive, passes changes that alter rendering: a line broken
+before a `>&2` or a `+ …`, in plain prose or inside a code span, so it opens a
+blockquote or a list item; a sentence split inside a heading or a table cell; a
+code-span edge space dropped. The render diff also surfaces markdown that was
+already malformed — a three-backtick fence nested inside another — which every
+re-serializer reinterprets differently. That is a fix to the source, not a mark
+against the tool.
+
 ## The class that leaks is pointers to open work
 
 Not argument and not mechanism: those have sections that carry them into a node

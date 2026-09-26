@@ -104,9 +104,10 @@ caps, and — because every skill here was cut from a private memory store —
 that no shipped body carries a `[[wikilink]]` or a private path that resolves
 only on the author's machine.
 
-`.bin/claude` launches Claude Code with `--plugin-dir` pointed at the repo
-root, so a dev session runs the in-tree plugin rather than an installed copy.
-`direnv` puts it on `PATH` via `.envrc`.
+`.bin/claude` copies the manifest and `skills/` to `dist/plugin/` and launches
+Claude Code with `--plugin-dir` pointed at that copy, so a dev session runs the
+in-tree plugin rather than an installed one. A skill edit reaches a session at
+its next launch. `direnv` puts the launcher on `PATH` via `.envrc`.
 
 `plugin-dev/` is a vendored subtree of the shared release toolkit. Never
 hand-edit it: fix upstream, cut a `dist-` tag, and re-pull with

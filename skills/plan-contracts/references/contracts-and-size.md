@@ -41,6 +41,17 @@ the cap, split into multiple focused documents. Never keep the count down by
 cramming content onto 150–300-character single lines: long unwrapped lines game
 the number while destroying reviewability, the thing the cap protects.
 
+"Wrap first" means a pass that re-fills every paragraph, not one that only
+breaks lines over the column. A wrapper in the second mode leaves prose
+hand-wrapped narrower exactly as it is, and prose at 60 columns runs about 1.3x
+the line count of the same words at 80 — so the count is not comparable across
+files, and a file that passes may never have been normalized at all. rumdl
+behaves this way by default: `reflow = true` alone only breaks long lines, and
+`reflow-mode = "normalize"` is what re-fills. The same goes for a crammed file:
+most of its post-reflow count comes from the reflow, not from new words, so take
+any ceiling from post-reflow counts and put the formatter ahead of the line
+guard in the same gate.
+
 Wrap honestly, measure with `wc -l`, split on a clean seam if over — one corpus
 plan split three ways on its local-vs-network seam. Splitting is explicitly
 sanctioned by such caps ("anything longer gets split"). Preserve all information

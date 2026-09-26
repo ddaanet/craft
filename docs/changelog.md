@@ -6,6 +6,17 @@ history is already the full changelog and needs no duplicate here. An entry
 earns its place by answering a question a future reader would otherwise ask of
 [the design](design.md) and find no answer to.
 
+## 2026-09-26 — the dev launcher loads a copy of the plugin
+
+`.bin/claude` used to pass the repo root as `--plugin-dir`. Claude Code treats
+every path under a `--plugin-dir` root as a sensitive file, so every Edit or
+Write in the tree asked, auto mode's classifier gave no verdict on any of them,
+and a dev session could not edit its own repo. The launcher now copies the
+manifest and `skills/` to a gitignored `dist/plugin/` at each launch and points
+there, at the price of a skill edit reaching only the next session. This is a
+stopgap: the shared toolkit is building a dist-copy launcher that syncs on edit,
+and craft's shim goes when that ships.
+
 ## 2026-09-25 — the state layer drops the status stamp and the resume pointer
 
 `design-doc-writing` no longer asks a design doc for a `Status:` line, a

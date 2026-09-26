@@ -1,3 +1,5 @@
 ## Current task
 
-Triaging craft's inbox one group at a time, grouped by the skill node each brief targets, so only one topic is open at once. The test-discipline, removing-cleanly, plan-contracts and directive-writing groups have landed; design-doc-writing is next. Per group: recall memories and load the matching craft skills and nodes before ruling, read every brief critically against the shipped node, present per-item rulings with defaults, then edit, sweep the whole tree for inbound references the edit makes stale (hubs, README's skills table, sibling skills' pointers, README and design-doc claims about which skills are hub-only), run `just precommit`, add a changelog entry, move each spent brief to `plans/<its own dateline>-<name>.md`, and commit. A brief spanning groups moves only when its last section is spent.
+Triage `inbox/2026-09-26-brief-live-guard-probe-register.md`, which arrived from another repo and has not been read. Per D-8, verify its claims against the shipped skills, surface its recommendation as a choice rather than acting on it, and move it to `plans/` once acted on.
+
+The dev launcher now loads a copy of the plugin from `dist/plugin/`, refreshed at launch, so a skill edit reaches only the next session.

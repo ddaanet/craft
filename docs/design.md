@@ -60,12 +60,17 @@ launcher. It is a required step rather than a suggestion, and it carries no
 cache or sentinel. *Done* · Where · pinned by: the `precommit` and `format-docs`
 recipes in `justfile`.
 
-**FR-8 — the in-tree plugin is active in a dev session.** `.bin/claude` prepends
-`--plugin-dir <repo root>` and chains to the next `claude` on `PATH` with its
+**FR-8 — the in-tree plugin is active in a dev session.** `.bin/claude` copies
+`.claude-plugin/` and `skills/` to a gitignored `dist/plugin/`, prepends
+`--plugin-dir <that copy>` and chains to the next `claude` on `PATH` with its
 own directory stripped, passing the stripped `PATH` through the `exec`. `.envrc`
-adds it last so it wins over `.gitlore/bin`. *Done* · Where · pinned by:
-`.bin/claude`, the final `PATH_add` in `.envrc`, and `shellcheck` in
-`precommit`.
+adds it last so it wins over `.gitlore/bin`. Not the repo root: Claude Code
+treats every path under a `--plugin-dir` root as a sensitive file, so with the
+root loaded every Edit or Write in the tree asks, and auto mode's classifier
+gives no verdict. The copy is a stopgap until the toolkit's dist-copy launcher
+ships; until then a skill edit reaches a session only at its next launch. *Done*
+· Where · pinned by: `.bin/claude`, the final `PATH_add` in `.envrc`, and
+`shellcheck` in `precommit`.
 
 **FR-9 — releases go through the vendored toolkit.** `plugin-dev/release.just`
 provides `release`, `resume-release` and `check-version`; craft supplies
@@ -144,8 +149,25 @@ reader there, so the two are not the same budget. *Rejected: one uniform cap.*
 has normalized the prose, otherwise a file with 300-character lines passes a cap
 it plainly violates. rumdl in `normalize` mode re-joins each paragraph before
 wrapping, so the count reflects the prose rather than where an earlier edit left
-the breaks. *Rejected: counting characters instead of lines* — it stops matching
-what a reader takes in at one go, which is what the cap is about.
+the breaks; its default mode only breaks lines over the column, leaving narrower
+hand-wrapping as it is. *Rejected: counting characters instead of lines* — it
+stops matching what a reader takes in at one go, which is what the cap is about.
+
+rumdl is the wrapper because it alone left rendering untouched. Measured by
+cmark-gfm render diff over ~100 files of design docs and plans, on rumdl 0.2.74
+(craft pins 0.2.60), rumdl showed zero rendering changes on well-formed input,
+left emphasis markers alone, and was idempotent. *Rejected:*
+
+- **prettier** `--prose-wrap always` — rewrites `*em*` to `_em_` with no option
+  to keep it, and broke a bold whose first word was a code span starting `**`.
+- **dprint** — keeps emphasis, but dedents fenced code to the fence's indent and
+  strips a one-sided space inside a code span.
+- **mdformat** (+gfm) — turns `---` rules into underscores and renumbers ordered
+  lists `1. 1. 1.`, both hardcoded.
+- **mdslw**, **remark** with `@webpro/remark-wrap-prose` — break inside code
+  spans, headings and table cells, and start a wrapped line with `+ …`, which
+  re-parses as a list item; remark is not idempotent either.
+- **pandoc** `-t gfm --columns` — drops code fences and escapes `#` and `**`.
 
 **D-3 — a quoted description is required, though the runtime does not need
 one.** `yaml.safe_load` rejects an unquoted scalar containing `: `, which Claude
