@@ -6,6 +6,21 @@ history is already the full changelog and needs no duplicate here. An entry
 earns its place by answering a question a future reader would otherwise ask of
 [the design](design.md) and find no answer to.
 
+## 2026-09-28 — `test-discipline` stays out of live probes
+
+A brief proposed extending the pairing rule in `non-vacuous-negatives` to a
+guard verified by a live probe — a hook, a sandbox rule, a subagent's
+containment — with a must-allow command beside the must-block one, a probe that
+is harmless if the guard is dead, and reading the probe's tool result rather
+than the agent's report of it. Rejected. Pairing in that node exists because a
+suite's negative goes stale silently as the code moves; a probe runs once
+against the system as it is, and a guard broken closed announces itself by
+refusing legitimate work. The one non-obvious claim, that an agent cannot
+witness its own containment, is dispatch evidence rather than test evidence, and
+stays in the memory fact about frontmatter hooks, keyed to the symptom that
+leads a session to it. The skill already sends a hand-run validation to the
+suite rather than teaching how to run one.
+
 ## 2026-09-26 — the dev launcher loads a copy of the plugin
 
 `.bin/claude` used to pass the repo root as `--plugin-dir`. Claude Code treats
