@@ -93,39 +93,23 @@ None. The plugin ships markdown and reads nothing outside the session.
 ## Working on craft itself
 
 `just precommit` is the gate and is required before every commit. It
-hard-wraps `skills/`, `plans/` and `docs/` at 80 columns, runs
-`scripts/check-skills.py` over the tree, runs the checker's own test suite,
-parses the manifest and shellchecks the dev launcher. It takes a few seconds,
-cheap enough to carry no cache and no sentinel.
+hard-wraps the Markdown prose at 80 columns, then checks the skills, runs the
+skill checker's own test suite and parses the manifest; those three skip
+themselves while none of the files they read has changed since their last pass.
 
-`scripts/check-skills.py` enforces ten blocking checks: frontmatter shape,
-description size and quoting, node reachability, link validity, the line
-caps, and — because every skill here was cut from a private memory store —
-that no shipped body carries a `[[wikilink]]` or a private path that resolves
-only on the author's machine.
-
-`.bin/claude` copies the manifest and `skills/` to `dist/plugin/` and launches
-Claude Code with `--plugin-dir` pointed at that copy, so a dev session runs the
-in-tree plugin rather than an installed one. A skill edit reaches a session at
-its next launch. `direnv` puts the launcher on `PATH` via `.envrc`.
+`just dogfood` copies the shipped files to `dist/plugin/`, and the `claude`
+shim `direnv` puts on `PATH` launches Claude Code with that copy as its plugin
+dir, so a dev session runs the in-tree plugin rather than an installed one. A
+skill edit reaches a session after the next `just dogfood` and relaunch.
 
 `plugin-dev/` is a vendored subtree of the shared release toolkit. Never
 hand-edit it: fix upstream, cut a `dist-` tag, and re-pull with
 `just update-plugin-dev`.
 
-## Further reading
-
-- [`docs/design.md`](docs/design.md) — what craft is, how it is built, and
-  why: requirements, architecture, decisions with their rejected
-  alternatives, and the known limitations.
-- [`docs/changelog.md`](docs/changelog.md) — design-significant changes only.
-  Git history is already the full changelog.
-- [`plans/`](plans) — what this repo plans for itself, and the spent briefs
-  that caused past changes.
-- [`inbox/`](inbox) — briefs arriving from other repositories, still
-  untriaged. See [`inbox/README.md`](inbox/README.md).
-- [`CLAUDE.md`](CLAUDE.md) — instructions for an agent working on the plugin
-  itself.
+Development: what craft is, how it is built, and why — requirements,
+architecture, decisions with their rejected alternatives, and the known
+limitations — is in the
+[design document](https://github.com/ddaanet/craft/blob/main/docs/design.md).
 
 ## License
 

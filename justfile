@@ -1,12 +1,16 @@
 import 'plugin-dev/release.just'
+import 'plugin-dev/gates.just'
 
-precommit: format-docs
-    #!/usr/bin/env bash
-    set -euo pipefail
+# Tool versions no lockfile pins: the venv's python3 and the system jq.
+export PLUGIN_DEV_GATE_TOOLS := "python3 --version\njq --version"
+
+precommit: format-docs check-refs
+    #!{{ plugin_dev_gate_prolog }}
+    sentinel-guard precommit .claude-plugin skills scripts tests docs pyproject.toml uv.lock .gitignore
     scripts/check-skills.py
     pytest tests/ -q
     jq . .claude-plugin/plugin.json >/dev/null && echo "jq: plugin.json parses"
-    shellcheck .bin/claude && echo "shellcheck: .bin/claude clean"
+    record-sentinel
 
 # Hard-wrap prose at 80 columns. The line caps in check-skills.py are only
 # measurable after this runs: an unwrapped file games any line count.
