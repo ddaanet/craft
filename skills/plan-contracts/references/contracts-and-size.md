@@ -10,17 +10,17 @@ context management, and a file that reaches it usually holds cohesive content to
 spin off, so split on that seam rather than arguing the overage. On a plan or a
 PR, do not block a commit or agonize over exceeding it in local self-review.
 
-Contract size predicts implementation size: when a single spec or plan task's
-**contract** runs past ~400 lines, its implementation almost certainly
-overshoots the PR's size cap too. Observed at roughly 3.5×, in lines — a
-~400-line contract producing a 1385-line implementation.
+Contract size predicts implementation size: a single spec or plan task's
+implementation runs several times the size of its **contract**. Measured
+instance, in lines: roughly 3.5×, a ~400-line contract producing a 1385-line
+implementation.
 
 Catching the overshoot at spec-review time is cheap; discovering it at
 PR-slicing time is expensive re-work. So during spec or plan review, treat a
-single task's contract approaching the size cap as the signal to
-**split that task**. Weight contract length as a predictor of implementation
-length in the update-vs-split decision; do not judge the contract's size in
-isolation.
+single task whose contract, scaled by that ratio, would overshoot the PR's size
+cap as the signal to **split that task**. Weight contract length as a predictor
+of implementation length in the update-vs-split decision; do not judge the
+contract's size in isolation.
 
 Stating a step as a contract also catches errors that writing it as code hides.
 One measured case: a task's test had asserted a fixed surviving line count,
@@ -52,9 +52,11 @@ no hard wrap there.
 
 ## Before splitting, cut what the plan duplicates
 
-An over-cap plan has two sanctioned escapes, a split and an exemption, and both
-are wrong when the overage is duplication: a split files the redundancy in two
-documents, an exemption keeps it whole. The duplication that hides best is the
+An over-cap plan has two sanctioned escapes under its soft cap, a split and a
+bounded overage, and both are wrong when the overage is duplication: a split
+files the redundancy in two documents, an overage keeps it whole. Under root
+`plans/` a `size.exempt` entry is not one of them: `check-size` skips that
+directory and refuses an entry there. The duplication that hides best is the
 plan pre-writing the code comments it commissions.
 
 **Where a plan and the comment it commissions would both carry a rationale, the
@@ -70,7 +72,7 @@ each also the subject of a comment the plan told the implementer to write.
 Compressed to 376 lines, it lost no content, changed no decision, and no longer
 needed a split.
 
-Run this before reaching for a split or an exemption, in descending yield:
+Run this before reaching for a split or an overage, in descending yield:
 
 1. Hoist a failure mode recurring across sections into one short list the
    sections reference.

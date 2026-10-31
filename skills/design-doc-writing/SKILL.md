@@ -29,9 +29,9 @@ and format: the format is settled, and it is this one.
 
 The living design answers **what, how and why**, in the present tense: what the
 system does, how it is built, why it is built that way. Git history answers
-**how we got here**, through commit bodies and `git log -- <path>`. A project
-with a residual need for history runs its own targeted `git log`; the doc names
-no file for it.
+**how we got here**, through commit bodies and `git log --follow -- <path>`. A
+project with a residual need for history runs its own targeted `git log`; the
+doc names no file for it.
 
 **The why splits in two.** *Reason* is why a decision stands: the trade-off
 weighed, the alternative ruled out, the constraint. A reader of the design needs
@@ -45,9 +45,9 @@ Write a body for a design-significant change — a decision reversed, a subsyste
 built or torn down, a requirement added or dropped, a rationale that turned out
 false. A point-fix needs none.
 
-**A decision that is inverted or retired is deleted from the doc.** The commit
-that deletes it says why, and the diff keeps the text. A rejected alternative
-that makes sense on its own is a decision and stays.
+**A decision that is inverted is deleted from the doc.** The commit that deletes
+it says why, and the diff keeps the text. A rejected alternative that makes
+sense on its own is a decision and stays.
 
 That split decides where text goes when a doc is cleaned up. Implementation
 status ("slice 3-ii done 2026-07-21, 37 cases in …"), `(implemented 2026-07-15)`
