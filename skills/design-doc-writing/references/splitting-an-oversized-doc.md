@@ -66,33 +66,27 @@ wrapped line.
 Collapse restatements before cutting anything. The tell for a hub past its floor
 is a section that restates a node instead of summarizing it; on one project two
 sections both restating the same install-time node became one paragraph. That is
-noise reduction and stands on its own — the cut below is the structural move.
+noise reduction and stands on its own — the audit below is the structural move.
 
-The last seam is the `## Design Decisions` heading itself, and it is a section
-boundary that already exists. Everything above it says what the system is and
-how it is built, read while building or debugging one component; everything
-below — the decision groups and their *Rejected* lines — is the argument index,
-read whole when weighing or adding a decision. So the conclusions move whole
-into `docs/decisions.md`: one line per decision and every rejected alternative
-by name, grouped by the node that argues them, verbatim. The two sections become
-pointer stubs, the shape §Changelog already has toward `changelog.md`, and the
-hub keeps its six sections.
+The last lever is inside the conclusion bullets themselves. A bullet that has
+grown carries argument alongside its conclusion: the mechanism, the bug that
+motivated it, the "because" clause, the measurement. That material is read when
+weighing or changing that one decision, which is a need-time seam; the
+conclusion is read on every trip. So once every mechanism section has moved,
+audit each bullet and move every clause that argues rather than concludes into
+the node that owns the decision, leaving the conclusion, its invariant and the
+pointer. The floor is then one line per decision with no argument in it.
+Measured on one project, that pass over 67 hub bullets landed the hub under its
+cap.
 
-This cut does not pay the usual way. The saving elsewhere is the reader skipping
-most pointers, and nobody skips a decisions index — they read it whole, which is
-the property the coverage rule above demands. What it buys is that they read it
-whole *only* when weighing a decision, instead of carrying it on every trip into
-a component. Take it as the lever at the floor rather than a shape every design
-doc starts in. Raising the hub's own cap instead is not the move: the split
-preserves the read-whole property at a third of the size. Measured on one
-project, hub 400 → 279 lines with the index at 133.
-
-Once a doc has taken this cut, its checker follows the conclusions rather than
-the hub — every conclusion line and every delegation is read from the index, a
-missing index is an error the way a missing hub is, and hub citations are still
-checked against what the index and the nodes define. No check wants a conclusion
-in both files, so this retargets one constant rather than creating a two-file
-hub.
+The conclusions themselves never leave the hub — neither one by one into each
+node's opening, as above, nor wholesale into a decisions file the hub points at.
+Together they are the system overview, and they are all that has to be true. A
+decisions index read whole on the way to any decision is the hub under another
+name: the cut satisfies the cap without reducing what is read. A hub still over
+its cap at the floor has a group that has become a subsystem, which takes one
+hub entry for the cluster while its sub-decisions conclude in its node — the
+invariant §What the checker enforces states.
 
 A hub at its cap is never a reason to leave a new conclusion out — by that logic
 nothing could be added again. It is the signal to move the largest hub-only
