@@ -54,10 +54,10 @@ no hard wrap there.
 
 An over-cap plan has two sanctioned escapes under its soft cap, a split and a
 bounded overage, and both are wrong when the overage is duplication: a split
-files the redundancy in two documents, an overage keeps it whole. A
-`size.exempt` entry is not one of them — it is for files the gate counts, and
-`check-size` skips root `plans/` and refuses an entry there. The duplication
-that hides best is the plan pre-writing the code comments it commissions.
+files the redundancy in two documents, an overage keeps it whole. Under root
+`plans/` a `size.exempt` entry is not one of them: `check-size` skips that
+directory and refuses an entry there. The duplication that hides best is the
+plan pre-writing the code comments it commissions.
 
 **Where a plan and the comment it commissions would both carry a rationale, the
 comment keeps it and the plan names the constraint.** The instinct runs the

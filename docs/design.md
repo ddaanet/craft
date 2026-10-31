@@ -43,10 +43,9 @@ reports them. *Done* · Where · pinned by: the `wikilink` and `private-referenc
 checks in `check_body`, against the `SOURCE_FACTS` set.
 
 **FR-5 — size caps are enforced in bytes.** 10000 bytes for a hub, 20000 for any
-other file outside `plans/` and the vendored `plugin-dev/`, as `wc -c` counts
-them, whitespace included. Bytes are indifferent to line length, so no reflow
-has to run before the count. *Done* · Where · pinned by: `check-size`, a
-dependency of `precommit`.
+other file `check-size` scans, as `wc -c` counts them, whitespace included.
+Bytes are indifferent to line length, so no reflow has to run before the count.
+*Done* · Where · pinned by: `check-size`, a dependency of `precommit`.
 
 **FR-6 — code samples are not scanned as prose.** A bats expression such as
 `[[ "$out" != *"x"* ]]` is a sample, not a wikilink, and a path inside a fence
