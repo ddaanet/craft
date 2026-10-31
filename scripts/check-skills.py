@@ -149,12 +149,8 @@ def check_body(path: Path, failures: list[str]) -> None:
         failures.append(f"{path}:{line}: wikilink: {match.group(0)}")
     # Keep these patterns free of spaces: the formatter reflows prose, and a
     # pattern with a space can be split across lines and go unmatched.
-    for pattern in ("memory/", "MEMORY.md"):
-        for match in re.finditer(re.escape(pattern), prose):
-            line = line_of(prose, match.start())
-            failures.append(f"{path}:{line}: private-reference: {pattern}")
-    for slug in sorted(SOURCE_FACTS):
-        pattern = f"{slug}.md"
+    patterns = ["memory/", "MEMORY.md", *(f"{slug}.md" for slug in sorted(SOURCE_FACTS))]
+    for pattern in patterns:
         for match in re.finditer(re.escape(pattern), prose):
             line = line_of(prose, match.start())
             failures.append(f"{path}:{line}: private-reference: {pattern}")
