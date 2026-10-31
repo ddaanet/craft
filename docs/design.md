@@ -5,7 +5,7 @@ markdown-skills-only as the component set. All are settled below with their
 reasons.
 
 This document is the living design: what craft is, how it is built, and why. How
-it got here is git's: commit bodies and `git log -- <path>`.
+it got here is git's: commit bodies and `git log --follow -- <path>`.
 
 ## Status legend
 
@@ -43,9 +43,10 @@ reports them. *Done* · Where · pinned by: the `wikilink` and `private-referenc
 checks in `check_body`, against the `SOURCE_FACTS` set.
 
 **FR-5 — size caps are enforced in bytes.** 10000 bytes for a hub, 20000 for any
-other file, as `wc -c` counts them, whitespace included. Bytes are indifferent
-to line length, so no reflow has to run before the count. *Done* · Where ·
-pinned by: `check-size`, a dependency of `precommit`.
+other file outside `plans/` and the vendored `plugin-dev/`, as `wc -c` counts
+them, whitespace included. Bytes are indifferent to line length, so no reflow
+has to run before the count. *Done* · Where · pinned by: `check-size`, a
+dependency of `precommit`.
 
 **FR-6 — code samples are not scanned as prose.** A bats expression such as
 `[[ "$out" != *"x"* ]]` is a sample, not a wikilink, and a path inside a fence
@@ -76,9 +77,11 @@ gives no verdict. *Done* · Where · pinned by: the final `PATH_add` in `.envrc`
 
 **FR-9 — releases go through the vendored toolkit.** `plugin-dev/release.just`
 provides `release`, `resume-release` and `check-version`; craft supplies
-`precommit` and `prerelease`. *Done* — v0.1.0 was cut through it. Where · pinned
-by: `import 'plugin-dev/release.just'` and the `prerelease` recipe in
-`justfile`, which just refuses to parse without it.
+`precommit` and `prerelease`. Vendored rather than depended on: the release
+recipe has to work in a repo that has never been released, which a runtime
+dependency resolved from a marketplace cannot guarantee. *Done* — v0.1.0 was cut
+through it. Where · pinned by: `import 'plugin-dev/release.just'` and the
+`prerelease` recipe in `justfile`, which just refuses to parse without it.
 
 ## Non-functional requirements
 
