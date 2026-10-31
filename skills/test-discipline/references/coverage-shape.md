@@ -48,6 +48,12 @@ systemd, a shell exec —
 **assert the invocation contract itself, not just the behavior.** Concretely:
 `[ -x path ]` per hook script.
 
+A guard is invoked by the system it contains, so its ALLOW case is a command
+that system really issues, not a synthetic probe. An allowlist hook signed off
+on blocked probes alone admitted no space or quote, and so blocked the quoted,
+multi-word note every real call carries: the one operation the contained agent
+existed to perform.
+
 **Corollary:** use `git ls-files -s` (recorded mode), not `ls -l` (local
 filesystem mode). A fresh clone reproduces git's mode, and a local `chmod` can
 mask the bug.
