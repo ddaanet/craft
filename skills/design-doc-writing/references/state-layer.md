@@ -1,9 +1,9 @@
 # The state layer
 
-The six sections say what the system is and why. They do not say how much to
+The five sections say what the system is and why. They do not say how much to
 trust each claim, or which questions are already closed, and a cold reader
 cannot tell a pinned requirement from an aspiration or a settled decision from
-an open one. Four additions carry that, and they sit around the six rather than
+an open one. Four additions carry that, and they sit around the five rather than
 inside them.
 
 1. **A `Do not re-litigate` line** directly under the title, pointing at the

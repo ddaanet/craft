@@ -41,7 +41,7 @@ first use instead of assuming the reader knows them.
 Two rules pull in opposite directions and are resolved by *which artifact* is
 being written.
 
-- **A dated design-decision or changelog entry is a record.** It captured the
+- **A commit message, a dated plan or a report is a record.** It captured the
   thinking at the time, with the information available then. Its rationale
   paragraphs — why option A was chosen, what trade-offs were weighed — are the
   audit trail and are preserved, dates and all.

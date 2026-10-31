@@ -5,7 +5,7 @@ formatter-before-checker ordering, and markdown-skills-only as the component
 set. All are settled below with their reasons.
 
 This document is the living design: what craft is, how it is built, and why. How
-it got here is [the changelog](changelog.md).
+it got here is git's: commit bodies and `git log -- <path>`.
 
 ## Status legend
 
@@ -262,9 +262,3 @@ The ones that stand alone:
 - **Backward compatibility across skill revisions.** A skill is loaded fresh
   each session; there is no stored state to migrate and no pinned version to
   keep working.
-
-## Changelog
-
-Design-significant history lives in [`docs/changelog.md`](changelog.md) — what
-was decided, reversed, built or torn down, never a line-by-line account of every
-edit. Git history is already the full changelog.

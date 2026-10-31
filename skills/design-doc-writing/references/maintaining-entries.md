@@ -72,7 +72,7 @@ An entry that exists only to report a measurement of mutable state gets retired
 rather than corrected — its content was always a task. Delete the figure, keep
 the mechanism and the pass that acts on it.
 
-**Retire, don't renumber.** FR/D/L ids are cited from changelog entries, plans,
-reports and other durable notes, so removing one leaves a gap in the sequence.
-Leave the gap: renumbering silently repoints every existing citation past it at
-the wrong entry.
+**Retire, don't renumber.** FR/D/L ids are cited from commits, plans, reports
+and other durable notes, so removing one leaves a gap in the sequence. Leave the
+gap: renumbering silently repoints every existing citation past it at the wrong
+entry.
