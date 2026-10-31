@@ -1,6 +1,6 @@
 ---
 name: plan-contracts
-description: "Size a plan or spec to the executable work it carries and state each task as a contract rather than full code, so the document stays reviewable and its enumerations stay true. Use when writing, sizing, splitting or reviewing an implementation plan, spec or design task, when another plan-writing skill asks for complete code in every step, when collapsing passages claimed to be duplicates, or when a line-count cap on a plan, PR or source file is in play. Not for the design doc itself, which is a living doc rather than a frozen plan."
+description: "Size a plan or spec to the executable work it carries and state each task as a contract rather than full code, so the document stays reviewable and its enumerations stay true. Use when writing, sizing, splitting or reviewing an implementation plan, spec or design task, when another plan-writing skill asks for complete code in every step, when collapsing passages claimed to be duplicates, or when a size cap on a plan, PR or source file is in play. Not for the design doc itself, which is a living doc rather than a frozen plan."
 ---
 
 # Plan contracts
@@ -29,7 +29,7 @@ series is not evidence it fits this one.
 A plan task states a **contract**: the precondition, the postcondition and the
 invariant that the implementation must satisfy — not the function body. Contract
 size is the lever the rest of this skill turns on: it predicts implementation
-size, it is what a line cap actually measures, and it is what a split cuts.
+size, it is what a size cap actually measures, and it is what a split cuts.
 
 Two acts follow when the plan-writing skill in play demands complete code
 instead. Write the `Interfaces:` block verbatim and the steps as contracts, and
@@ -40,9 +40,9 @@ the override stick; the next upgrade overwrites it without a word.
 - [How much code a plan carries](references/code-in-a-plan.md) — what stays
   verbatim, why full bodies cost more than they save, and the size difference to
   budget for.
-- [Contracts and size](references/contracts-and-size.md) — the ~400-line
-  contract as the split signal, how to measure a line cap honestly instead of
-  gaming it, and cutting duplicated rationale before splitting an over-cap plan.
+- [Contracts and size](references/contracts-and-size.md) — a contract near the
+  size cap as the split signal, how the byte cap is measured and gamed, and
+  cutting duplicated rationale before splitting an over-cap plan.
 - [Spec hygiene](references/spec-hygiene.md) — a spec's claims about the corpus
   or its cases are queries to run, since every review downstream checks only
   conformance to them: grep a call-site list, diff a claimed duplicate, check a

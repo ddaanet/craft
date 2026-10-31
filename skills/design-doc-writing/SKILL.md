@@ -1,16 +1,14 @@
 ---
 name: design-doc-writing
-description: "Write and maintain a living design doc — the six sections, the state layer, and the splitting, superseding and style rules that keep it current truth rather than an archive. Use when creating, updating, reviewing, splitting or auditing a design doc, spec, or architecture reference, or when a decision, requirement or rejected alternative needs recording. Not for plans and runbooks, which are frozen and date-stamped."
+description: "Write and maintain a living design doc — the five sections, the state layer, and the splitting, superseding and style rules that keep it current truth rather than an archive. Use when creating, updating, reviewing, splitting or auditing a design doc, spec, or architecture reference, or when a decision, requirement or rejected alternative needs recording. Not for plans and runbooks, which are frozen and date-stamped."
 ---
 
 # Design doc writing
 
-A design doc is a **living doc**, not a one-off spec. Six sections: functional
+A design doc is a **living doc**, not a one-off spec. Five sections: functional
 requirements, non-functional requirements, architecture, design decisions (with
-rationale), rejected alternatives, changelog — and the changelog is a
-**separate file** the doc points at. Past a certain size that file is only the
-index and each change gets its own dated file beside it,
-`docs/changelog/<date>-<title>.md`, one line per entry in the index.
+rationale), rejected alternatives. History is git's: the doc keeps no changelog,
+inline or in a separate file, and is rewritten in place.
 
 Plans and specs go in a root `plans/`. The design doc is a
 **single living doc for the project** — `docs/design.md`. The rule is one living
@@ -22,32 +20,47 @@ The point is to capture the *why* alongside the *what*, so future sessions do
 not re-litigate settled decisions. The rejected-alternatives section matters
 most — it prevents revisiting approaches already ruled out for good reason.
 
-When updating, add to the changelog and update the relevant section. Do not
-flatten or summarize decisions; preserve the rationale. Asked for a "live" or
-"living" design doc, do not reach for brainstorming or ask about scope and
-format: the format is settled, and it is this one.
+When updating, update the relevant section in place and let the commit say why.
+Do not flatten or summarize decisions; preserve the rationale. Asked for a
+"live" or "living" design doc, do not reach for brainstorming or ask about scope
+and format: the format is settled, and it is this one.
 
-## Two documents, two jobs
+## The design and git history
 
 The living design answers **what, how and why**, in the present tense: what the
-system does, how it is built, why it is built that way. The changelog answers
-**how we got here**.
+system does, how it is built, why it is built that way. Git history answers
+**how we got here**, through commit bodies and `git log -- <path>`. A project
+with a residual need for history runs its own targeted `git log`; the doc names
+no file for it.
 
-**The changelog is scoped to design-significant changes only.** Git history is
-already the full changelog and needs no duplicate. What belongs in the file is
-what explains why the project is the way it is — decisions reversed, subsystems
-built or torn down, requirements added or dropped, a rationale that turned out
-false — never a line-by-line account of every edit. An entry earns its place by
-answering a question a future reader would otherwise ask of the design doc and
-find no answer to.
+**The why splits in two.** *Reason* is why a decision stands: the trade-off
+weighed, the alternative ruled out, the constraint. A reader of the design needs
+it to weigh the decision, so the node keeps it, in the present tense.
+*Narration* is why it changed now: the incident, the belief that turned out
+false, the order of events. The commit carries it. This is the rule that a
+commit summary points at the diff rather than retelling it, applied once more:
+the diff says what, the body says why, and neither retypes the other.
+
+Write a body for a design-significant change — a decision reversed, a subsystem
+built or torn down, a requirement added or dropped, a rationale that turned out
+false. A point-fix needs none.
+
+**A decision that is inverted or retired is deleted from the doc.** The commit
+that deletes it says why, and the diff keeps the text. A rejected alternative
+that makes sense on its own is a decision and stays.
 
 That split decides where text goes when a doc is cleaned up. Implementation
 status ("slice 3-ii done 2026-07-21, 37 cases in …"), `(implemented 2026-07-15)`
 tags stamped on a mechanism paragraph, and "this retired the two earlier
-point-fixes" narratives are all changelog material: in the design they are
-noise, and they rot. Dates that *ground a claim* stay wherever the claim is —
-"verified against CC 2.1.150", "measured over 76 bullets", "eval over 528
-transcripts" — because deleting them turns evidence into assertion.
+point-fixes" narratives belong to the commit message, a task file or a plan: in
+the design they are noise, and they rot. Dates that *ground a claim* stay
+wherever the claim is — "verified against CC 2.1.150", "measured over 76
+bullets", "eval over 528 transcripts" — because deleting them turns evidence
+into assertion.
+
+**A project that still has dated records** folds into the node any argument the
+design cites from a record before that record goes. It may keep existing records
+frozen rather than migrate them, and writes no new ones.
 
 ## No measurement of mutable state
 
@@ -69,14 +82,15 @@ the fix was queued as a review finding as though the figure were the defect.
   does not.
 - **State that has to live somewhere lives where state lives** — a task frame, a
   date-stamped plan, a report. Those are read as of-a-moment by construction;
-  the design record is not.
+  the design is not. A figure measured at each release is a dated report under
+  `plans/`.
 - **An entry existing only to report that a mutable quantity is out of bounds
   gets retired, not corrected.** Its content was always a task, and the task
   belongs to whatever pass owns it.
 
 ## The nodes
 
-- [The state layer](references/state-layer.md) — the six sections say what the
+- [The state layer](references/state-layer.md) — the five sections say what the
   system is and why, never how much to trust each claim or what is settled. Four
   additions carry that, and one test decides which state claims may stay: the
   edit that falsifies a claim has to touch it.
@@ -100,10 +114,9 @@ Numbering makes requirements, decisions and limitations individually
 referenceable (FR-3, D-12, L-5) so other artifacts — and other sections — can
 cite them.
 
-**Retire, don't renumber.** Those ids are cited from changelog entries, plans,
-reports and other durable notes, so removing one leaves a gap in the sequence.
-Renumbering silently repoints every existing citation past the gap at the wrong
-entry.
+**Retire, don't renumber.** Those ids are cited from commits, plans, reports and
+other durable notes, so removing one leaves a gap in the sequence. Renumbering
+silently repoints every existing citation past the gap at the wrong entry.
 
 ## Reviewing a large doc
 

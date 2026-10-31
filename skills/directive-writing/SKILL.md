@@ -73,12 +73,12 @@ Plan-scoped artifacts — a recall artifact under `plans/<job>/`, a dispatch
 prompt naming paths — are the channel for by-path references. They live with the
 plan, not with the plugin.
 
-## Comments and changelogs
+## Comments and commits
 
-[Comments and changelogs](references/comments-and-changelogs.md) — the same cut
+[Comments and commits](references/comments-and-commits.md) — the same cut
 applied to code comments against a maintainer's bar, plan ids and line numbers
-included; one change told once across code, tests, changelog and design doc; and
-a pre-commit sweep of the staged diff for plan vocabulary.
+included; one change told once across code, tests, commit body and design doc;
+and a pre-commit sweep of the staged diff for plan vocabulary.
 
 ## How to apply
 

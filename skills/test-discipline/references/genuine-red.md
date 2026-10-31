@@ -133,9 +133,9 @@ very session that is mutation-checking a test it just wrote.
 ## Interface contracts, one per line
 
 In a contract-style plan, conveying a full interface as a run-on paragraph —
-semicolon-chained methods, comma-run dataclass lists — is a form of cramming,
-the second form beyond long-line line-count gaming. Give each method, dataclass
-and exception its own bullet with its full signature and return type.
+semicolon-chained methods, comma-run dataclass lists — is cramming that a byte
+count does not catch. Give each method, dataclass and exception its own bullet
+with its full signature and return type.
 
 Un-cramming also surfaces elided return types: three missing `list[...]`
 annotations were caught this way on one plan.

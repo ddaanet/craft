@@ -2,12 +2,14 @@
 
 ## Superseding a decision
 
-When a decision is superseded, the old section stays with a one-line superseding
-pointer, and every *mechanism* description elsewhere gets updated to the new
-truth. A stale architecture section outlives its decision otherwise: on one
-project a branch model was rewritten by a decision in July, and the Architecture
-"Branch Model" section, two earlier decisions and four rejected-alternative rows
-still described the abandoned named per-worktree branches ten days later.
+When a decision is superseded, the old section is deleted and the commit that
+deletes it says why; every *mechanism* description elsewhere gets updated to the
+new truth. An old approach worth keeping as ruled out becomes a
+rejected-alternative entry carrying its reason. A stale architecture section
+outlives its decision otherwise: on one project a branch model was rewritten by
+a decision in July, and the Architecture "Branch Model" section, two earlier
+decisions and four rejected-alternative rows still described the abandoned named
+per-worktree branches ten days later.
 
 A past decision whose rationale looks thin on re-reading gets
 **re-examined, not treated as settled**; new context or fresh eyes can invert
@@ -24,14 +26,12 @@ inversion produced a cleaner architecture.
 - Be willing to write a new spec that inverts an old one. Spec history in git is
   the audit trail; the latest doc is the current answer.
 
-The new dated entry leads with the motivating fact — the incident that forced
-the change, load-bearing and must survive — then the positive design and its
-reasoning. Cut the museum narrative: deletion inventories ("extract.py loses
-functions A, B, C…"), "it no longer does what it used to" framing, and
-inversion-bookkeeping ("this supersedes decision X and Y"). Old sections stay,
-with a terse superseding *pointer* stating current truth — that one line is
-where "what changed" bookkeeping goes, not the prose. "Retained as a record of
-what was cut" is not a justification.
+The new entry leads with the reason it stands — the constraint the incident
+exposed, in the present tense — then the positive design and its reasoning. The
+incident itself goes in the commit body. Cut the museum narrative: deletion
+inventories ("extract.py loses functions A, B, C…"), "it no longer does what it
+used to" framing, and inversion-bookkeeping ("this supersedes decision X and
+Y"). "Retained as a record of what was cut" is not a justification.
 
 ## Rewiring a dead component
 
@@ -72,7 +72,7 @@ An entry that exists only to report a measurement of mutable state gets retired
 rather than corrected — its content was always a task. Delete the figure, keep
 the mechanism and the pass that acts on it.
 
-**Retire, don't renumber.** FR/D/L ids are cited from changelog entries, plans,
-reports and other durable notes, so removing one leaves a gap in the sequence.
-Leave the gap: renumbering silently repoints every existing citation past it at
-the wrong entry.
+**Retire, don't renumber.** FR/D/L ids are cited from commits, plans, reports
+and other durable notes, so removing one leaves a gap in the sequence. Leave the
+gap: renumbering silently repoints every existing citation past it at the wrong
+entry.

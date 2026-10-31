@@ -50,6 +50,6 @@ on one plan: 874 lines of code-carrying steps became 537 lines of contracts,
 about 1.6×, and its largest task went from ~430 lines to ~190. Budget for 1.6×,
 not the 2.5× that seems intuitive.
 
-That leaves the ~400-line contract intact as the split signal — see
+That leaves a contract near the size cap intact as the split signal — see
 [Contracts and size](contracts-and-size.md), which also covers the way stating a
 step as a contract catches errors that writing it as code hides.
