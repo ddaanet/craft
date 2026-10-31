@@ -1,3 +1,0 @@
-## Current task
-
-The inbox triage is finished: the hub-keeps-conclusions, retire-the-changelog and size-cap briefs are applied, reviewed and filed under plans/, and plugin-dev 0.13.0 with check-size is adopted. Next concrete action: take the TODO.md item on docs/design.md gate and launcher drift since the plugin-dev 0.12.0 adoption (FR-8, NFR-3's no-sentinel sentence, the per-check-caching rejected alternative), check each claim against the justfile as it runs, fix, run just precommit, commit, and get a delegated /code-review medium of the commit.

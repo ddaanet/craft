@@ -196,8 +196,7 @@ through the vendored `plugin-dev/bin/claude` rather than a launcher of its own:
 the shim, the sync and the two hooks that guard the copy and report a session
 not loading it ship and are tested together upstream, and NFR-4 keeps fixes to
 them there. *Rejected: a craft-owned launcher script* — it would duplicate the
-shim's `PATH` chaining and need its own lint, with nothing to report a session
-that bypassed it.
+shim's `PATH` chaining and need its own lint.
 
 **D-7 — the caps are a shared-tier rule, not a craft rule.** They govern every
 artifact written anywhere, not only where a checker happens to be wired, so they
