@@ -53,11 +53,11 @@ illustrates rather than points. Fences and inline spans are blanked to spaces
 before the prose checks run, preserving line numbers so failures still name the
 right line. *Done* · Where · pinned by: `blank_code`.
 
-**FR-7 — the gate runs before every commit.** `just precommit` formats, runs the
-checker, runs the checker's own suite, parses the manifest and shellchecks the
-launcher. It is a required step rather than a suggestion, and it carries no
-cache or sentinel. *Done* · Where · pinned by: the `precommit` and `format-docs`
-recipes in `justfile`.
+**FR-7 — the gate runs before every commit.** `just precommit` formats, checks
+references and sizes, runs the checker, runs the checker's own suite, parses the
+manifest and shellchecks the launcher. It is a required step rather than a
+suggestion, and it carries no cache or sentinel. *Done* · Where · pinned by: the
+`precommit` and `format-docs` recipes in `justfile`.
 
 **FR-8 — the in-tree plugin is active in a dev session.** `.bin/claude` copies
 `.claude-plugin/` and `skills/` to a gitignored `dist/plugin/`, prepends
@@ -193,7 +193,7 @@ another shim is installed or the binary moves.
 
 **D-7 — the caps are a shared-tier rule, not a craft rule.** They govern every
 artifact written anywhere, not only where a checker happens to be wired, so they
-have to act without being looked up. The checker enforces them here; the
+have to act without being looked up. `check-size` enforces them here; the
 argument for them ships in `craft:plan-contracts`.
 *Rejected: documenting them only in this repo.*
 
@@ -207,8 +207,8 @@ still untriaged. *Rejected: leaving inbox untracked as scratch* — the briefs a
 the provenance for the edits they cause, and deleting a spent one throws that
 away.
 
-**D-9 — the design doc is covered by the same formatter and cap as a skill.**
-Written while dogfooding `design-doc-writing`, which requires both.
+**D-9 — the design doc is covered by the same formatter pass and cap as a
+skill.** Written while dogfooding `design-doc-writing`, which requires the cap.
 *Rejected: exempting `docs/` as maintainer-only prose* — the cap exists because
 a reader takes a document in at one go, which is as true here as under
 `skills/`.

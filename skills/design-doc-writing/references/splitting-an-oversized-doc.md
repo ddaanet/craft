@@ -117,11 +117,11 @@ Whether an always-on instruction reliably causes the read is not established; it
 is the current mechanism, and the routing table is the part that has the best
 chance because it matches the token the agent is already looking at.
 
-Enforce the graph's shape mechanically alongside: a formatter that hard-wraps
-the prose so a line count means something, and a gate that fails a hub or node
-over the cap (400 lines) and any pointer that stops resolving. `rumdl` with
-MD013 reflow at 80 columns is the wrapper that does this without changing what
-the markdown renders to.
+Enforce the graph's shape mechanically alongside: a gate that fails a hub or
+node over the size cap (20000 bytes, `check-size`) and any pointer that stops
+resolving. A formatter is not needed for the count, since bytes ignore line
+length; if the repo wraps prose anyway, `rumdl` with MD013 reflow at 80 columns
+does it without changing what the markdown renders to.
 
 Establish that claim for any markdown re-serializer — a wrapper, a formatter, a
 converter — by rendering every file to HTML with cmark-gfm before and after, and

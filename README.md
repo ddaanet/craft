@@ -23,7 +23,7 @@ docs.
 | skill | use it when |
 |---|---|
 | `design-doc-writing` | creating, updating, reviewing, splitting or auditing a design doc, spec or architecture reference — or a decision, requirement or rejected alternative needs recording |
-| `plan-contracts` | writing, sizing, splitting or reviewing an implementation plan or spec, collapsing passages claimed to be duplicates — or a line-count cap on a plan, a PR or a source file is in play |
+| `plan-contracts` | writing, sizing, splitting or reviewing an implementation plan or spec, collapsing passages claimed to be duplicates — or a size cap on a plan, a PR or a source file is in play |
 | `test-discipline` | writing, reviewing or dispatching tests, planning a red step, or inherited or subagent-authored tests came back green |
 | `directive-writing` | authoring agent-facing text: a hook's `additionalContext`, a probe directive, an instructing error message, a deny reason, a code comment |
 | `removing-cleanly` | removing a feature, retiring a file, deleting or splitting a module, renaming a symbol other files cite, or handling a version transition in tooling you also control |
@@ -92,8 +92,9 @@ None. The plugin ships markdown and reads nothing outside the session.
 ## Working on craft itself
 
 `just precommit` is the gate and is required before every commit. It
-hard-wraps the Markdown prose at 80 columns, then checks the skills, runs the
-skill checker's own test suite and parses the manifest; those three skip
+hard-wraps the Markdown prose at 80 columns, checks references and file sizes,
+then checks the skills, runs the skill checker's own test suite and parses the
+manifest; those three skip
 themselves while none of the files they read has changed since their last pass.
 
 `just dogfood` copies the shipped files to `dist/plugin/`, and the `claude`
