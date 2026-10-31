@@ -7,13 +7,10 @@ leakage rather than breakage: a `[[wikilink]]` that resolved in that store, or a
 nothing but a gate reports them.
 
 The rest is shape. A description is loaded into every session whether or not the
-skill fires, so it is capped; a hub is read on every invocation and a node only
-when the hub sends the reader there, so the hub's line cap is the tighter one.
-The same node cap covers `scripts/*.py`, `tests/*.py` and `docs/*.md`, which
-are read at one go by the same reader and are wrapped by the same formatter
-pass.
+skill fires, so it is capped. File size is `just check-size`'s concern, not this
+script's.
 
-Ten checks, all blocking:
+Nine checks, all blocking:
 
 - `missing-skill`        a `skills/<name>/` with no `SKILL.md`
 - `missing-field`        frontmatter without `name` or `description`
@@ -24,7 +21,6 @@ Ten checks, all blocking:
 - `private-reference`    a `memory/…` path, `MEMORY.md`, or a source-fact slug
 - `broken-link`          a relative pointer whose target is not on disk
 - `orphan-node`          a `references/*.md` no hub points at
-- `oversized-file`       a file past the cap for its kind
 
 Repo-local maintainer tooling, not a shipped plugin component.
 """
@@ -44,13 +40,6 @@ SKILLS = Path("skills")
 # (`shell-scripting:shell-gotchas`, 551 B) and well under the point where five
 # of them stop being free.
 MAX_DESCRIPTION_BYTES = 600
-
-# A hub is read on every invocation; a node only when the hub sends the reader
-# there. Both caps count lines after `just format-docs` has hard-wrapped at 80
-# columns; run without it, an unwrapped file games any cap. The design doc is
-# capped as a node, since a reader takes it in at one go.
-MAX_HUB_LINES = 200
-MAX_NODE_LINES = 400
 
 # The memory facts these skills were written from. A body naming one cites a
 # file only a reader with the store can open.
@@ -150,7 +139,7 @@ def check_frontmatter(skill_md: Path, failures: list[str]) -> None:
 
 
 def check_body(path: Path, failures: list[str]) -> None:
-    """Check one body for private references, broken links and its line cap."""
+    """Check one body for private references and broken links."""
     text = path.read_text()
     prose = blank_code(text)
 
@@ -177,11 +166,6 @@ def check_body(path: Path, failures: list[str]) -> None:
             line = line_of(prose, match.start())
             failures.append(f"{path}:{line}: broken-link: {target}")
 
-    cap = MAX_HUB_LINES if path.name == "SKILL.md" else MAX_NODE_LINES
-    lines = len(text.splitlines())
-    if lines > cap:
-        failures.append(f"{path}: oversized-file: {lines} lines > {cap}")
-
 
 def main() -> int:
     """Run every check over `skills/` and print each failure on its own line."""
@@ -202,16 +186,6 @@ def main() -> int:
 
     for path in sorted(SKILLS.rglob("*.md")):
         check_body(path, failures)
-
-    capped = (
-        sorted(Path("scripts").glob("*.py"))
-        + sorted(Path("tests").glob("*.py"))
-        + sorted(Path("docs").glob("*.md"))
-    )
-    for path in capped:
-        lines = len(path.read_text().splitlines())
-        if lines > MAX_NODE_LINES:
-            failures.append(f"{path}: oversized-file: {lines} lines > {MAX_NODE_LINES}")
 
     for failure in failures:
         print(failure)

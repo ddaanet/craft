@@ -1,8 +1,8 @@
 # craft — design
 
-**Do not re-litigate** — the hub/node split, the 200/400 line caps, the
-formatter-before-checker ordering, and markdown-skills-only as the component
-set. All are settled below with their reasons.
+**Do not re-litigate** — the hub/node split, the 10000/20000 byte caps, and
+markdown-skills-only as the component set. All are settled below with their
+reasons.
 
 This document is the living design: what craft is, how it is built, and why. How
 it got here is git's: commit bodies and `git log -- <path>`.
@@ -42,11 +42,10 @@ retired source-fact filename. None of these stop a skill loading, so only a gate
 reports them. *Done* · Where · pinned by: the `wikilink` and `private-reference`
 checks in `check_body`, against the `SOURCE_FACTS` set.
 
-**FR-5 — line caps are enforced against wrapped prose.** 200 lines for a hub,
-400 for a node or a maintainer script, measured only after `just format-docs`
-hard-wraps at 80 columns — an unwrapped file games any line count. *Done* ·
-Where · pinned by: `MAX_HUB_LINES`, `MAX_NODE_LINES`, the `oversized-file`
-check, and `format-docs` running as `precommit`'s first dependency.
+**FR-5 — size caps are enforced in bytes.** 10000 bytes for a hub, 20000 for any
+other file, as `wc -c` counts them, whitespace included. Bytes are indifferent
+to line length, so no reflow has to run before the count. *Done* · Where ·
+pinned by: `check-size`, a dependency of `precommit`.
 
 **FR-6 — code samples are not scanned as prose.** A bats expression such as
 `[[ "$out" != *"x"* ]]` is a sample, not a wikilink, and a path inside a fence
@@ -119,13 +118,14 @@ component paths — skills are discovered from `skills/`.
 - **`skills/<name>/references/*.md`** — nodes, read only when the hub sends the
   reader to one. One skill is hub-only, having no material that splits.
 - **`scripts/check-skills.py`** — maintainer tooling, not a shipped component.
-  Ten blocking checks, grouped as frontmatter shape (`check_frontmatter`), body
-  hygiene and caps (`check_body`), and reachability (in `main`).
+  Nine blocking checks, grouped as frontmatter shape (`check_frontmatter`), body
+  hygiene (`check_body`), and reachability (in `main`).
 - **`tests/test_check_skills.py`** — the gate's own gate. One test per check,
   each spoiling an otherwise-clean tree in exactly one way and asserting the
   *complete* output, so the assertion fails if the check it names stops firing.
-- **`justfile`** — `format-docs` then `precommit` then `prerelease`, with the
-  release recipes imported from the vendored toolkit.
+- **`justfile`** — `precommit` (`format-docs`, `check-refs`, `check-size`, then
+  the checker and its suite) then `prerelease`, with the release and size
+  recipes imported from the vendored toolkit.
 - **`.rumdl.toml`** — MD013 only, reflow at 80 columns in `normalize` mode.
   rumdl is used as a prose wrapper, not a linter: headings, code and tables are
   neither wrapped nor reported.
@@ -134,24 +134,18 @@ component paths — skills are discovered from `skills/`.
 - **`inbox/`** and **`plans/`** — what arrives from other repositories, and what
   this repo plans for itself. See `inbox/README.md`.
 
-The ordering is load-bearing in one place: the formatter must run before the
-checker, because a line count means nothing until the prose is hard-wrapped.
-`precommit` expresses this as a just dependency rather than as a step inside the
-recipe, so it cannot be skipped by running the checker directly.
-
 ## Design decisions
 
-**D-1 — the hub cap is tighter than the node cap.** 200 lines against 400. A hub
-is paid on every invocation of the skill; a node only when the hub sends the
-reader there, so the two are not the same budget. *Rejected: one uniform cap.*
+**D-1 — the hub cap is tighter than the node cap.** 10000 bytes against 20000. A
+hub is paid on every invocation of the skill; a node only when the hub sends the
+reader there, so the two are not the same budget. *Rejected: one uniform cap*,
+and *rejected: counting lines* — a line count rewards long lines, where a byte
+count is indifferent to them.
 
-**D-2 — hard-wrap, then measure.** A line count is only honest once a formatter
-has normalized the prose, otherwise a file with 300-character lines passes a cap
-it plainly violates. rumdl in `normalize` mode re-joins each paragraph before
-wrapping, so the count reflects the prose rather than where an earlier edit left
-the breaks; its default mode only breaks lines over the column, leaving narrower
-hand-wrapping as it is. *Rejected: counting characters instead of lines* — it
-stops matching what a reader takes in at one go, which is what the cap is about.
+**D-2 — rumdl hard-wraps the prose.** In `normalize` mode it re-joins each
+paragraph before wrapping, so the breaks do not depend on where an earlier edit
+left them; its default mode only breaks lines over the column, leaving narrower
+hand-wrapping as it is.
 
 rumdl is the wrapper because it alone left rendering untouched. Measured by
 cmark-gfm render diff over ~100 files of design docs and plans, on rumdl 0.2.74

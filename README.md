@@ -68,15 +68,14 @@ is roughly 3 KB.
 A skill is a **hub** with **opt-in nodes**.
 
 - `skills/<name>/SKILL.md` — the hub, read on every invocation. Capped at
-  200 lines, because every invocation pays for it.
+  10000 bytes, because every invocation pays for it.
 - `skills/<name>/references/*.md` — nodes, read only when the hub sends you
-  to one. Capped at 400 lines. One of the five skills is hub-only, having no
+  to one. Capped at 20000 bytes. One of the five skills is hub-only, having no
   material that splits.
 
-Both caps are measured only after the prose is hard-wrapped at 80 columns,
-because an unwrapped file games any line count. `just precommit` runs the
-formatter first and the checker second, and the ordering is a dependency
-rather than a step inside a recipe so it cannot be skipped.
+Both caps are bytes as `wc -c` counts them, whitespace included, about 5k and
+10k tokens, enforced by `just check-size` in `just precommit`. Bytes are
+indifferent to line length, so no reflow has to run before the count.
 
 The reasoning behind the caps ships in `craft:plan-contracts` — they are a
 rule about what a reader takes in at one go, not a quirk of this repository.

@@ -1,9 +1,8 @@
 # Only MD013 with reflow: rumdl is used as a prose wrapper, not a linter.
-# Wrapping keeps line counts honest under `skills/`, `plans/` and `docs/`, which
-# makes the 400/200-line caps in `scripts/check-skills.py` measurable at all.
 # Headings, code and tables are not wrapped, so they are not reported either.
-# `normalize` re-joins each paragraph before wrapping, so a line count reflects
-# the prose rather than where an earlier edit happened to leave the breaks.
+# `normalize` re-joins each paragraph before wrapping, so breaks do not depend on
+# where an earlier edit happened to leave them. Size caps are bytes, enforced by
+# `just check-size`, and need no wrapping.
 [global]
 enable = ["MD013"]
 

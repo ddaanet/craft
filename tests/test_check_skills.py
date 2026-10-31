@@ -31,16 +31,6 @@ def hub(name: str = "alpha", description: str = "What alpha does.", body: str = 
     return f'---\nname: {name}\ndescription: "{description}"\n---\n\n# {name}\n\n{body}\n'
 
 
-def sized(lines: int) -> str:
-    """A body of exactly `lines` lines, carrying nothing else to report."""
-    return "\n".join(["x"] * lines) + "\n"
-
-
-def sized_hub(lines: int) -> str:
-    """A well-formed hub of exactly `lines` lines. The frontmatter is 4 of them."""
-    return f'---\nname: alpha\ndescription: "d"\n---\n' + sized(lines - 4)
-
-
 def build(tmp_path: Path, files: dict[str, str] | None = None, dirs: tuple[str, ...] = ()) -> Path:
     """Write a tree rooted at `tmp_path`, defaulting to one clean skill."""
     for rel in dirs:
@@ -78,23 +68,6 @@ def test_linked_node_is_not_an_orphan(tmp_path):
         {
             "skills/alpha/SKILL.md": hub(body="See [the node](references/node.md)."),
             "skills/alpha/references/node.md": "# Node\n",
-        },
-    )
-    assert check(tree) == (0, ["check-skills: 2 files, all checks passed"])
-
-
-def test_caps_are_not_off_by_one(tmp_path):
-    """A file *at* its cap passes; only one past it fails."""
-    tree = build(
-        tmp_path,
-        {
-            "skills/alpha/SKILL.md": sized_hub(200).replace(
-                "x\nx\n", "x\n[the node](references/node.md)\n", 1
-            ),
-            "skills/alpha/references/node.md": sized(400),
-            "scripts/tool.py": sized(400),
-            "tests/test_x.py": sized(400),
-            "docs/design.md": sized(400),
         },
     )
     assert check(tree) == (0, ["check-skills: 2 files, all checks passed"])
@@ -208,37 +181,6 @@ def test_orphan_node(tmp_path):
         {"skills/alpha/SKILL.md": hub(), "skills/alpha/references/node.md": "# Node\n"},
     )
     assert check(tree) == (1, ["skills/alpha/references/node.md: orphan-node: no hub link"])
-
-
-def test_oversized_hub(tmp_path):
-    tree = build(tmp_path, {"skills/alpha/SKILL.md": sized_hub(201)})
-    assert check(tree) == (1, ["skills/alpha/SKILL.md: oversized-file: 201 lines > 200"])
-
-
-def test_oversized_node(tmp_path):
-    tree = build(
-        tmp_path,
-        {
-            "skills/alpha/SKILL.md": hub(body="See [the node](references/node.md)."),
-            "skills/alpha/references/node.md": sized(401),
-        },
-    )
-    assert check(tree) == (1, ["skills/alpha/references/node.md: oversized-file: 401 lines > 400"])
-
-
-def test_oversized_script(tmp_path):
-    tree = build(tmp_path, {"skills/alpha/SKILL.md": hub(), "scripts/tool.py": sized(401)})
-    assert check(tree) == (1, ["scripts/tool.py: oversized-file: 401 lines > 400"])
-
-
-def test_oversized_test_module(tmp_path):
-    tree = build(tmp_path, {"skills/alpha/SKILL.md": hub(), "tests/test_x.py": sized(401)})
-    assert check(tree) == (1, ["tests/test_x.py: oversized-file: 401 lines > 400"])
-
-
-def test_oversized_doc(tmp_path):
-    tree = build(tmp_path, {"skills/alpha/SKILL.md": hub(), "docs/design.md": sized(401)})
-    assert check(tree) == (1, ["docs/design.md: oversized-file: 401 lines > 400"])
 
 
 # --- code is a sample, not prose (FR-6)
