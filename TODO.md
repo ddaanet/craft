@@ -1,5 +1,5 @@
 ## Remaining
 
-- v0.2.3 was an interim release cut straight from `main` to ship the byte-count
-  caps, without an `xhigh` release review. Run that review over v0.2.2..v0.2.3
-  together with the next release's range.
+- The range v0.2.2..`main` has had its `xhigh` release review and the fix
+  round (`plans/reviews/v0.2.2-release-review-*.md`). The next release's
+  `xhigh` review covers only what lands after that fix round.
