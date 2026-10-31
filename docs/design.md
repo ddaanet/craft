@@ -244,6 +244,16 @@ The ones that stand alone:
   `skills/design-doc-writing/references/splitting-an-oversized-doc.md`.
 - **Per-check caching or a sentinel file in `precommit`.** A cache would add
   invalidation bugs to buy back a few seconds on a gate nobody waits on (NFR-3).
+- **Extending `test-discipline`'s pairing rule to live-probe guards** — a hook,
+  a sandbox rule, a subagent's containment. Pairing exists because a suite's
+  negative goes stale silently as the code moves; a probe runs once against the
+  system as it is, and a guard broken closed announces itself by refusing
+  legitimate work.
+- **Re-running a mutation matrix after every later edit.** A mutation run's
+  proof is behaviour-bound: a later green run shows the behaviour is still
+  there, so an edit invalidates it no more than any other test. What is
+  byte-bound is the recipe naming the mutation, and `genuine-red` covers that by
+  proving a mutation landed before reading its result.
 
 ## Limitations
 

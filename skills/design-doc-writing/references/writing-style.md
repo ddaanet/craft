@@ -14,10 +14,9 @@ status and the `Where · pinned by` pin inline. Numbering survives the move, so
 `FR-7` stays citable. Default to prose and reach for a table only where the
 cells really are small.
 
-Each decision carries its rationale and, where one applies, a **Supersedes** or
-**Reopen-if** clause — the condition that puts a settled decision back on the
-table. That stops re-litigation and flags when a parked call has gone live
-again.
+Each decision carries its rationale and, where one applies, a **Reopen-if**
+clause — the condition that puts a settled decision back on the table. That
+stops re-litigation and flags when a parked call has gone live again.
 
 ## No draft archaeology
 

@@ -36,10 +36,10 @@ no file for it.
 **The why splits in two.** *Reason* is why a decision stands: the trade-off
 weighed, the alternative ruled out, the constraint. A reader of the design needs
 it to weigh the decision, so the node keeps it, in the present tense.
-*Narration* is what changed and why it changed now: the incident, the belief
-that turned out false, the order of events. The commit carries it. This is the
-rule that a commit summary points at the diff rather than narrating it, applied
-once more: the diff says what, the body says why, and neither retypes the other.
+*Narration* is why it changed now: the incident, the belief that turned out
+false, the order of events. The commit carries it. This is the rule that a
+commit summary points at the diff rather than retelling it, applied once more:
+the diff says what, the body says why, and neither retypes the other.
 
 Write a body for a design-significant change — a decision reversed, a subsystem
 built or torn down, a requirement added or dropped, a rationale that turned out

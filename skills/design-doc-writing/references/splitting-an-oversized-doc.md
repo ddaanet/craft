@@ -15,7 +15,7 @@ Two shapes come out of that measurement and they take different cuts.
 call (measured: one entry at 28% of the whole document, on par with all the
 other decisions combined). Move its content into its own
 `docs/references/<subsystem>.md` and shrink the entry to a motivation paragraph
-plus a pointer, the same stub shape a superseded decision takes.
+plus a pointer.
 
 **The distribution is flat** — the commoner case, and the one that defeats a
 search for a dominant subsystem: a section is large because it enumerates many
