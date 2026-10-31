@@ -237,9 +237,10 @@ The ones that stand alone:
 - **One skill holding all the guidance.** Its description would have to name
   every moment at once, which is how a description stops discriminating; and
   every invocation would pay for all five topics.
-- **A `docs/decisions.md` index for this document.** That is the lever at a
-  hub's floor, and this hub is nowhere near it. Recorded here so the option is
-  not re-derived: see
+- **A `docs/decisions.md` index for this document.** A decisions file read whole
+  on the way to any decision is the hub under another name: it meets the cap
+  without reducing what is read. At a hub's floor the argument moves out of the
+  conclusion bullets instead, and the conclusions stay; see
   `skills/design-doc-writing/references/splitting-an-oversized-doc.md`.
 - **Per-check caching or a sentinel file in `precommit`.** A cache would add
   invalidation bugs to buy back a few seconds on a gate nobody waits on (NFR-3).
