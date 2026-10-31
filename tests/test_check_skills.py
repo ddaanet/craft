@@ -1,6 +1,6 @@
 """The gate's own gate: every check in `scripts/check-skills.py` is load-bearing.
 
-The checker pins every requirement in `docs/design.md` by running over the real
+The checker pins every requirement it owns in `docs/design.md` by running over the real
 tree on each commit. Nothing pinned the checker itself, so a check that stopped
 firing would look exactly like a tree with nothing to report.
 

@@ -180,8 +180,8 @@ stricter than the runtime for no reason: with it, the gate parses everything the
 runtime parses. *Rejected: a bespoke frontmatter parser* — more code to be wrong
 than the rule is worth.
 
-**D-4 — retired source facts are named in the checker.** The twenty facts these
-skills were written from, two retired to other venues, and one absorbed into a
+**D-4 — retired source facts are named in the checker.** The facts these skills
+were written from, those retired to other venues, and those absorbed into a
 skill after release are enumerated in `SOURCE_FACTS`. Every one is gone from the
 store, so a surviving mention in a body is a dangling private reference rather
 than a citation. *Rejected: matching any `*.md` filename* — it would flag

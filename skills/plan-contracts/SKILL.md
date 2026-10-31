@@ -40,9 +40,10 @@ the override stick; the next upgrade overwrites it without a word.
 - [How much code a plan carries](references/code-in-a-plan.md) — what stays
   verbatim, why full bodies cost more than they save, and the size difference to
   budget for.
-- [Contracts and size](references/contracts-and-size.md) — a contract near the
-  size cap as the split signal, how the byte cap is measured and gamed, and
-  cutting duplicated rationale before splitting an over-cap plan.
+- [Contracts and size](references/contracts-and-size.md) — a contract whose
+  projected implementation overshoots the size cap as the split signal, how the
+  byte cap is measured and gamed, and cutting duplicated rationale before
+  splitting an over-cap plan.
 - [Spec hygiene](references/spec-hygiene.md) — a spec's claims about the corpus
   or its cases are queries to run, since every review downstream checks only
   conformance to them: grep a call-site list, diff a claimed duplicate, check a

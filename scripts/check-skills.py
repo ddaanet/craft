@@ -68,6 +68,7 @@ SOURCE_FACTS = frozenset(
         "plan-contracts-not-full-code",
         "precommit-line-caps",
         "reference-audit-after-a-move",
+        "guardrail-must-permit-real-commands",
     },
 )
 
