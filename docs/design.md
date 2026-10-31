@@ -61,17 +61,18 @@ none of the files they read has changed since their last pass; the reference and
 size checks run on every call. *Done* · Where · pinned by: the `precommit` and
 `format-docs` recipes in `justfile`.
 
-**FR-8 — the in-tree plugin is active in a dev session.** `.bin/claude` copies
-`.claude-plugin/` and `skills/` to a gitignored `dist/plugin/`, prepends
-`--plugin-dir <that copy>` and chains to the next `claude` on `PATH` with its
-own directory stripped, passing the stripped `PATH` through the `exec`. `.envrc`
-adds it last so it wins over `.gitlore/bin`. Not the repo root: Claude Code
-treats every path under a `--plugin-dir` root as a sensitive file, so with the
-root loaded every Edit or Write in the tree asks, and auto mode's classifier
-gives no verdict. The copy is a stopgap until the toolkit's dist-copy launcher
-ships; until then a skill edit reaches a session only at its next launch. *Done*
-· Where · pinned by: `.bin/claude`, the final `PATH_add` in `.envrc`, and
-`shellcheck` in `precommit`.
+**FR-8 — the in-tree plugin is active in a dev session.** The toolkit's dogfood
+shim, `plugin-dev/bin/claude`, points `CLAUDE_CODE_PLUGIN_DIRS` at a gitignored
+`dist/plugin/` and chains to the next `claude` on `PATH`. `.envrc` adds it last
+so it wins over `.gitlore/bin`. Only `just dogfood` writes the copy, holding the
+paths `dist.include` allows; a launch never syncs, so an edit reaches a session
+only after `just dogfood`, and which kinds of change then need `/reload-plugins`
+or a relaunch is in `plugin-dev/manual/dogfood.md`. Not the repo root: Claude
+Code treats every path under a loaded plugin root as a sensitive file, so with
+the root loaded every Edit or Write in the tree asks, and auto mode's classifier
+gives no verdict. *Done* · Where · pinned by: the final `PATH_add` in `.envrc`,
+`dist.include`, and the two dogfood hooks in `.claude/settings.json`, whose
+`SessionStart` check reports a session that does not load the copy.
 
 **FR-9 — releases go through the vendored toolkit.** `plugin-dev/release.just`
 provides `release`, `resume-release` and `check-version`; craft supplies
@@ -95,13 +96,17 @@ meaning, the rule it pointed at is restated inline instead. *Done (prose)* ·
 Where · pinned by: FR-4's checks catch the mechanical classes; the judgement
 that an inlined clause reads correctly stays with review.
 
-**NFR-3 — the gate is cheap enough to be unconditional.** Roughly six seconds on
-the whole tree, nearly all of it the checker's suite: twenty-five tests, each
-spawning the checker as a subprocess so the invocation matches the one
-`precommit` makes. That is what lets the gate run on every commit with no cache
-to invalidate and no sentinel to go stale — the sub-second figure this recorded
-before the suite existed bought nothing that the absence of a cache does not buy
-at six. *Done* · Where · pinned by: `precommit` having no cache step.
+**NFR-3 — the gate is cheap enough to run on every commit.** Roughly six seconds
+cold, nearly all of it the checker's suite: twenty-five tests, each spawning the
+checker as a subprocess so the invocation matches the one `precommit` makes. The
+toolkit's gate sentinel buys most of that back: it hashes the names, contents
+and execute bits of the files the `sentinel-guard` pathspecs match, with the
+justfile, the vendored toolkit and the tool versions `PLUGIN_DEV_GATE_TOOLS`
+lists, and skips the checker, suite and manifest parse when the hash matches the
+last pass. It caches correctly only while everything those three read sits
+inside the pathspec list, so a new input to the checker or its suite joins the
+list in the same change. *Done* · Where · pinned by: the
+`sentinel-guard precommit` line in `justfile`.
 
 **NFR-4 — the vendored subtree is never hand-edited.** `plugin-dev/` is
 generated content pulled from a pinned `dist-` tag of the toolkit repo; a fix
@@ -186,12 +191,13 @@ installable with no permissions question.
 *Rejected: shipping the checker as a plugin hook* — it validates this repo's own
 authoring, which no consumer runs.
 
-**D-6 — the dev launcher chains rather than resolves.** `.bin/claude` strips its
-own directory from `PATH` and passes the stripped `PATH` through the `exec`,
-because the next shim on the chain resolves *its* next `claude` against the
-inherited `PATH`; leaving ourselves on it makes the two shims exec each other
-forever. *Rejected: hard-coding the real binary's path* — it breaks the moment
-another shim is installed or the binary moves.
+**D-6 — the dev launcher is the toolkit's.** Craft loads its dogfood copy
+through the vendored `plugin-dev/bin/claude` rather than a launcher of its own:
+the shim, the sync and the two hooks that guard the copy and report a session
+not loading it ship and are tested together upstream, and NFR-4 keeps fixes to
+them there. *Rejected: a craft-owned launcher script* — it would duplicate the
+shim's `PATH` chaining and need its own lint, with nothing to report a session
+that bypassed it.
 
 **D-7 — the caps are a shared-tier rule, not a craft rule.** They govern every
 artifact written anywhere, not only where a checker happens to be wired, so they
@@ -238,8 +244,6 @@ The ones that stand alone:
   without reducing what is read. At a hub's floor the argument moves out of the
   conclusion bullets instead, and the conclusions stay; see
   `skills/design-doc-writing/references/splitting-an-oversized-doc.md`.
-- **Per-check caching or a sentinel file in `precommit`.** A cache would add
-  invalidation bugs to buy back a few seconds on a gate nobody waits on (NFR-3).
 - **Re-running a mutation matrix after every later edit.** A mutation run's
   proof is behaviour-bound: a later green run shows the behaviour is still
   there, so an edit invalidates it no more than any other test. What is
