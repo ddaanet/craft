@@ -48,18 +48,24 @@ systemd, a shell exec —
 **assert the invocation contract itself, not just the behavior.** Concretely:
 `[ -x path ]` per hook script.
 
-A guard is invoked by the system it contains, so its ALLOW case is a command
-that system really issues, not a synthetic probe. An allowlist hook signed off
-on blocked probes alone admitted no space or quote, and so blocked the quoted,
-multi-word note every real call carries: the one operation the contained agent
-existed to perform.
-
 **Corollary:** use `git ls-files -s` (recorded mode), not `ls -l` (local
 filesystem mode). A fresh clone reproduces git's mode, and a local `chmod` can
 mask the bug.
 
 The pattern had already been added elsewhere in the same repo for this exact
 reason. The lesson had been learned once and not generalized.
+
+A guard is invoked by the system it contains, so its ALLOW case is a command
+that system really issues, not a synthetic probe. An allowlist hook signed off
+on blocked probes alone admitted no space or quote, while the subcommand it
+contained takes a quoted, multi-word note on every call. So it blocked the one
+operation the contained agent existed to perform. After moving or editing a live
+guard, re-provoke it and read two things off the denial: the script path the
+harness attributes it to, which proves which copy fired rather than a stale one,
+and a phrase only the new text contains, which proves the edit is what runs.
+Pair the provocation with a must-ALLOW command in the same check, because a
+guard broken closed blocks the provocation too and looks like success from the
+deny alone.
 
 ## A suite that is not run cannot fail
 
