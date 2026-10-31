@@ -48,12 +48,12 @@ that failure is silent.
 
 Once every mechanism has moved out, what is left is the five mandated sections,
 a component map, one conclusion line per decision and one line per rejected
-alternative — and none of it compresses. Rewording returns almost nothing
-against a hard-wrapping formatter, which refills the lines just emptied;
-measured on one pass, the mandated sections reworded for concision came back
-four lines shorter. So budget the hub by *measuring* after the planned moves
-rather than estimating: one plan's estimate was 96 lines under on Architecture
-alone, which turned "a light concision pass" into two unplanned moves.
+alternative — and none of it compresses. Rewording returns almost nothing:
+measured in lines on one pass, the mandated sections reworded for concision came
+back four lines shorter. So budget the hub by *measuring* after the planned
+moves rather than estimating: one plan's estimate was 96 lines under on
+Architecture alone, which turned "a light concision pass" into two unplanned
+moves.
 
 Demoting the conclusion lines into each node's opening summary is not a lever,
 though the coverage rule accepts it: a reader weighing a new decision needs

@@ -54,10 +54,12 @@ before the prose checks run, preserving line numbers so failures still name the
 right line. *Done* · Where · pinned by: `blank_code`.
 
 **FR-7 — the gate runs before every commit.** `just precommit` formats, checks
-references and sizes, runs the checker, runs the checker's own suite, parses the
-manifest and shellchecks the launcher. It is a required step rather than a
-suggestion, and it carries no cache or sentinel. *Done* · Where · pinned by: the
-`precommit` and `format-docs` recipes in `justfile`.
+references and sizes, runs the checker, runs the checker's own suite and parses
+the manifest. It is a required step rather than a suggestion. The last three sit
+between `sentinel-guard` and `record-sentinel`, so they skip themselves while
+none of the files they read has changed since their last pass; the reference and
+size checks run on every call. *Done* · Where · pinned by: the `precommit` and
+`format-docs` recipes in `justfile`.
 
 **FR-8 — the in-tree plugin is active in a dev session.** `.bin/claude` copies
 `.claude-plugin/` and `skills/` to a gitignored `dist/plugin/`, prepends
@@ -94,7 +96,7 @@ Where · pinned by: FR-4's checks catch the mechanical classes; the judgement
 that an inlined clause reads correctly stays with review.
 
 **NFR-3 — the gate is cheap enough to be unconditional.** Roughly six seconds on
-the whole tree, nearly all of it the checker's suite: thirty-one tests, each
+the whole tree, nearly all of it the checker's suite: twenty-five tests, each
 spawning the checker as a subprocess so the invocation matches the one
 `precommit` makes. That is what lets the gate run on every commit with no cache
 to invalidate and no sentinel to go stale — the sub-second figure this recorded
