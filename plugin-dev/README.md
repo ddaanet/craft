@@ -9,9 +9,10 @@ dotfiles).
 
 - **`release.just`** — the recipes imported into the consumer's `justfile`:
   `release`, `resume-release`, `check-version`, `check-refs`, `check-size`,
-  `update-plugin-dev` and `dogfood`. All are one-line wrappers: `release` and
-  `resume-release` around `release.sh`, `check-refs` around `check-refs.sh`,
-  `update-plugin-dev` around `update.sh`, `dogfood` around `dogfood.sh sync`.
+  `check-frontmatter`, `check-modes`, `update-plugin-dev` and `dogfood`. All are
+  one-line wrappers: `release` and `resume-release` around `release.sh`,
+  `check-refs` around `check-refs.sh`, `update-plugin-dev` around `update.sh`,
+  `dogfood` around `dogfood.sh sync`.
 - **`update.sh`** — pulls a newer toolkit version into the consumer. With no ref
   it resolves the newest `dist-` tag from the remote. After the pull it prints
   the migration notes for every version crossed — guidance to apply by hand; an
@@ -32,8 +33,9 @@ dotfiles).
 - **`check-refs.sh`** — refuses a Markdown link whose target is missing, and,
   with a `dist.include`, one from a shipped file to an unshipped one. Run from
   `precommit`; the dist build runs it again on the tree it builds. Its parser
-  lives in `check-refs-parse.sh` beside it, which it sources. See
-  [Reference check](#reference-check).
+  lives in `check-refs-parse.sh` beside it, which it sources, as it does
+  `exempt-list.sh`, the reader of its exempt list that `check-size.sh` shares.
+  See [Reference check](#reference-check).
 - **`check-version.sh`** — compares `plugin.json`'s version against the plugin's
   `marketplace.json` entry. Exposed as `just check-version` and run as a
   `release` pre-flight, so a release refuses to start on top of a previous one
@@ -60,8 +62,16 @@ dotfiles).
   are unchanged. See [Gate sentinels](#gate-sentinels).
 - **`check-size.sh`** — opt-in, wired as `precommit: check-refs check-size`.
   Refuses a file over the byte cap. See [Size check](#size-check).
-- **`run-bats.sh`** — opt-in quiet runner for `bats`: failures and a pass count
-  instead of the TAP stream.
+- **`check-frontmatter.sh`** — opt-in, wired as
+  `precommit: check-refs check-size check-frontmatter`. Refuses a skill, agent
+  or command whose frontmatter is missing, not YAML, or breaks the toolkit's
+  field rules. See [Frontmatter check](#frontmatter-check).
+- **`check-modes.sh`** — opt-in, wired as
+  `precommit: check-refs check-size check-frontmatter check-modes`. Refuses a
+  vendored script that starts with `#!` but lacks the execute bit. See
+  [Mode check](#mode-check).
+- **`run-bats.sh`** — opt-in quiet runner for `bats`: failures and a pass, fail
+  and skip count instead of the TAP stream.
 - **`install.sh`** — one-shot install script: vendors the toolkit (resolving the
   newest `dist-` tag when no ref is given), inserts the justfile import line,
   and wires the version-guard hook and the two dogfood hooks into
@@ -225,18 +235,19 @@ ignored target is refused, a target above the repository root too, and the match
 is exact-case even on a case-insensitive disk. Links with a scheme, pure
 `#anchors`, root `/paths`, fenced code, inline code spans and HTML comments are
 not checked, and neither are backticked paths. It reads every Markdown file on
-disk that git does not ignore, tracked or not, apart from `plugin-dev/` and
-submodules. Wire it into the commit gate as a dependency, so it runs on every
-call, ahead of any gate guard:
+disk that git does not ignore, tracked or not, apart from `plugin-dev/`, a root
+`plans/` and submodules. Wire it into the commit gate as a dependency, so it
+runs on every call, ahead of any gate guard:
 
 ```just
 precommit: check-refs
 ```
 
-Files under `docs/changelog/` and `plans/` are exempt, since a dated record's
-link to a file deleted later is still true. A `refs.exempt` at the root, one
-path per line with `#` comments, replaces that list; an empty one exempts
-nothing.
+Files under `docs/changelog/` are exempt, since a dated record's link to a file
+deleted later is still true. A `refs.exempt` at the root, one path per line with
+`#` comments and an optional ` # reason` after a path, replaces that default; an
+empty one exempts nothing. `plans/` is never read, like `plugin-dev/`, whatever
+`refs.exempt` says.
 
 With a `dist.include`, a link from a shipped file must also reach a shipped file
 that exists, exempt or not: the `dist` tree holds only the listed paths, and
@@ -266,6 +277,29 @@ Optional. `just check-size` refuses a file over 20000 bytes, or 10000 for a
 `precommit: check-refs check-size`; it runs uncached. The metric, what is
 skipped, the `size.exempt` format and the report are in
 [manual/size-check.md](manual/size-check.md).
+
+## Frontmatter check
+
+Optional. `just check-frontmatter` refuses a skill, agent or command whose
+frontmatter is missing, not YAML, or breaks the toolkit's field rules. Wire it
+as `precommit: check-refs check-size check-frontmatter`; it runs uncached and
+needs PyYAML in the dev group of `pyproject.toml`. What is read, each refusal,
+what is not refused and the setup are in
+[manual/frontmatter-check.md](manual/frontmatter-check.md).
+
+## Mode check
+
+Optional. `just check-modes` refuses a file under the vendored `plugin-dev/`
+that starts with `#!` but is not executable on disk. A recipe that runs a script
+as `bash <script>` passes whatever its mode, while `bin/claude` leaves PATH and
+a direct call fails, so a commit that flips a vendored script to 644 goes
+unseen. Wire it as
+`precommit: check-refs check-size check-frontmatter check-modes`; it runs
+uncached. It takes no arguments and checks only its own directory. Each refusal
+is one line, `mode-lost: <path>`, the path from the repo root, followed by a
+`chmod +x` command over the same files by absolute path, which runs from
+anywhere, and a reminder to commit the mode change. A pass prints how many `#!`
+files it checked. Migration steps are in `plugin-dev/migrations/v0.16.0.md`.
 
 ## Dogfooding
 
@@ -304,7 +338,8 @@ the launcher shipped takes the steps in `plugin-dev/migrations/v0.9.0.md`.
   stays sandboxed, and under auto mode the `dangerouslyDisableSandbox` flag gets
   the call denied.
 - Default branch is auto-detected from `origin/HEAD`; recipes don't hardcode
-  `main`.
+  `main`. A release runs from that branch or from `dev`, never changes branch,
+  publishes the release commit to the default branch, and never pushes `dev`.
 - The version-guard hook fires on Write/Edit events targeting
   `.claude-plugin/plugin.json` and is a no-op outside plugin repositories (no
   manifest, no fire).
