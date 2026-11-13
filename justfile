@@ -4,7 +4,7 @@ import 'plugin-dev/gates.just'
 # Tool versions no lockfile pins: the venv's python3 and the system jq.
 export PLUGIN_DEV_GATE_TOOLS := "python3 --version\njq --version"
 
-precommit: format-docs check-refs check-size
+precommit: format-docs check-refs check-size check-frontmatter check-modes
     #!{{ plugin_dev_gate_prolog }}
     sentinel-guard precommit .claude-plugin skills scripts tests docs pyproject.toml uv.lock .gitignore
     scripts/check-skills.py
