@@ -12,7 +12,7 @@
 
 bump_marketplace() {
     local mp_tmp repo_slug mp_branch mp_remote_head mp_local_head committed=0
-    mp_tmp=$(mktemp)
+    mp_tmp=$(mktemp "${TMPDIR:-/tmp}/release-marketplace.XXXXXX")
     if [ "$marketplace_entry_exists" = 1 ]; then
         # An opted-in plugin's entry follows the dist branch: only .source.ref is
         # added, the rest of the source is left as it is.
@@ -114,7 +114,7 @@ bump_marketplace() {
     # check_marketplace_writable's /add-dir advice covers the file write, not
     # this. Everything else is already public by now, so the message has to say
     # that rather than leave a bare git error as the last word.
-    git -C "$MARKETPLACE_DIR" push || {
+    git -C "$MARKETPLACE_DIR" push origin "HEAD:refs/heads/$mp_branch" || {
         printf 'hint: %s is public through its GitHub release, and the marketplace bump\n' "$tag" >&2
         printf '      to %s is committed in %s — only the push is missing.\n' "$V" "$MARKETPLACE_DIR" >&2
         # shellcheck disable=SC2016  # backticks are literal markdown, not command substitution
