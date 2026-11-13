@@ -132,9 +132,10 @@ component paths — skills are discovered from `skills/`.
 - **`tests/test_check_skills.py`** — the gate's own gate. One test per check,
   each spoiling an otherwise-clean tree in exactly one way and asserting the
   *complete* output, so the assertion fails if the check it names stops firing.
-- **`justfile`** — `precommit` (`format-docs`, `check-refs`, `check-size`, then
-  the checker and its suite) then `prerelease`, with the release and size
-  recipes imported from the vendored toolkit.
+- **`justfile`** — `precommit` (`format-docs`, `check-refs`, `check-size`,
+  `check-frontmatter`, `check-modes`, then the checker and its suite) then
+  `prerelease`, with the release and size recipes imported from the vendored
+  toolkit.
 - **`.rumdl.toml`** — MD013 only, reflow at 80 columns in `normalize` mode.
   rumdl is used as a prose wrapper, not a linter: headings, code and tables are
   neither wrapped nor reported.
