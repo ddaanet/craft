@@ -12,10 +12,11 @@ when-needed one: content loaded at one moment apart from content loaded at
 another. Under a hard cap, getting a file back under is always that split: never
 offer a `size.exempt` entry as the alternative, or ask which of the two to take.
 An entry never replaces the split, but it may hold one already scheduled, with
-the known end that lands it named in the entry's reason: those are the "overages
-that have an end" the claude-plugin-dev toolkit's size-check manual admits, and
-what else an entry must satisfy is that manual's to say. On a plan or a PR, do
-not block a commit or agonize over exceeding it in local self-review.
+the known end that lands it named in the entry's reason: that is one of the
+"overages that have an end" the claude-plugin-dev toolkit's size-check manual
+admits, and what else an entry must satisfy is that manual's to say. On a plan
+or a PR, do not block a commit or agonize over exceeding it in local
+self-review.
 
 Contract size predicts implementation size: a single spec or plan task's
 implementation runs several times the size of its **contract**. Measured
