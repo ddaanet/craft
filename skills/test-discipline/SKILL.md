@@ -1,6 +1,6 @@
 ---
 name: test-discipline
-description: "Make a test evidence rather than decoration: name the state of the world that fails it, get a genuine red from a failed assertion, and check that the suite is reached and the code invoked as production invokes it. Use when writing, reviewing or dispatching tests, when a red step is being planned, or when inherited or subagent-authored tests came back green. Complements test-driven-development rather than replacing it."
+description: "Make a test evidence rather than decoration: name the state of the world that fails it, get a genuine red from a failed assertion, and check that the suite is reached and the code invoked as production invokes it. Use when writing, reviewing or dispatching tests, when deciding whether a check is automated, skipped or run by hand, when a red step is being planned, or when inherited or subagent-authored tests came back green. Complements test-driven-development rather than replacing it."
 ---
 
 # Test discipline
@@ -38,6 +38,9 @@ instead.
   rather than relocating the test, restoring it by inverting the edit rather
   than from a backup copy, and proving a mutation landed before reading what
   survives it.
+- [What belongs in the suite](references/suite-contents.md) — automate by
+  default, grep the suite before a fixture, no skipped tests, dogfood the day it
+  ships, and audit failure reporting a clean run cannot show.
 - [Coverage shape](references/coverage-shape.md) — outside-in when the
   architecture is settled; assert that the suite is *reached* and that the code
   is *invoked as production invokes it*.

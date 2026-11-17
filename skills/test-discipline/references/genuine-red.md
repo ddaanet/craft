@@ -49,11 +49,13 @@ test is the general remedy; the systematic form is
 **one mutation per behaviour the suite claims to pin**.
 
 Take each check, branch or rule the code implements, neuter exactly that one in
-the subject where it lives, run the whole suite, and record which tests go red.
-Three things come out of the run that reading the tests cannot give you:
+the subject where it lives, run the test files the work touches, and record
+which tests go red. The full suite is not this check's to run: `edify:dispatch`
+gives it to the commit gate, once, before the commit. Three things come out of
+the run that reading the tests cannot give you:
 
-- **A mutation nothing catches** names an unpinned behaviour. The suite looked
-  complete and was not.
+- **A mutation nothing catches** names a behaviour those files leave unpinned. A
+  test file outside the run can still pin it.
 - **A red that is not the test named for the mutated behaviour** means the test
   that failed is coupled to something it does not claim, while the one that
   should have failed is passing for another reason.
@@ -97,7 +99,7 @@ check it against the suite's own root resolution before following it.
 
 ## Restore by inverting the edit, never from a copy
 
-Mutating, running the suite and restoring are separate tool calls, so any
+Mutating, running the tests and restoring are separate tool calls, so any
 restore that depends on state surviving between calls is the hazard. Measured: a
 backup written to `$TMPDIR` succeeded, the suite redded as intended, and the
 restore one call later read an empty `$TMPDIR` — `cp` failed, and the mutation
@@ -112,9 +114,9 @@ the string pair is itself the record of what was changed.
   file that already holds another `return []` restores the wrong line. Choose a
   mutation text that occurs nowhere else, or confirm its count before applying.
 - **Prove the mutation landed.** A replacement whose old string matches nothing
-  exits 0 and changes nothing, so the suite stays green and the run reads as a
+  exits 0 and changes nothing, so the tests stay green and the run reads as a
   mutation nothing catches — a false finding of an unpinned behaviour. Grep for
-  the mutated text before running the suite. Measured: a `sed` dropping
+  the mutated text before running the tests. Measured: a `sed` dropping
   `pipefail` from a `set` line, where a renamed line turns the scenario into a
   second run of the unmodified script. The same false reading arrives when a
   recorded mutation is re-applied after the subject changed: the recipe names
@@ -122,8 +124,8 @@ the string pair is itself the record of what was changed.
   first reading to check, ahead of the two that `non-vacuous-negatives` gives a
   survived mutation.
 - **Prove the restore.** Grep for the mutation text and expect no hit, then run
-  the full suite and expect green. The replacement exiting 0 is not the
-  evidence.
+  the same test files the mutants ran against and expect green. The replacement
+  exiting 0 is not the evidence.
 
 Rejected, each for a reason worth keeping: `${TMPDIR:-/tmp}` keeps the
 cross-call assumption and only covers an unset variable;
