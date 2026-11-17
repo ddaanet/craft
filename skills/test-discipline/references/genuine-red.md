@@ -99,7 +99,7 @@ check it against the suite's own root resolution before following it.
 
 ## Restore by inverting the edit, never from a copy
 
-Mutating, running the suite and restoring are separate tool calls, so any
+Mutating, running the tests and restoring are separate tool calls, so any
 restore that depends on state surviving between calls is the hazard. Measured: a
 backup written to `$TMPDIR` succeeded, the suite redded as intended, and the
 restore one call later read an empty `$TMPDIR` — `cp` failed, and the mutation
@@ -116,7 +116,7 @@ the string pair is itself the record of what was changed.
 - **Prove the mutation landed.** A replacement whose old string matches nothing
   exits 0 and changes nothing, so the suite stays green and the run reads as a
   mutation nothing catches — a false finding of an unpinned behaviour. Grep for
-  the mutated text before running the suite. Measured: a `sed` dropping
+  the mutated text before running the tests. Measured: a `sed` dropping
   `pipefail` from a `set` line, where a renamed line turns the scenario into a
   second run of the unmodified script. The same false reading arrives when a
   recorded mutation is re-applied after the subject changed: the recipe names
