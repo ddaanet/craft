@@ -50,8 +50,9 @@ test is the general remedy; the systematic form is
 
 Take each check, branch or rule the code implements, neuter exactly that one in
 the subject where it lives, run the test files that exercise the subject, and
-record which tests go red. Find those files by grepping the test tree for the
-mutated function or symbol name. This is the exception to `edify:dispatch`,
+record which tests go red. Find those files by grepping the test tree for every
+name a test reaches the subject by: the mutated function or symbol, and the
+command or script path that runs it. This is the exception to `edify:dispatch`,
 which scopes an agent to the test files it touched: a guard pinned only in an
 untouched file survives a run that skips it, and gets deleted as a guard doing
 nothing. The full suite stays the commit gate's, once, before the commit. Three
