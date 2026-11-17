@@ -1,6 +1,6 @@
 ---
 name: directive-writing
-description: "Write text an agent will act on — a hook's additionalContext, a probe directive, an instructing error message, a deny reason, a code comment — so it carries acts and not narration, and withholds identifiers instead of forbidding them. Use when authoring or reviewing agent-facing output, hook wording, dispatch text or comments, or when designing where a generator's output gets constrained. Not for user-facing prose."
+description: "Write text an agent will act on — a hook's additionalContext, a probe directive, an instructing error message, a deny reason, a code comment — so it carries acts and not narration, and withholds identifiers instead of forbidding them. Use when authoring or reviewing agent-facing output, hook wording, dispatch text or comments, when designing where a generator's output gets constrained, or when deciding what goes in always-on context such as a CLAUDE.md. Not for user-facing prose."
 ---
 
 # Directive writing
@@ -91,7 +91,9 @@ each with a positive over the same fixture — see the `test-discipline` skill.
 
 When a rule is an ordering between the *caller's own steps*, it belongs where
 the steps are described: a prohibition must be front-loaded, a procedure defers
-to its trigger.
+to its trigger. [Always-on context](references/always-on-context.md) — why a
+resident recipe turns into ceremony, and why a self-describing gate is invoked
+rather than pre-satisfied.
 
 ## Wording by channel
 

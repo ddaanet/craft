@@ -7,8 +7,12 @@ The size cap is 20000 bytes for a file and 10000 for a `SKILL.md`, bytes as
 takes the file in. It is **hard** for design docs and implementation — source
 files, skill hubs and nodes — and **soft** for plans and PRs. It exists for
 context management, and a file that reaches it usually holds cohesive content to
-spin off, so split on that seam rather than arguing the overage. On a plan or a
-PR, do not block a commit or agonize over exceeding it in local self-review.
+spin off, so split on that seam rather than arguing the overage. The seam is a
+when-needed one: content loaded at one moment apart from content loaded at
+another. Under a hard cap, getting a file back under is always that split, so
+never offer a `size.exempt` entry as the alternative or ask which of the two to
+take. On a plan or a PR, do not block a commit or agonize over exceeding it in
+local self-review.
 
 Contract size predicts implementation size: a single spec or plan task's
 implementation runs several times the size of its **contract**. Measured
@@ -40,12 +44,16 @@ against and the dispatcher one to check the returned rule by.
 ## Measure the cap honestly
 
 The cap is a proxy for *reviewable*. `check-size` counts bytes, which long lines
-and merged paragraphs do not change, so nothing has to run before the count. If
-a file exceeds the cap, split it into multiple focused documents on a clean seam
-— one corpus plan split three ways on its local-vs-network seam. Splitting is
-explicitly sanctioned by such caps ("anything longer gets split"). Preserve all
-information across the split: duplicated front matter (constraints, shared
-types) is fine; dropped content is not.
+and merged paragraphs do not change: a re-wrap barely moves the count, so no
+formatter has to run ahead of it. The plugin-dev toolkit ships the checker as
+`check-size`, documented wired as `precommit: check-refs check-size`; an overage
+prints `oversized-file: <path>: <n> bytes > <cap>`, with `(SKILL.md hub)`
+appended for a hub. If a file exceeds the cap, split it into multiple focused
+documents on a clean seam — one corpus plan split three ways on its
+local-vs-network seam. Splitting is explicitly sanctioned by such caps
+("anything longer gets split"). Preserve all information across the split:
+duplicated front matter (constraints, shared types) is fine; dropped content is
+not.
 
 GitHub bodies are the opposite case — they render every newline as a break, so
 no hard wrap there.
@@ -105,8 +113,9 @@ a file parked at exactly its cap has stopped emitting the signal the cap exists
 to emit. The next line added anywhere breaks the build, which reads as a tooling
 failure rather than as "this module is due to be split". If trimming is the only
 way to fit,
-**say so out loud and put the split in front of the human as a decision**; never
-let the cap be satisfied quietly by prose loss.
+**say so out loud and put the split in front of the human as a decision** —
+where and when to split, never whether a `size.exempt` entry would do instead;
+never let the cap be satisfied quietly by prose loss.
 
 ## Splitting is not free, so a soft cap is not absolute
 
