@@ -61,6 +61,9 @@ cause lived in the fixture, which is the part review skims.
   the test fail. The red-phase review is what proves the test fails against
   unchanged code; "they share a commit" is a packaging detail, not a reason to
   bundle them.
+- **Scope a mutation dispatch to the test files that exercise the subject**,
+  found by grep, not to the files the agent touched; the full suite stays the
+  commit gate's. `genuine-red` has the grep and the reason.
 
 The brief that dispatched the work misdescribes the code in the same way a
 hand-listed enumeration does — conformance passes clean against it. The
