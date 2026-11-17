@@ -1,7 +1,7 @@
 # Always-on context
 
-What sits in context every session — a `CLAUDE.md`, an imported rule file —
-holds prohibitions; a procedure defers to its trigger.
+What sits in context every session holds prohibitions; a procedure defers to its
+trigger.
 
 **A prohibition is front-loaded** when it guards against something the agent
 would otherwise do unprompted: nothing downstream discloses it in time.

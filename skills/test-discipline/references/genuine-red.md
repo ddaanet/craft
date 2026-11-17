@@ -114,7 +114,7 @@ the string pair is itself the record of what was changed.
   file that already holds another `return []` restores the wrong line. Choose a
   mutation text that occurs nowhere else, or confirm its count before applying.
 - **Prove the mutation landed.** A replacement whose old string matches nothing
-  exits 0 and changes nothing, so the suite stays green and the run reads as a
+  exits 0 and changes nothing, so the tests stay green and the run reads as a
   mutation nothing catches — a false finding of an unpinned behaviour. Grep for
   the mutated text before running the tests. Measured: a `sed` dropping
   `pipefail` from a `set` line, where a renamed line turns the scenario into a
