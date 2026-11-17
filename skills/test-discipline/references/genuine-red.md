@@ -54,8 +54,9 @@ which tests go red. The full suite is not this check's to run: `edify:dispatch`
 gives it to the commit gate, once, before the commit. Three things come out of
 the run that reading the tests cannot give you:
 
-- **A mutation nothing catches** names an unpinned behaviour. The suite looked
-  complete and was not.
+- **A mutation nothing catches** names an unpinned behaviour — unless a test
+  file the run left out pins it. Grep the test tree for the subject before
+  reading a survivor as unpinned. The suite looked complete and was not.
 - **A red that is not the test named for the mutated behaviour** means the test
   that failed is coupled to something it does not claim, while the one that
   should have failed is passing for another reason.

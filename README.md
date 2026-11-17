@@ -24,8 +24,8 @@ docs.
 |---|---|
 | `design-doc-writing` | creating, updating, reviewing, splitting or auditing a design doc, spec or architecture reference — or a decision, requirement or rejected alternative needs recording |
 | `plan-contracts` | writing, sizing, splitting or reviewing an implementation plan or spec, collapsing passages claimed to be duplicates — or a size cap on a plan, a PR or a source file is in play |
-| `test-discipline` | writing, reviewing or dispatching tests, planning a red step, or inherited or subagent-authored tests came back green |
-| `directive-writing` | authoring agent-facing text: a hook's `additionalContext`, a probe directive, an instructing error message, a deny reason, a code comment |
+| `test-discipline` | writing, reviewing or dispatching tests, deciding whether a check is automated, skipped or run by hand, planning a red step, or inherited or subagent-authored tests came back green |
+| `directive-writing` | authoring agent-facing text: a hook's `additionalContext`, a probe directive, an instructing error message, a deny reason, a code comment — or deciding what goes in always-on context such as a `CLAUDE.md` |
 | `removing-cleanly` | removing a feature, retiring a file, deleting or splitting a module, renaming a symbol other files cite, or handling a version transition in tooling you also control |
 
 Each one also says what it is *not* for, and means it:

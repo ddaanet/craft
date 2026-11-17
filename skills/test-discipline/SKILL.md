@@ -1,6 +1,6 @@
 ---
 name: test-discipline
-description: "Make a test evidence rather than decoration: name the state of the world that fails it, get a genuine red from a failed assertion, and check that the suite is reached and the code invoked as production invokes it. Use when writing, reviewing or dispatching tests, when a check is automated, skipped or run by hand, when a red step is being planned, or when inherited or subagent-authored tests came back green. Complements test-driven-development rather than replacing it."
+description: "Make a test evidence rather than decoration: name the state of the world that fails it, get a genuine red from a failed assertion, and check that the suite is reached and the code invoked as production invokes it. Use when writing, reviewing or dispatching tests, when deciding whether a check is automated, skipped or run by hand, when a red step is being planned, or when inherited or subagent-authored tests came back green. Complements test-driven-development rather than replacing it."
 ---
 
 # Test discipline
