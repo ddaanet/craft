@@ -124,8 +124,8 @@ the string pair is itself the record of what was changed.
   first reading to check, ahead of the two that `non-vacuous-negatives` gives a
   survived mutation.
 - **Prove the restore.** Grep for the mutation text and expect no hit, then run
-  the same test files the mutants ran against and expect green; the commit gate
-  runs the full suite. The replacement exiting 0 is not the evidence.
+  the same test files the mutants ran against and expect green. The replacement
+  exiting 0 is not the evidence.
 
 Rejected, each for a reason worth keeping: `${TMPDIR:-/tmp}` keeps the
 cross-call assumption and only covers an unset variable;

@@ -1,6 +1,6 @@
 ---
 name: test-discipline
-description: "Make a test evidence rather than decoration: name the state of the world that fails it, get a genuine red from a failed assertion, and check that the suite is reached and the code invoked as production invokes it. Use when writing, reviewing or dispatching tests, when deciding whether a check is automated, skipped or run by hand, when a red step is being planned, or when inherited or subagent-authored tests came back green. Complements test-driven-development rather than replacing it."
+description: "Make a test evidence rather than decoration: name the state of the world that fails it, get a genuine red from a failed assertion, and check that the suite is reached and the code invoked as production invokes it. Use when writing, reviewing or dispatching tests, when a check is automated, skipped or run by hand, when a red step is being planned, or when inherited or subagent-authored tests came back green. Complements test-driven-development rather than replacing it."
 ---
 
 # Test discipline
@@ -38,6 +38,9 @@ instead.
   rather than relocating the test, restoring it by inverting the edit rather
   than from a backup copy, and proving a mutation landed before reading what
   survives it.
+- [What belongs in the suite](references/suite-contents.md) — automate by
+  default, grep the suite before a fixture, no skipped tests, dogfood the day it
+  ships, and audit failure reporting a clean run cannot show.
 - [Coverage shape](references/coverage-shape.md) — outside-in when the
   architecture is settled; assert that the suite is *reached* and that the code
   is *invoked as production invokes it*.
@@ -81,36 +84,6 @@ worth checking belongs in the suite, never in a throwaway fixture — and it sto
 being true the moment the code changes. That is what makes the structural
 answers in these nodes the answer: they cost no separate pass and keep working
 as the code moves.
-
-## What belongs in the suite
-
-- **Automate by default.** A manual check does not compound: it is a tax paid
-  again on every change. Keep manual only for judgement no assertion can
-  express, and re-ask the question on each plan — a check too hard to automate
-  last time is often trivial once a fixture exists.
-- **Writing the cases is most of the cost.** Once the cases are written,
-  automating them is a small markup on that work. Do not propose an agent-driven
-  test where an assertion-based shell test works; eyeball only what resists
-  assertion — TUI rendering, screenshot diffs, smoke output on real data.
-- **Grep the suite before writing a fixture.** The path is often already
-  covered. A hand run is for dogfooding the real product end to end, which is a
-  different job from testing a script.
-- **A skipped test is a dead test.** A test that cannot run on some platform for
-  want of a tool (macOS ships no `timeout`) is made portable: replace the
-  dependency with something the suite owns, and pin that replacement with a test
-  of its own. Never `skip` it and never branch per platform — a skip reports
-  green while checking nothing, and a branch is a skip on every machine but one.
-- **Dogfood the day it ships.** Run a self-contained slice on the real target
-  the same day rather than letting the next plan validate the last one. Fixtures
-  encode what was expected to vary; the real environment holds what nobody
-  thought to parameterize. A surprise there is a patch to the just-shipped plan.
-  Running the pipeline on real data *before* planning is the `plan-contracts`
-  skill's.
-- **A clean run says nothing about failure reporting.** It is evidence about
-  behaviour, never about observability. Enumerate the failure paths and ask who
-  learns about each: one silent to everyone gets fixed; one visible to the user
-  but not the agent is weaker; one whose signal would be inferred rather than
-  observed may stay silent when inferring it produces false alarms.
 
 For the bats mechanisms that make these failure modes concrete —
 `run missing_function` exiting 127 before the code exists, `run` being a

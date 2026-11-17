@@ -1,6 +1,6 @@
 ---
 name: directive-writing
-description: "Write text an agent will act on — a hook's additionalContext, a probe directive, an instructing error message, a deny reason, a code comment — so it carries acts and not narration, and withholds identifiers instead of forbidding them. Use when authoring or reviewing agent-facing output, hook wording, dispatch text or comments, when designing where a generator's output gets constrained, or when deciding what goes in always-on context such as a CLAUDE.md. Not for user-facing prose."
+description: "Write text an agent will act on — a hook's additionalContext, a probe directive, an instructing error message, a deny reason, a code comment — so it carries acts and not narration, and withholds identifiers instead of forbidding them. Use when authoring or reviewing agent-facing output, hook wording, dispatch text or comments, when designing where a generator's output gets constrained, or what goes in always-on context (CLAUDE.md). Not for user-facing prose."
 ---
 
 # Directive writing
