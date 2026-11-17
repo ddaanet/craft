@@ -9,12 +9,11 @@ files, skill hubs and nodes — and **soft** for plans and PRs. It exists for
 context management, and a file that reaches it usually holds cohesive content to
 spin off, so split on that seam rather than arguing the overage. The seam is a
 when-needed one: content loaded at one moment apart from content loaded at
-another. Under a hard cap, getting a file back under is always that split. A
-`size.exempt` entry is no alternative to it: it carries only an overage with a
-known end, such as a split already scheduled, and names that end as its reason.
-So the question put to anyone is never "split or exempt?": the split is settled,
-and only its timing is open. On a plan or a PR, do not block a commit or agonize
-over exceeding it in local self-review.
+another. Under a hard cap, getting a file back under is always that split: never
+offer a `size.exempt` entry as the alternative, or ask which of the two to take.
+When an entry is legitimate is `plugin-dev/manual/size-check.md`'s to say. On a
+plan or a PR, do not block a commit or agonize over exceeding it in local
+self-review.
 
 Contract size predicts implementation size: a single spec or plan task's
 implementation runs several times the size of its **contract**. Measured
@@ -115,10 +114,8 @@ a file parked at exactly its cap has stopped emitting the signal the cap exists
 to emit. The next line added anywhere breaks the build, which reads as a tooling
 failure rather than as "this module is due to be split". If trimming is the only
 way to fit,
-**say so out loud and put the split in front of the human as a decision** of
-where and when to split. A split deferred to later holds a `size.exempt` entry
-naming the point it lands at. Never let the cap be satisfied quietly by prose
-loss.
+**say so out loud and put the split in front of the human as a decision**; never
+let the cap be satisfied quietly by prose loss.
 
 ## Splitting is not free, so a soft cap is not absolute
 
