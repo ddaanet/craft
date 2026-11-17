@@ -110,10 +110,11 @@ self-parent check. Delete the guard and pin the guarantee that is actually
 load-bearing. Its comment goes with it: a comment claiming the reason the line
 did not serve survives the line unless the same pass cuts both.
 
-Both readings assume the mutation landed. A recipe recorded against an earlier
-version of the subject can miss the behaviour it once neutered, and a survived
-mutation then says nothing about the code or the test; `genuine-red` has the
-check.
+Both readings assume the mutation landed and ran against the test files that
+exercise the subject, not only the files the work touched. A recipe recorded
+against an earlier version of the subject can miss the behaviour it once
+neutered, and a survived mutation then says nothing about the code or the test;
+`genuine-red` has the check and the run's scope.
 
 ## Delete an untestable negative whole
 
