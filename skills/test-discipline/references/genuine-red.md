@@ -49,13 +49,13 @@ test is the general remedy; the systematic form is
 **one mutation per behaviour the suite claims to pin**.
 
 Take each check, branch or rule the code implements, neuter exactly that one in
-the subject where it lives, run the test files that exercise the subject, and
-record which tests go red. The full suite is not this check's to run:
-`edify:dispatch` gives it to the commit gate, once, before the commit. Three
-things come out of the run that reading the tests cannot give you:
+the subject where it lives, run the test files the work touches, and record
+which tests go red. The full suite is not this check's to run: `edify:dispatch`
+gives it to the commit gate, once, before the commit. Three things come out of
+the run that reading the tests cannot give you:
 
-- **A mutation nothing catches** names an unpinned behaviour. The suite looked
-  complete and was not.
+- **A mutation nothing catches** names a behaviour those files leave unpinned. A
+  test file outside the run can still pin it.
 - **A red that is not the test named for the mutated behaviour** means the test
   that failed is coupled to something it does not claim, while the one that
   should have failed is passing for another reason.
